@@ -37,21 +37,21 @@ public class Shield extends JavaPlugin{
 	private void loadPlugins(){
 		//Attempt to load WorldGuard
 		if (packageExists("com.sk89q.worldguard")) {
-            Protection pro = new WorldGuard(this);
-            sm.register(Protection.class, pro, this, ServicePriority.Normal);
-            log.info(String.format("[%s] WorldGuard found: %s", getDescription().getName(), pro.isEnabled() ? "Loaded" : "Waiting"));
-        }
+			Protection pro = new WorldGuard(this);
+			sm.register(Protection.class, pro, this, ServicePriority.Normal);
+			log.info(String.format("[%s] WorldGuard found: %s", getDescription().getName(), pro.isEnabled() ? "Loaded" : "Waiting"));
+		}
 	}
 	
 	private static boolean packageExists(String...packages) {
-        try {
-            for (String pkg : packages) {
-                Class.forName(pkg);
-            }
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
+		try {
+			for (String pkg : packages) {
+				Class.forName(pkg);
+			}
+			return true;
+		}catch (Exception e) {
+			return false;
+		}
+	}
 
 }
