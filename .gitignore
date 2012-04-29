@@ -6,3 +6,7 @@ Shield/.project
 Shield/.settings/org.eclipse.jdt.core.prefs
 
 Shield/bin/us/twoguys/shield/Shield.class
+
+Shield/bin/us/twoguys/shield/Protection.class
+
+Shield/bin/us/twoguys/shield/plugins/WorldGuard.class
