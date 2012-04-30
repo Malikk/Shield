@@ -1,5 +1,7 @@
 package us.twoguys.shield.plugins;
 
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -9,6 +11,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.protection.ApplicableRegionSet;
 
 import us.twoguys.shield.*;
 
@@ -71,5 +74,26 @@ public class Protect_WorldGuard implements Protection, Listener{
 	public String getName(){
 		return name;
 	}
+	
+	@Override
+	public boolean isInRegion(Player player){
+		ApplicableRegionSet regionSet = protect.getRegionManager(player.getWorld()).getApplicableRegions(player.getLocation());
+		
+		if (regionSet.size() > 0){
+			return true;
+		}else{
+			return false;
+		}
+	}
 
+	@Override
+	public boolean canBuild(Player player) {
+		return protect.canBuild(player, player.getLocation());
+	}
+
+	@Override
+	public boolean canBuild(Player player, Location loc) {
+		return protect.canBuild(player, loc);
+	}
+	
 }
