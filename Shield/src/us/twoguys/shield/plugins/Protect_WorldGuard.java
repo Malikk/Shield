@@ -40,26 +40,26 @@ public class Protect_WorldGuard implements Protection, Listener{
 	}
 	
 	@EventHandler(priority = EventPriority.MONITOR)
-    public void onPluginEnable(PluginEnableEvent event) {
-        if (protect == null) {
-            Plugin p = shield.getServer().getPluginManager().getPlugin(name);
+	public void onPluginEnable(PluginEnableEvent event) {
+		if (protect == null) {
+			Plugin p = shield.getServer().getPluginManager().getPlugin(name);
 
-            if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
-                protect = (WorldGuardPlugin) p;
-                shield.log(String.format("%s hooked.", name));
-            }
-        }
-    }
+			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
+				protect = (WorldGuardPlugin) p;
+				shield.log(String.format("%s hooked.", name));
+			}
+		}
+	}
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onPluginDisable(PluginDisableEvent event) {
-        if (protect != null) {
-            if (event.getPlugin().getDescription().getName().equals(name)) {
-                protect = null;
-                shield.log(String.format("%s unhooked.", name));
-            }
-        }
-    }
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onPluginDisable(PluginDisableEvent event) {
+		if (protect != null) {
+			if (event.getPlugin().getDescription().getName().equals(name)) {
+				protect = null;
+				shield.log(String.format("%s unhooked.", name));
+			}
+		}
+	}
 
 	@Override
 	public boolean isEnabled() {
