@@ -28,15 +28,15 @@ public class Protect_WorldGuard implements Protection, Listener{
 		PluginManager pm = shield.getServer().getPluginManager();
 		pm.registerEvents(this, shield);
 		
-        //Load plugin if it was loaded before Shield
-        if (protect == null) {
-            Plugin p = shield.getServer().getPluginManager().getPlugin(name);
+		//Load plugin if it was loaded before Shield
+		if (protect == null) {
+			Plugin p = shield.getServer().getPluginManager().getPlugin(name);
             
-            if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
-                protect = (WorldGuardPlugin) p;
-                shield.log(String.format("%s hooked.", name));
-            }
-        }
+			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
+				protect = (WorldGuardPlugin) p;
+				shield.log(String.format("%s hooked.", name));
+			}
+		}
 	}
 	
 	@EventHandler(priority = EventPriority.MONITOR)
