@@ -21,7 +21,7 @@ public class Protect_WorldGuard implements Protection, Listener{
 	
 	private final String name = "WorldGuard";
 	private final String pack = "com.sk89q.worldguard.bukkit.WorldGuardPlugin";
-    protected WorldGuardPlugin protect = null;
+	protected WorldGuardPlugin protect = null;
 	
 	public Protect_WorldGuard(Shield instance){
 		this.shield = instance;
