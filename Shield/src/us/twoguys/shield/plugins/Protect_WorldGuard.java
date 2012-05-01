@@ -1,6 +1,7 @@
 package us.twoguys.shield.plugins;
 
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -10,8 +11,12 @@ import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
+import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
+import com.sk89q.worldguard.protection.flags.DefaultFlag;
+import com.sk89q.worldguard.protection.flags.StateFlag;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
 import us.twoguys.shield.*;
 
@@ -63,27 +68,49 @@ public class Protect_WorldGuard implements Protection, Listener{
 
 	@Override
 	public boolean isEnabled() {
-		if (protect == null) {
-			return false;
-		}else{
-			return protect.isEnabled();
-		}
+		return (protect == null ? false : protect.isEnabled());
 	}
 	
 	@Override
-	public String getName(){
+	public String getPluginName() {
 		return name;
 	}
 	
 	@Override
-	public boolean isInRegion(Player player){
-		ApplicableRegionSet regionSet = protect.getRegionManager(player.getWorld()).getApplicableRegions(player.getLocation());
+	public boolean isInRegion(Entity entity) {
+		ApplicableRegionSet regionSet = getAppRegionSet(entity);
 		
-		if (regionSet.size() > 0){
-			return true;
-		}else{
-			return false;
+		return (regionSet.size() > 0 ? true : false);
+	}
+	
+	@Override
+	public String getRegionOccupiedBy(Entity entity) {
+		ApplicableRegionSet regionSet = getAppRegionSet(entity);
+		ProtectedRegion priority = null;
+		
+		for (ProtectedRegion region: regionSet){
+			if (priority == null){
+				priority = region;
+			}else if (region.getPriority() > priority.getPriority()){
+				priority = region;
+			}
 		}
+		
+		return (priority == null ? null : priority.getId());
+	}
+	
+	@Override
+	public boolean isInRegion(Location loc) {
+		return (getAppRegionSet(loc) != null ? true : false);
+	}
+	
+	@Override
+	public boolean isInRegion(Location loc, String regionName) {
+		if (ProtectedRegion.isValidId(regionName)){return false;}
+		
+		ProtectedRegion region = protect.getRegionManager(loc.getWorld()).getRegion(regionName);
+		
+		return (region.contains(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()) == true ? true: false);
 	}
 
 	@Override
@@ -96,4 +123,52 @@ public class Protect_WorldGuard implements Protection, Listener{
 		return protect.canBuild(player, loc);
 	}
 	
+	@Override
+	public boolean canUse(Player player){
+		ApplicableRegionSet regionSet = getAppRegionSet((Entity)player);
+		LocalPlayer lPlayer = protect.wrapPlayer(player);
+		
+		if (regionSet.size() == 0){return true;}
+		
+		return (regionSet.allows(DefaultFlag.USE, lPlayer) ? true : false);
+	}
+	
+	@Override
+	public boolean canUse(Player player, Location loc){
+		ApplicableRegionSet regionSet = getAppRegionSet(loc);
+		LocalPlayer lPlayer = protect.wrapPlayer(player);
+		
+		if (regionSet.size() == 0){return true;}
+		
+		return (regionSet.allows(DefaultFlag.USE, lPlayer) ? true : false);
+	}
+	
+	@Override
+	public boolean canOpen(Player player){
+		ApplicableRegionSet regionSet = getAppRegionSet((Entity)player);
+		LocalPlayer lPlayer = protect.wrapPlayer(player);
+		
+		if (regionSet.size() == 0){return true;}
+		
+		return (regionSet.allows(DefaultFlag.CHEST_ACCESS, lPlayer) ? true : false);
+	}
+	
+	@Override
+	public boolean canOpen(Player player, Location loc){
+		ApplicableRegionSet regionSet = getAppRegionSet(loc);
+		LocalPlayer lPlayer = protect.wrapPlayer(player);
+		
+		if (regionSet.size() == 0){return true;}
+		
+		return (regionSet.allows(DefaultFlag.CHEST_ACCESS, lPlayer) ? true : false);
+	}
+	
+	public ApplicableRegionSet getAppRegionSet(Entity entity){
+		return protect.getRegionManager(entity.getWorld()).getApplicableRegions(entity.getLocation());
+	}
+	
+	public ApplicableRegionSet getAppRegionSet(Location loc){
+		return protect.getRegionManager(loc.getWorld()).getApplicableRegions(loc);
+	}
+
 }
