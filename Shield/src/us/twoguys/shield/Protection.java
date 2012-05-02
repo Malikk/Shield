@@ -32,7 +32,7 @@ public interface Protection {
 	/**
 	 * Returns the highest priority region that the entity is inside of
 	 * @param entity
-	 * @return region name as string
+	 * @return region name as string, or null
 	 */
 	public String getRegionOccupiedBy(Entity entity);
 		
