@@ -15,7 +15,14 @@ public class Shield extends JavaPlugin{
 	private Logger log = Logger.getLogger("Minecraft");
 	private ServicesManager sm = Bukkit.getServicesManager();
 	
+	public ShieldPluginManager pm = new ShieldPluginManager(this);
+	
+	//Plugin Classes
+	public static Protect_WorldGuard worldGuard = null;
+	
 	public void onEnable(){
+		registerAPI();
+		
 		loadPlugins();
 		
 		log("Enabled");
@@ -35,24 +42,28 @@ public class Shield extends JavaPlugin{
 		log.severe("[" + pdfile.getName() + "] " + msg);
 	}
 	
+	private void registerAPI(){
+		ShieldAPI api = new ShieldPluginManager(this);
+		sm.register(ShieldAPI.class, api, this, ServicePriority.Normal);
+	}
+	
 	private void loadPlugins(){
 		//Attempt to load WorldGuard
-		if (packageExists("com.sk89q.worldguard.bukkit.WorldGuardPlugin")) {
-			Protection protect = new Protect_WorldGuard(this);
-			sm.register(Protection.class, protect, this, ServicePriority.Normal);
-			log(String.format("WorldGuard found: %s", protect.isEnabled() ? "Loaded" : "Waiting"));
+		if (packageExists("com.sk89q.worldguard.bukkit.WorldGuardPlugin")){
+			worldGuard = new Protect_WorldGuard(this);
+			log(String.format("WorldGuard found: %s", worldGuard.isEnabled() ? "Loaded" : "Waiting"));
 		}else{
 			log("No supported protection plugins found.");
 		}
 	}
 	
-	private static boolean packageExists(String...packages) {
-		try {
-			for (String pkg : packages) {
+	private static boolean packageExists(String...packages){
+		try{
+			for (String pkg : packages){
 				Class.forName(pkg);
 			}
 			return true;
-		}catch (Exception e) {
+		}catch (Exception e){
 			return false;
 		}
 	}
