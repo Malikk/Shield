@@ -19,7 +19,7 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
 import us.twoguys.shield.*;
 
-public class Protect_WorldGuard implements Listener{
+public class Protect_WorldGuard implements Listener {
 	
 	Shield shield;
 	
@@ -32,7 +32,6 @@ public class Protect_WorldGuard implements Listener{
 		this.shield = instance;
 		PluginManager pm = shield.getServer().getPluginManager();
 		pm.registerEvents(this, shield);
-		instanceCount++;
 		
 		if (instanceCount == 0){
 			//Load plugin if it was loaded before Shield
@@ -46,6 +45,9 @@ public class Protect_WorldGuard implements Listener{
 				}
 			}
 		}
+		
+		instanceCount++;
+		
 	}
 	
 	@EventHandler(priority = EventPriority.MONITOR)

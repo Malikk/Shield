@@ -1,6 +1,5 @@
 package us.twoguys.shield;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
@@ -79,7 +78,7 @@ public class ShieldPluginManager implements ShieldAPI{
 	}
 	
 	public void addClassToInstantiatedPluginClassesArrayList(String className){
-		plugin.log("added " + className + " to pm class list");
+		//plugin.log("added " + className + " to pm class list");
 		plugins.add("Protect_" + className);
 	}
 	
@@ -108,19 +107,7 @@ public class ShieldPluginManager implements ShieldAPI{
 			Object obj = null;
 			try {
 				obj = ((Class<?>)protect).getConstructor(Class.forName("us.twoguys.shield.Shield")).newInstance(plugin);
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
-			} catch (SecurityException e) {
-				e.printStackTrace();
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				e.printStackTrace();
-			} catch (NoSuchMethodException e) {
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
+			} catch (Exception e){
 				e.printStackTrace();
 			}
 			
@@ -178,11 +165,7 @@ public class ShieldPluginManager implements ShieldAPI{
 								assigned = true;
 							}
 						}
-					} catch (IllegalArgumentException e) {
-						e.printStackTrace();
-					} catch (IllegalAccessException e) {
-						e.printStackTrace();
-					} catch (InvocationTargetException e) {
+					} catch (Exception e) {
 						e.printStackTrace();
 					}
 					

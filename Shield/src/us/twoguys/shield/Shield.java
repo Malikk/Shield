@@ -14,8 +14,9 @@ public class Shield extends JavaPlugin{
 	
 	private Logger log = Logger.getLogger("Minecraft");
 	private ServicesManager sm = Bukkit.getServicesManager();
-	
 	public ShieldPluginManager pm = new ShieldPluginManager(this);
+	
+	private boolean foundPlugin = false;
 	
 	//Plugin Classes
 	public static Protect_WorldGuard worldGuard = null;
@@ -52,7 +53,10 @@ public class Shield extends JavaPlugin{
 		if (packageExists("com.sk89q.worldguard.bukkit.WorldGuardPlugin")){
 			worldGuard = new Protect_WorldGuard(this);
 			log(String.format("WorldGuard found: %s", worldGuard.isEnabled() ? "Loaded" : "Waiting"));
-		}else{
+			foundPlugin = true;
+		}
+		
+		if (foundPlugin == false){
 			log("No supported protection plugins found.");
 		}
 	}
