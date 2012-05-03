@@ -108,24 +108,19 @@ public class ShieldPluginManager implements ShieldAPI{
 			Object obj = null;
 			try {
 				obj = ((Class<?>)protect).getConstructor(Class.forName("us.twoguys.shield.Shield")).newInstance(plugin);
-			} catch (IllegalArgumentException e1) {
-				e1.printStackTrace();
-			} catch (SecurityException e1) {
-				e1.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				e.printStackTrace();
 			} catch (InstantiationException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (InvocationTargetException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (NoSuchMethodException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -150,7 +145,6 @@ public class ShieldPluginManager implements ShieldAPI{
 				
 				Class<?>[] methodArgsTypes = method.getParameterTypes();
 				Class<?>[] argsTypes = new Class<?>[args.length];
-				
 				
 				int counter = 0;
 				
