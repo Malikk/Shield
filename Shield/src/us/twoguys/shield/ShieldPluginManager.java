@@ -16,14 +16,15 @@ public class ShieldPluginManager implements ShieldAPI{
 		plugin = instance;
 	}
 	
-
+	/**
+	 * Returns true if ANY Protect classes return true
+	 */
 	@Override
 	public boolean isInRegion(Entity entity) {
 		Object[] args = {entity};
-		ArrayList<Boolean> outcomes = getOutcomes("isInRegion", args);
+		ArrayList<Boolean> outcomes = getBooleanOutcomes("isInRegion", args);
 		
 		for (boolean outcome: outcomes){
-			plugin.log("Outcome: " + outcome);
 			if (outcome == true){
 				return true;
 			}
@@ -31,58 +32,123 @@ public class ShieldPluginManager implements ShieldAPI{
 		return false;
 	}
 
+	/**
+	 * Returns true if ANY Protect classes return true
+	 */
 	@Override
 	public boolean isInRegion(Location loc) {
-		// TODO Auto-generated method stub
+		Object[] args = {loc};
+		ArrayList<Boolean> outcomes = getBooleanOutcomes("isInRegion", args);
+		
+		for (boolean outcome: outcomes){
+			if (outcome == true){
+				return true;
+			}
+		}
 		return false;
 	}
 
+	/**
+	 * Only returns true if EVERY Protect class returns true
+	 */
 	@Override
 	public boolean canBuild(Player player) {
-		// TODO Auto-generated method stub
-		return false;
+		Object[] args = {player};
+		ArrayList<Boolean> outcomes = getBooleanOutcomes("canBuild", args);
+		
+		for (boolean outcome: outcomes){
+			if (outcome == false){
+				return false;
+			}
+		}
+		return true;
 	}
 
+	/**
+	 * Only returns true is EVERY Protect class returns true
+	 */
 	@Override
 	public boolean canBuild(Player player, Location loc) {
-		// TODO Auto-generated method stub
-		return false;
+		Object[] args = {player, loc};
+		ArrayList<Boolean> outcomes = getBooleanOutcomes("canBuild", args);
+		
+		for (boolean outcome: outcomes){
+			if (outcome == false){
+				return false;
+			}
+		}
+		return true;
 	}
 
+	/**
+	 * Only returns true is EVERY Protect class returns true
+	 */
 	@Override
 	public boolean canUse(Player player) {
-		// TODO Auto-generated method stub
-		return false;
+		Object[] args = {player};
+		ArrayList<Boolean> outcomes = getBooleanOutcomes("canUse", args);
+		
+		for (boolean outcome: outcomes){
+			if (outcome == false){
+				return false;
+			}
+		}
+		return true;
 	}
 
+	/**
+	 * Only returns true is EVERY Protect class returns true
+	 */
 	@Override
 	public boolean canUse(Player player, Location loc) {
-		// TODO Auto-generated method stub
-		return false;
+		Object[] args = {player, loc};
+		ArrayList<Boolean> outcomes = getBooleanOutcomes("canUse", args);
+		
+		for (boolean outcome: outcomes){
+			if (outcome == false){
+				return false;
+			}
+		}
+		return true;
 	}
 
+	/**
+	 * Only returns true is EVERY Protect class returns true
+	 */
 	@Override
 	public boolean canOpen(Player player) {
-		// TODO Auto-generated method stub
-		return false;
+		Object[] args = {player};
+		ArrayList<Boolean> outcomes = getBooleanOutcomes("canOpen", args);
+		
+		for (boolean outcome: outcomes){
+			if (outcome == false){
+				return false;
+			}
+		}
+		return true;
 	}
 
+	/**
+	 * Only returns true is EVERY Protect class returns true
+	 */
 	@Override
 	public boolean canOpen(Player player, Location loc) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
-	public ArrayList<String> getInstantiatedPluginClassesArrayList(){
-		return plugins;
+		Object[] args = {player, loc};
+		ArrayList<Boolean> outcomes = getBooleanOutcomes("canOpen", args);
+		
+		for (boolean outcome: outcomes){
+			if (outcome == false){
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	public void addClassToInstantiatedPluginClassesArrayList(String className){
-		//plugin.log("added " + className + " to pm class list");
 		plugins.add("Protect_" + className);
 	}
 	
-	public ArrayList<Boolean> getOutcomes(String methodName, Object[] args){
+	public ArrayList<Boolean> getBooleanOutcomes(String methodName, Object[] args){
 		ArrayList<Boolean> outcomes = new ArrayList<Boolean>();
 		@SuppressWarnings("unchecked")
 		ArrayList<String> temp = (ArrayList<String>) plugins.clone();

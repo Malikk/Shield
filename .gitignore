@@ -20,3 +20,9 @@ Shield/bin/us/twoguys/shield/plugins/Protect_WorldGuard.class
 Shield/bin/us/twoguys/shield/ShieldPluginManager.class
 
 Shield/bin/us/twoguys/shield/ShieldAPI.class
+
+Shield/bin/us/twoguys/shield/plugins/Protect.class
+
+Shield/bin/us/twoguys/shield/plugins/Protect_PreciousStones.class
+
+Shield/bin/us/twoguys/shield/plugins/Protect_Regios.class

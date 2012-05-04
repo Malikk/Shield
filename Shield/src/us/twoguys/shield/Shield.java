@@ -19,6 +19,8 @@ public class Shield extends JavaPlugin{
 	private boolean foundPlugin = false;
 	
 	//Plugin Classes
+	public static Protect_PreciousStones preciousStones = null;
+	public static Protect_Regios regios = null;
 	public static Protect_WorldGuard worldGuard = null;
 	
 	public void onEnable(){
@@ -49,10 +51,24 @@ public class Shield extends JavaPlugin{
 	}
 	
 	private void loadPlugins(){
-		//Attempt to load WorldGuard
+		//Try to load PreciousStones
+		if (packageExists("net.sacredlabyrinth.Phaed.PreciousStones.PreciousStones")){
+			preciousStones = new Protect_PreciousStones(this);
+			foundPlugin = true;
+			log(String.format("Detected PreciousStones: %s", preciousStones.isEnabled() ? "Hooked" : "Waiting"));
+		}
+		
+		//Try to load Regios
+		if (packageExists("couk.Adamki11s.Regios.Main.Regios")){
+			regios = new Protect_Regios(this);
+			log(String.format("Detected Regios: %s", regios.isEnabled() ? "Hooked" : "Waiting"));
+			foundPlugin = true;
+		}
+		
+		//Try to load WorldGuard
 		if (packageExists("com.sk89q.worldguard.bukkit.WorldGuardPlugin")){
 			worldGuard = new Protect_WorldGuard(this);
-			log(String.format("WorldGuard found: %s", worldGuard.isEnabled() ? "Loaded" : "Waiting"));
+			log(String.format("Detected WorldGuard: %s", worldGuard.isEnabled() ? "Hooked" : "Waiting"));
 			foundPlugin = true;
 		}
 		

@@ -19,7 +19,7 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
 import us.twoguys.shield.*;
 
-public class Protect_WorldGuard implements Listener {
+public class Protect_WorldGuard implements Listener, Protect {
 	
 	Shield shield;
 	
@@ -30,6 +30,7 @@ public class Protect_WorldGuard implements Listener {
 	
 	public Protect_WorldGuard(Shield instance){
 		this.shield = instance;
+		
 		PluginManager pm = shield.getServer().getPluginManager();
 		pm.registerEvents(this, shield);
 		
@@ -41,7 +42,6 @@ public class Protect_WorldGuard implements Listener {
 				if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
 					protect = (WorldGuardPlugin) p;
 					shield.pm.addClassToInstantiatedPluginClassesArrayList(name);
-					shield.log(String.format("%s hooked.", name));
 				}
 			}
 		}
@@ -75,6 +75,10 @@ public class Protect_WorldGuard implements Listener {
 	
 	public boolean isEnabled(){
 		return (protect == null ? false : true);
+	}
+	
+	public String getPluginName(){
+		return name;
 	}
 	
 	public boolean isInRegion(Entity entity) {
