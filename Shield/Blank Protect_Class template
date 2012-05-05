@@ -24,7 +24,7 @@ public class Protect_PluginName implements Listener, Protect {
 	private static int instanceCount = 0;
 	private static PMainClass protect = null;
 	
-	public Protect_PreciousStones(Shield instance){
+	public Protect_PluginName(Shield instance){
 		this.shield = instance;
 		
 		PluginManager pm = shield.getServer().getPluginManager();
