@@ -19,8 +19,8 @@ public class Protect_Residence implements Listener, Protect {
 	
 	Shield shield;
 	
-	private final String name = "PluginName";
-	private final String pack = "Package.location.for.main.class";
+	private final String name = "Residence";
+	private final String pack = "com.bekvon.bukkit.residence.Residence";
 	private static int instanceCount = 0;
 	private static Residence protect = null;
 	
