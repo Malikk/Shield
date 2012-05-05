@@ -12,6 +12,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
 import com.bekvon.bukkit.residence.Residence;
+import com.bekvon.bukkit.residence.protection.ResidenceManager;
 
 import us.twoguys.shield.*;
 
@@ -23,6 +24,9 @@ public class Protect_Residence implements Listener, Protect {
 	private final String pack = "com.bekvon.bukkit.residence.Residence";
 	private static int instanceCount = 0;
 	private static Residence protect = null;
+	
+	//Managers
+	ResidenceManager rmanager = Residence.getResidenceManager();
 	
 	public Protect_Residence(Shield instance){
 		this.shield = instance;
@@ -78,13 +82,11 @@ public class Protect_Residence implements Listener, Protect {
 	}
 
 	public boolean isInRegion(Entity entity) {
-		// TODO Auto-generated method stub
-		return false;
+		return (rmanager.getByLoc(entity.getLocation()) != null ? true : false);
 	}
 
 	public boolean isInRegion(Location loc) {
-		// TODO Auto-generated method stub
-		return false;
+		return (rmanager.getByLoc(loc) != null ? true : false);
 	}
 
 	public boolean canBuild(Player player) {

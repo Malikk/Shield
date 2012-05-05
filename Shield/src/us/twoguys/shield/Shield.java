@@ -52,6 +52,9 @@ public class Shield extends JavaPlugin{
 	}
 	
 	private void loadPlugins(){
+		
+		log("Scanning for supported protection plugins...");
+		
 		//Attempt to load PreciousStones
 		if (packageExists("net.sacredlabyrinth.Phaed.PreciousStones.PreciousStones")){
 			preciousStones = new Protect_PreciousStones(this);
