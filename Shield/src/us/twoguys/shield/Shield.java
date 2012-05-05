@@ -21,6 +21,7 @@ public class Shield extends JavaPlugin{
 	//Plugin Classes
 	public static Protect_PreciousStones preciousStones = null;
 	public static Protect_Regios regios = null;
+	public static Protect_Residence residence = null;
 	public static Protect_WorldGuard worldGuard = null;
 	
 	public void onEnable(){
@@ -62,6 +63,13 @@ public class Shield extends JavaPlugin{
 		if (packageExists("couk.Adamki11s.Regios.Main.Regios")){
 			regios = new Protect_Regios(this);
 			log(String.format("Detected Regios: %s", regios.isEnabled() ? "Hooked" : "Waiting"));
+			foundPlugin = true;
+		}
+		
+		//Attempt to load Residence
+		if (packageExists("com.bekvon.bukkit.residence.Residence")){
+			residence = new Protect_Residence(this);
+			log(String.format("Detected Residence: %s", residence.isEnabled() ? "Hooked" : "Waiting"));
 			foundPlugin = true;
 		}
 		
