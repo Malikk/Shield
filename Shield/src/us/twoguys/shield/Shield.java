@@ -51,21 +51,21 @@ public class Shield extends JavaPlugin{
 	}
 	
 	private void loadPlugins(){
-		//Try to load PreciousStones
+		//Attempt to load PreciousStones
 		if (packageExists("net.sacredlabyrinth.Phaed.PreciousStones.PreciousStones")){
 			preciousStones = new Protect_PreciousStones(this);
 			foundPlugin = true;
 			log(String.format("Detected PreciousStones: %s", preciousStones.isEnabled() ? "Hooked" : "Waiting"));
 		}
 		
-		//Try to load Regios
+		//Attempt to load Regios
 		if (packageExists("couk.Adamki11s.Regios.Main.Regios")){
 			regios = new Protect_Regios(this);
 			log(String.format("Detected Regios: %s", regios.isEnabled() ? "Hooked" : "Waiting"));
 			foundPlugin = true;
 		}
 		
-		//Try to load WorldGuard
+		//Attempt to load WorldGuard
 		if (packageExists("com.sk89q.worldguard.bukkit.WorldGuardPlugin")){
 			worldGuard = new Protect_WorldGuard(this);
 			log(String.format("Detected WorldGuard: %s", worldGuard.isEnabled() ? "Hooked" : "Waiting"));
