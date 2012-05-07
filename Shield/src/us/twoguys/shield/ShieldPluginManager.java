@@ -153,7 +153,7 @@ public class ShieldPluginManager implements ShieldAPI{
 		@SuppressWarnings("unchecked")
 		ArrayList<String> temp = (ArrayList<String>) plugins.clone();
 		
-		plugin.log("Getting Outcomes");
+		//plugin.log("Getting Outcomes");
 		
 		for (String className: temp){
 			//plugin.log("Class name is " + className);
@@ -202,7 +202,10 @@ public class ShieldPluginManager implements ShieldAPI{
 				int counter = 0;
 				
 				for (Object arg: args){
-					if (arg instanceof Entity){
+					if (arg instanceof Player){
+						argsTypes[counter] = Player.class;
+						counter++;
+					}else if (arg instanceof Entity){
 						argsTypes[counter] = Entity.class;
 						counter++;
 					}else if (arg instanceof Location){
@@ -211,7 +214,7 @@ public class ShieldPluginManager implements ShieldAPI{
 					}
 				}
 				
-				if (method.getName().equalsIgnoreCase(methodName)){
+				if (method.getName().equalsIgnoreCase(methodName) && methodArgsTypes.length == argsTypes.length){
 					
 					try {
 						if (methodArgsTypes.length == 0){

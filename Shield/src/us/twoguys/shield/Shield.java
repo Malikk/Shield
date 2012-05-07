@@ -13,7 +13,6 @@ import us.twoguys.shield.plugins.*;
 public class Shield extends JavaPlugin{
 	
 	private Logger log = Logger.getLogger("Minecraft");
-	private ServicesManager sm = Bukkit.getServicesManager();
 	public ShieldPluginManager pm = new ShieldPluginManager(this);
 	
 	private boolean foundPlugin = false;
@@ -48,7 +47,7 @@ public class Shield extends JavaPlugin{
 	
 	private void registerAPI(){
 		ShieldAPI api = new ShieldPluginManager(this);
-		sm.register(ShieldAPI.class, api, this, ServicePriority.Normal);
+		Bukkit.getServicesManager().register(ShieldAPI.class, api, this, ServicePriority.Normal);
 	}
 	
 	private void loadPlugins(){
