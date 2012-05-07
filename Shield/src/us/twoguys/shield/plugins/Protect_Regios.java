@@ -10,7 +10,10 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.RegisteredServiceProvider;
 
+import couk.Adamki11s.Regios.API.RegiosAPI;
+import couk.Adamki11s.Regios.Checks.Checks;
 import couk.Adamki11s.Regios.Main.Regios;
 
 import us.twoguys.shield.*;
@@ -23,6 +26,8 @@ public class Protect_Regios implements Listener, Protect {
 	private final String pack = "couk.Adamki11s.Regios.Main.Regios";
 	private static int instanceCount = 0;
 	private static Regios protect = null;
+	private static Checks checks = null;
+	private static RegiosAPI api = null;
 	
 	public Protect_Regios(Shield instance){
 		this.shield = instance;
@@ -37,7 +42,8 @@ public class Protect_Regios implements Listener, Protect {
 	            
 				if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
 					protect = (Regios) p;
-					//shield.pm.addClassToInstantiatedPluginClassesArrayList(name);
+					setupInterfaces();
+					shield.pm.addClassToInstantiatedPluginClassesArrayList(name);
 				}
 			}
 		}
@@ -53,7 +59,8 @@ public class Protect_Regios implements Listener, Protect {
 
 			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
 				protect = (Regios) p;
-				//shield.pm.addClassToInstantiatedPluginClassesArrayList(name);
+				setupInterfaces();
+				shield.pm.addClassToInstantiatedPluginClassesArrayList(name);
 				shield.log(String.format("%s hooked.", name));
 			}
 		}
@@ -69,6 +76,15 @@ public class Protect_Regios implements Listener, Protect {
 		}
 	}
 	
+	private void setupInterfaces(){
+		RegisteredServiceProvider<Checks> provider = shield.getServer().getServicesManager().getRegistration(Checks.class);
+        if (provider != null) {
+            checks = provider.getProvider();
+        }
+        
+        api = new RegiosAPI();
+	}
+	
 	public boolean isEnabled(){
 		return (protect == null ? false : true);
 	}
@@ -78,8 +94,12 @@ public class Protect_Regios implements Listener, Protect {
 	}
 
 	public boolean isInRegion(Entity entity) {
-		// TODO Auto-generated method stub
-		return false;
+		//Regios currently can only check for Players, defaults false for other entity types
+		if (entity instanceof Player){
+			return (api.isInRegion((Player)entity) ? true : false);
+		}else{
+			return false;
+		}
 	}
 
 	public boolean isInRegion(Location loc) {
@@ -88,32 +108,40 @@ public class Protect_Regios implements Listener, Protect {
 	}
 
 	public boolean canBuild(Player player) {
-		// TODO Auto-generated method stub
-		return false;
+		if (api == null){
+        	shield.log("api is null");
+        }
+        
+        if (checks == null){
+        	shield.log("checks is null");
+        }
+        
+		//return (checks.canBuild(player) ? true : false);
+        return true;
 	}
 
 	public boolean canBuild(Player player, Location loc) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	public boolean canUse(Player player) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	public boolean canUse(Player player, Location loc) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	public boolean canOpen(Player player) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	public boolean canOpen(Player player, Location loc) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 }
