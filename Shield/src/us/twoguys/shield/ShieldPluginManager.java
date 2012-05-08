@@ -164,11 +164,15 @@ public class ShieldPluginManager implements ShieldAPI{
 				e.printStackTrace();
 			}
 			
+			//plugin.log(protect.getSimpleName());
+			
+			/*
 			if (protect == null){
-				//plugin.log("Class is null");
+				plugin.log("Class is null");
 			}else{
-				//plugin.log(protect.getName());
+				plugin.log(protect.getName());
 			}
+			*/
 			
 			Object obj = null;
 			try {
@@ -216,20 +220,34 @@ public class ShieldPluginManager implements ShieldAPI{
 				
 				if (method.getName().equalsIgnoreCase(methodName) && methodArgsTypes.length == argsTypes.length){
 					
+					/*
+					plugin.log("Method name and args length matches");
+					
+					plugin.log("Passed in____________");
+					for (Class<?> c: argsTypes){
+						plugin.log(c.getSimpleName());
+					}
+					
+					plugin.log("In Method____________");
+					for (Class<?> c: methodArgsTypes){
+						plugin.log(c.getSimpleName());
+					}
+					*/
+					
 					try {
 						if (methodArgsTypes.length == 0){
 							outcome = (Boolean) method.invoke(obj);
 							assigned = true;
 						}else if (methodArgsTypes.length == 1){
-							if (argsTypes[0] == methodArgsTypes[0]){
+							if (equalsOrExtends(argsTypes[0], methodArgsTypes[0])){
 								outcome = (Boolean) method.invoke(obj, args[0]);
 								assigned = true;
 							}
 						}else if (methodArgsTypes.length == 2){
-							if (argsTypes[0] == methodArgsTypes[0]){
+							if (equalsOrExtends(argsTypes[0], methodArgsTypes[0])){
 								outcome = (Boolean) method.invoke(obj, args[0], args[1]);
 								assigned = true;
-							}else if (argsTypes[0] == methodArgsTypes[1]){
+							}else if (equalsOrExtends(argsTypes[0], methodArgsTypes[1])){
 								outcome = (Boolean) method.invoke(obj, args[1], args[0]);
 								assigned = true;
 							}
@@ -239,7 +257,7 @@ public class ShieldPluginManager implements ShieldAPI{
 					}
 					
 					if (assigned == true){
-						//plugin.log("added outcome: " + outcome);
+						//plugin.log("" + outcome);
 						outcomes.add(outcome);
 					}
 				}
@@ -247,6 +265,16 @@ public class ShieldPluginManager implements ShieldAPI{
 			
 		}
 		return outcomes;
+	}
+	
+	public boolean equalsOrExtends(Class<?> c1, Class<?> c2){
+		if (c1 == c2){
+			return true;
+		}else if (c2.isAssignableFrom(c1)){
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 }
