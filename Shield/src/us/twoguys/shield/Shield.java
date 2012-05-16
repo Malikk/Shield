@@ -17,6 +17,8 @@ public class Shield extends JavaPlugin{
 	
 	private boolean foundPlugin = false;
 	
+	//Testing
+	
 	//Plugin Classes
 	public static Protect_PreciousStones preciousStones = null;
 	public static Protect_Regios regios = null;
