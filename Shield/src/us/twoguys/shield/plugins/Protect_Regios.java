@@ -98,12 +98,13 @@ public class Protect_Regios implements Listener, Protect {
 		if (entity instanceof Player){
 			return (api.isInRegion((Player)entity) ? true : false);
 		}else{
+			shield.incompat.incompatible(name, "isInRegion", "non-player entities", "always returning false");
 			return false;
 		}
 	}
 
 	public boolean isInRegion(Location loc) {
-		// TODO Auto-generated method stub
+		shield.incompat.incompatible(name, "isInRegion", "locations", "always returning false");
 		return false;
 	}
 

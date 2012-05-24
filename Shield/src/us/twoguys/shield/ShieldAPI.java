@@ -3,7 +3,7 @@ package us.twoguys.shield;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-//poop
+
 /**
  * The main API
  * 

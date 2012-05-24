@@ -28,3 +28,5 @@ Shield/bin/us/twoguys/shield/plugins/Protect_PreciousStones.class
 Shield/bin/us/twoguys/shield/plugins/Protect_Regios.class
 
 Shield/bin/us/twoguys/shield/plugins/Protect_Residence.class
+
+Shield/bin/us/twoguys/shield/IncompatibilityHandler.class

@@ -5,7 +5,6 @@ import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.ServicePriority;
-import org.bukkit.plugin.ServicesManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import us.twoguys.shield.plugins.*;
@@ -13,6 +12,7 @@ import us.twoguys.shield.plugins.*;
 public class Shield extends JavaPlugin{
 	
 	private Logger log = Logger.getLogger("Minecraft");
+	private PluginDescriptionFile pdfile = this.getDescription();	
 	public ShieldPluginManager pm = new ShieldPluginManager(this);
 	
 	private boolean foundPlugin = false;
@@ -22,6 +22,8 @@ public class Shield extends JavaPlugin{
 	public static Protect_Regios regios = null;
 	public static Protect_Residence residence = null;
 	public static Protect_WorldGuard worldGuard = null;
+	
+	public IncompatibilityHandler incompat = new IncompatibilityHandler(this);
 	
 	public void onEnable(){
 		registerAPI();
@@ -36,12 +38,14 @@ public class Shield extends JavaPlugin{
 	}
 	
 	public void log(String msg){
-		PluginDescriptionFile pdfile = this.getDescription();	
 		log.info("[" + pdfile.getName() + "] " + msg);
 	}
 	
+	public void logWarning(String msg){
+		log.warning("[" + pdfile.getName() + "] " + msg);
+	}
+	
 	public void logSevere(String msg){
-		PluginDescriptionFile pdfile = this.getDescription();	
 		log.severe("[" + pdfile.getName() + "] " + msg);
 	}
 	
