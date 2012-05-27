@@ -12,7 +12,10 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
 import com.bekvon.bukkit.residence.Residence;
+import com.bekvon.bukkit.residence.permissions.PermissionManager;
+import com.bekvon.bukkit.residence.protection.FlagPermissions;
 import com.bekvon.bukkit.residence.protection.ResidenceManager;
+import com.bekvon.bukkit.residence.protection.ResidencePermissions;
 
 import us.twoguys.shield.*;
 
@@ -41,7 +44,7 @@ public class Protect_Residence implements Listener, Protect {
 	            
 				if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
 					protect = (Residence) p;
-					//shield.pm.addClassToInstantiatedPluginClassesArrayList(name);
+					shield.pm.addClassToInstantiatedPluginClassesArrayList(name);
 				}
 			}
 		}
@@ -57,7 +60,7 @@ public class Protect_Residence implements Listener, Protect {
 
 			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
 				protect = (Residence) p;
-				//shield.pm.addClassToInstantiatedPluginClassesArrayList(name);
+				shield.pm.addClassToInstantiatedPluginClassesArrayList(name);
 				shield.log(String.format("%s hooked.", name));
 			}
 		}
@@ -90,32 +93,38 @@ public class Protect_Residence implements Listener, Protect {
 	}
 
 	public boolean canBuild(Player player) {
-		// TODO Auto-generated method stub
-		return false;
+		FlagPermissions flags = Residence.getPermsByLoc(player.getLocation());
+		
+		return flags.playerHas(player.getName(), player.getWorld().getName(), "build", true);
 	}
 
 	public boolean canBuild(Player player, Location loc) {
-		// TODO Auto-generated method stub
-		return false;
+		FlagPermissions flags = Residence.getPermsByLoc(loc);
+		
+		return flags.playerHas(player.getName(), player.getWorld().getName(), "build", true);
 	}
 
 	public boolean canUse(Player player) {
-		// TODO Auto-generated method stub
-		return false;
+		FlagPermissions flags = Residence.getPermsByLoc(player.getLocation());
+		
+		return flags.playerHas(player.getName(), player.getWorld().getName(), "use", true);
 	}
 
 	public boolean canUse(Player player, Location loc) {
-		// TODO Auto-generated method stub
-		return false;
+		FlagPermissions flags = Residence.getPermsByLoc(loc);
+		
+		return flags.playerHas(player.getName(), player.getWorld().getName(), "use", true);
 	}
 
 	public boolean canOpen(Player player) {
-		// TODO Auto-generated method stub
-		return false;
+		FlagPermissions flags = Residence.getPermsByLoc(player.getLocation());
+		
+		return flags.playerHas(player.getName(), player.getWorld().getName(), "container", true);
 	}
 
 	public boolean canOpen(Player player, Location loc) {
-		// TODO Auto-generated method stub
-		return false;
+		FlagPermissions flags = Residence.getPermsByLoc(loc);
+		
+		return flags.playerHas(player.getName(), player.getWorld().getName(), "container", true);
 	}
 }

@@ -11,8 +11,8 @@ import us.twoguys.shield.plugins.*;
 
 public class Shield extends JavaPlugin{
 	
-	private Logger log = Logger.getLogger("Minecraft");
-	private PluginDescriptionFile pdfile = this.getDescription();	
+	protected Logger log = Logger.getLogger("Minecraft");
+	PluginDescriptionFile pdfile = null;
 	public ShieldPluginManager pm = new ShieldPluginManager(this);
 	
 	private boolean foundPlugin = false;
@@ -27,6 +27,8 @@ public class Shield extends JavaPlugin{
 	
 	public void onEnable(){
 		registerAPI();
+		
+		pdfile = this.getDescription();
 		
 		loadPlugins();
 		
