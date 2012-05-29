@@ -1,5 +1,7 @@
 package us.twoguys.shield.plugins;
 
+import java.util.ArrayList;
+
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -76,6 +78,21 @@ public class Protect_PreciousStones implements Listener, Protect {
 	public String getPluginName(){
 		return name;
 	}
+	
+	public ArrayList<String> getRegions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArrayList<String> getRegions(Entity entity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArrayList<String> getRegions(Location loc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	public boolean isInRegion(Entity entity) {
 		// TODO Auto-generated method stub
@@ -116,5 +133,6 @@ public class Protect_PreciousStones implements Listener, Protect {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 }
 

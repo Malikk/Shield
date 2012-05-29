@@ -1,6 +1,11 @@
 package us.twoguys.shield.plugins;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -81,10 +86,41 @@ public class Protect_WorldGuard implements Listener, Protect {
 		return name;
 	}
 	
-	public boolean isInRegion(Entity entity) {
-		ApplicableRegionSet regionSet = getAppRegionSet((Entity)entity);
+	public ArrayList<String> getRegions(){
+		ArrayList<String> allRegions = new ArrayList<String>();
+		List<World> worlds = Bukkit.getServer().getWorlds();
 		
-		return (regionSet.size() > 0 ? true : false);
+		for (World world: worlds){
+			for (String s: protect.getRegionManager(world).getRegions().keySet()){
+				allRegions.add(s);
+			}
+		}
+		
+		return allRegions;
+	}
+	
+	public ArrayList<String> getRegions(Entity entity){
+		ArrayList<String> allRegions = new ArrayList<String>();
+		
+		for (ProtectedRegion r :getAppRegionSet(entity)){
+			allRegions.add(r.getId());
+		}
+		
+		return allRegions;
+	}
+	
+	public ArrayList<String> getRegions(Location loc){
+		ArrayList<String> allRegions = new ArrayList<String>();
+		
+		for (ProtectedRegion r :getAppRegionSet(loc)){
+			allRegions.add(r.getId());
+		}
+		
+		return allRegions;
+	}
+	
+	public boolean isInRegion(Entity entity) {
+		return (getAppRegionSet(entity).size() > 0 ? true : false);
 	}
 	
 	public String getRegionOccupiedBy(Entity entity) {
@@ -103,7 +139,7 @@ public class Protect_WorldGuard implements Listener, Protect {
 	}
 	
 	public boolean isInRegion(Location loc) {
-		return (getAppRegionSet(loc) != null ? true : false);
+		return (getAppRegionSet(loc).size() > 0 ? true : false);
 	}
 	
 	public boolean canBuild(Player player) {

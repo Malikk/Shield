@@ -1,5 +1,8 @@
 package us.twoguys.shield.plugins;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -12,10 +15,8 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
 import com.bekvon.bukkit.residence.Residence;
-import com.bekvon.bukkit.residence.permissions.PermissionManager;
 import com.bekvon.bukkit.residence.protection.FlagPermissions;
 import com.bekvon.bukkit.residence.protection.ResidenceManager;
-import com.bekvon.bukkit.residence.protection.ResidencePermissions;
 
 import us.twoguys.shield.*;
 
@@ -82,6 +83,18 @@ public class Protect_Residence implements Listener, Protect {
 	
 	public String getPluginName(){
 		return name;
+	}
+	
+	public ArrayList<String> getRegions(){
+		return new ArrayList<String>(Arrays.asList(rmanager.getResidenceList()));
+	}
+	
+	public ArrayList<String> getRegions(Entity entity){
+		return new ArrayList<String>(Arrays.asList(rmanager.getByLoc(entity.getLocation()).getName()));
+	}
+	
+	public ArrayList<String> getRegions(Location loc){
+		return new ArrayList<String>(Arrays.asList(rmanager.getByLoc(loc).getName()));
 	}
 
 	public boolean isInRegion(Entity entity) {

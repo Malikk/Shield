@@ -4,9 +4,11 @@ import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import us.twoguys.shield.flags.FlagManager;
 import us.twoguys.shield.plugins.*;
 
 public class Shield extends JavaPlugin{
@@ -14,6 +16,7 @@ public class Shield extends JavaPlugin{
 	protected Logger log = Logger.getLogger("Minecraft");
 	PluginDescriptionFile pdfile = null;
 	public ShieldPluginManager pm = new ShieldPluginManager(this);
+	public FlagManager fm = new FlagManager(this);
 	
 	private boolean foundPlugin = false;
 	
@@ -52,8 +55,14 @@ public class Shield extends JavaPlugin{
 	}
 	
 	private void registerAPI(){
-		ShieldAPI api = new ShieldPluginManager(this);
+		ShieldAPI api = new ShieldAPIManager(this);
 		Bukkit.getServicesManager().register(ShieldAPI.class, api, this, ServicePriority.Normal);
+	}
+	
+	public ShieldAPI getAPI(){
+		RegisteredServiceProvider<ShieldAPI> provider = getServer().getServicesManager().getRegistration(us.twoguys.shield.ShieldAPI.class);
+        ShieldAPI api = provider.getProvider();
+        return api;
 	}
 	
 	private void loadPlugins(){

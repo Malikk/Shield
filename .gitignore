@@ -30,3 +30,15 @@ Shield/bin/us/twoguys/shield/plugins/Protect_Regios.class
 Shield/bin/us/twoguys/shield/plugins/Protect_Residence.class
 
 Shield/bin/us/twoguys/shield/IncompatibilityHandler.class
+
+Shield/bin/us/twoguys/shield/flags/FlagManager.class
+
+Shield/bin/us/twoguys/shield/ShieldAPIManager.class
+
+Shield/bin/us/twoguys/shield/exceptions/FlagNotFoundException.class
+
+Shield/bin/us/twoguys/shield/exceptions/InvalidFlagException.class
+
+Shield/bin/us/twoguys/shield/exceptions/InvalidRegionException.class
+
+Shield/bin/us/twoguys/shield/flags/Flag.class

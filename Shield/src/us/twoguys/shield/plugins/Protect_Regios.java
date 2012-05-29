@@ -1,5 +1,7 @@
 package us.twoguys.shield.plugins;
 
+import java.util.ArrayList;
+
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -15,6 +17,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import couk.Adamki11s.Regios.API.RegiosAPI;
 import couk.Adamki11s.Regios.Checks.Checks;
 import couk.Adamki11s.Regios.Main.Regios;
+import couk.Adamki11s.Regios.Regions.Region;
 
 import us.twoguys.shield.*;
 
@@ -91,6 +94,36 @@ public class Protect_Regios implements Listener, Protect {
 	
 	public String getPluginName(){
 		return name;
+	}
+	
+	public ArrayList<String> getRegions(){
+		ArrayList<String> names = new ArrayList<String>();
+		
+		for (Region r: api.getRegions()){
+			names.add(r.getName());
+		}
+		
+		return names;
+	}
+	
+	public ArrayList<String> getRegions(Entity entity){
+		ArrayList<String> names = new ArrayList<String>();
+		
+		if (entity instanceof Player){
+			names.add(api.getRegion((Player)entity).getName());
+		}else{
+			shield.incompat.incompatible(name, "getRegions", "non-player entities", "always returning null");
+		}
+		
+		return names;
+	}
+	
+	public ArrayList<String> getRegions(Location loc){
+		ArrayList<String> names = new ArrayList<String>();
+		
+		shield.incompat.incompatible(name, "getRegions", "locations", "always returning null");
+		
+		return names;
 	}
 
 	public boolean isInRegion(Entity entity) {
