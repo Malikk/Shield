@@ -22,6 +22,10 @@ public class ShieldAPIManager implements ShieldAPI{
 	
 	@Override
 	public ArrayList<String> getRegions(){
+		for (String s :plugin.pm.getRegions()){
+			plugin.log(s);
+		}
+		
 		return plugin.pm.getRegions();
 	}
 	

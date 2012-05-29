@@ -202,10 +202,11 @@ public class ShieldPluginManager implements Protect{
 		plugins.add("Protect_" + className);
 	}
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings("unchecked")
 	public ArrayList<?> getOutcomes(String methodName, String outcomeType, Object[] args){
-		ArrayList outcomes = new ArrayList();
 		ArrayList<String> temp = (ArrayList<String>) plugins.clone();
+		ArrayList<Boolean> booleanOutcomes = new ArrayList<Boolean>();
+		ArrayList<String> stringOutcomes = new ArrayList<String>();
 		
 		plugin.log("------------" + methodName + "------------");
 		
@@ -252,10 +253,8 @@ public class ShieldPluginManager implements Protect{
 				
 				if (method.getName().equalsIgnoreCase(methodName) && methodArgsTypes.length == argsTypes.length){
 					
-					Object outcome = null;
-					
 					if (outcomeType.equalsIgnoreCase("boolean")){
-						outcome = false;
+						boolean outcome = false;
 						
 						try {
 							if (methodArgsTypes.length == 0){
@@ -281,11 +280,11 @@ public class ShieldPluginManager implements Protect{
 						
 						if (assigned == true){
 							plugin.log(protect.getSimpleName() + ": " + outcome);
-							outcomes.add(outcome);
+							booleanOutcomes.add(outcome);
 						}
 						
 					}else if (outcomeType.equalsIgnoreCase("ArrayList<String>")){
-						outcome = new ArrayList<String>();
+						ArrayList<String> outcome = new ArrayList<String>();
 						
 						try {
 							if (methodArgsTypes.length == 0){
@@ -310,16 +309,22 @@ public class ShieldPluginManager implements Protect{
 						}
 						
 						if (assigned == true){
-							for (String s: (ArrayList<String>)outcome){
+							for (String s: outcome){
 								plugin.log(protect.getSimpleName() + ": " + s);
-								outcomes.add(outcome);
+								stringOutcomes.add(s);
 							}
 						}
 					}
 				}
 			}
 		}
-		return outcomes;
+		if (outcomeType.equalsIgnoreCase("boolean")){
+			return booleanOutcomes;
+		}else if (outcomeType.equalsIgnoreCase("ArrayList<String>")){
+			return stringOutcomes;
+		}else{
+			return booleanOutcomes;
+		}
 	}
 	
 	public boolean equalsOrExtends(Class<?> c1, Class<?> c2){

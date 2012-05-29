@@ -86,15 +86,27 @@ public class Protect_Residence implements Listener, Protect {
 	}
 	
 	public ArrayList<String> getRegions(){
-		return new ArrayList<String>(Arrays.asList(rmanager.getResidenceList()));
+		try{
+			return new ArrayList<String>(Arrays.asList(rmanager.getResidenceList()));
+		}catch(Exception e){
+			return new ArrayList<String>();
+		}
 	}
 	
 	public ArrayList<String> getRegions(Entity entity){
-		return new ArrayList<String>(Arrays.asList(rmanager.getByLoc(entity.getLocation()).getName()));
+		try{
+			return new ArrayList<String>(Arrays.asList(rmanager.getByLoc(entity.getLocation()).getName()));
+		}catch(Exception e){
+			return new ArrayList<String>();
+		}
 	}
 	
 	public ArrayList<String> getRegions(Location loc){
-		return new ArrayList<String>(Arrays.asList(rmanager.getByLoc(loc).getName()));
+		try{
+			return new ArrayList<String>(Arrays.asList(rmanager.getByLoc(loc).getName()));
+		}catch(Exception e){
+			return new ArrayList<String>();
+		}
 	}
 
 	public boolean isInRegion(Entity entity) {
