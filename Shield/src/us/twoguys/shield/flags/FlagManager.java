@@ -36,14 +36,9 @@ public class FlagManager {
 		flags.add(f);
 	}
 	
-	public boolean hasFlag(Player player, String flag, String region){
-		Flag f = null;
+	public boolean hasFlag(Player player, String flag, String region) throws FlagNotFoundException{
 		
-		try {
-			f = getFlag(flag, region);
-		} catch (FlagNotFoundException e) {
-			e.printStackTrace();
-		}
+		Flag f = getFlag(flag, region);
 		
 		boolean fValue = f.getValue();
 		
@@ -60,20 +55,28 @@ public class FlagManager {
 		//Check if flag is valid
 		if (!isValidFlag(flag)){
 			
+			plugin.log("Invalid flag");
+			
 			try {
 				throw new InvalidFlagException();
 			} catch (InvalidFlagException e) {
 				e.printStackTrace();
 			}
+		}else{
+			plugin.log("flag is valid");
 		}
 		
 		//Check if Region is valid
 		if (!plugin.pm.isValidRegion(region)){
+			plugin.log("Invalid Region");
+			
 			try {
 				throw new InvalidRegionException();
 			} catch (InvalidRegionException e) {
 				e.printStackTrace();
 			}
+		}else{
+			plugin.log("region is valid");
 		}
 		
 		for (Flag f: flags){

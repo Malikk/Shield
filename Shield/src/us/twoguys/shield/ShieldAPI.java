@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
+import us.twoguys.shield.exceptions.FlagNotFoundException;
 import us.twoguys.shield.flags.Flag;
 
 /**
@@ -140,14 +141,16 @@ public interface ShieldAPI {
 	 * @param flag name
 	 * @param region name
 	 * @return true or false
+	 * @throws FlagNotFoundException 
 	 */
-	public boolean hasFlag(Player player, String flag, String region);
+	public boolean hasFlag(Player player, String flag, String region) throws FlagNotFoundException;
 	
 	/**
 	 * Gets the flag object for the name and region
 	 * @param flag name
 	 * @param region name
 	 * @return Flag
+	 * @throws FlagNotFoundException 
 	 */
-	public Flag getFlag(String flag, String region);
+	public Flag getFlag(String flag, String region) throws FlagNotFoundException;
 }

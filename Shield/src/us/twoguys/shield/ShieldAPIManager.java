@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
+import us.twoguys.shield.exceptions.FlagNotFoundException;
 import us.twoguys.shield.flags.Flag;
 
 public class ShieldAPIManager implements ShieldAPI{
@@ -99,15 +100,13 @@ public class ShieldAPIManager implements ShieldAPI{
 	}
 
 	@Override
-	public boolean hasFlag(Player player, String flag, String region) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean hasFlag(Player player, String flag, String region) throws FlagNotFoundException {
+		return plugin.fm.hasFlag(player, flag, region);
 	}
 
 	@Override
-	public Flag getFlag(String flag, String region) {
-		// TODO Auto-generated method stub
-		return null;
+	public Flag getFlag(String flag, String region) throws FlagNotFoundException {
+		return plugin.fm.getFlag(flag, region);
 	}
 
 }

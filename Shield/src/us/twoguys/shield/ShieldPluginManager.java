@@ -208,7 +208,7 @@ public class ShieldPluginManager implements Protect{
 		ArrayList<Boolean> booleanOutcomes = new ArrayList<Boolean>();
 		ArrayList<String> stringOutcomes = new ArrayList<String>();
 		
-		plugin.log("------------" + methodName + "------------");
+		//plugin.log("------------" + methodName + "------------");
 		
 		for (String className: temp){
 			Class<?> protect = null;
@@ -279,7 +279,7 @@ public class ShieldPluginManager implements Protect{
 						}
 						
 						if (assigned == true){
-							plugin.log(protect.getSimpleName() + ": " + outcome);
+							//plugin.log(protect.getSimpleName() + ": " + outcome);
 							booleanOutcomes.add(outcome);
 						}
 						
@@ -310,7 +310,7 @@ public class ShieldPluginManager implements Protect{
 						
 						if (assigned == true){
 							for (String s: outcome){
-								plugin.log(protect.getSimpleName() + ": " + s);
+								//plugin.log(protect.getSimpleName() + ": " + s);
 								stringOutcomes.add(s);
 							}
 						}
