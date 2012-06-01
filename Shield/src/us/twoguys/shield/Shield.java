@@ -8,15 +8,13 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import us.twoguys.shield.flags.FlagManager;
+import us.twoguys.shield.flags.*;
 import us.twoguys.shield.plugins.*;
 
 public class Shield extends JavaPlugin{
 	
 	protected Logger log = Logger.getLogger("Minecraft");
 	PluginDescriptionFile pdfile = null;
-	public ShieldPluginManager pm = new ShieldPluginManager(this);
-	public FlagManager fm = new FlagManager(this);
 	
 	private boolean foundPlugin = false;
 	
@@ -26,7 +24,11 @@ public class Shield extends JavaPlugin{
 	public static Protect_Residence residence = null;
 	public static Protect_WorldGuard worldGuard = null;
 	
+	//Shield Classes
 	public IncompatibilityHandler incompat = new IncompatibilityHandler(this);
+	public FlagPersister flagPersister = new FlagPersister(this);
+	public ShieldPluginManager pm = new ShieldPluginManager(this);
+	public FlagManager fm = new FlagManager(this);
 	
 	public void onEnable(){
 		registerAPI();
@@ -35,10 +37,14 @@ public class Shield extends JavaPlugin{
 		
 		loadPlugins();
 		
+		flagPersister.load();
+		
 		log("Enabled");
 	}
 	
 	public void onDisable(){
+		flagPersister.save();
+		
 		log("Disabled");
 	}
 	
@@ -72,7 +78,6 @@ public class Shield extends JavaPlugin{
 		//Attempt to load PreciousStones
 		if (packageExists("net.sacredlabyrinth.Phaed.PreciousStones.PreciousStones")){
 			preciousStones = new Protect_PreciousStones(this);
-			foundPlugin = true;
 			log(String.format("Detected PreciousStones: %s", preciousStones.isEnabled() ? "Hooked" : "Waiting"));
 		}
 		
@@ -80,21 +85,18 @@ public class Shield extends JavaPlugin{
 		if (packageExists("couk.Adamki11s.Regios.Main.Regios")){
 			regios = new Protect_Regios(this);
 			log(String.format("Detected Regios: %s", regios.isEnabled() ? "Hooked" : "Waiting"));
-			foundPlugin = true;
 		}
 		
 		//Attempt to load Residence
 		if (packageExists("com.bekvon.bukkit.residence.Residence")){
 			residence = new Protect_Residence(this);
 			log(String.format("Detected Residence: %s", residence.isEnabled() ? "Hooked" : "Waiting"));
-			foundPlugin = true;
 		}
 		
 		//Attempt to load WorldGuard
 		if (packageExists("com.sk89q.worldguard.bukkit.WorldGuardPlugin")){
 			worldGuard = new Protect_WorldGuard(this);
 			log(String.format("Detected WorldGuard: %s", worldGuard.isEnabled() ? "Hooked" : "Waiting"));
-			foundPlugin = true;
 		}
 		
 		if (foundPlugin == false){
@@ -102,11 +104,12 @@ public class Shield extends JavaPlugin{
 		}
 	}
 	
-	private static boolean packageExists(String...packages){
+	private boolean packageExists(String...packages){
 		try{
 			for (String pkg : packages){
 				Class.forName(pkg);
 			}
+			foundPlugin = true;
 			return true;
 		}catch (Exception e){
 			return false;

@@ -7,6 +7,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import us.twoguys.shield.exceptions.FlagNotFoundException;
+import us.twoguys.shield.exceptions.InvalidFlagException;
+import us.twoguys.shield.exceptions.InvalidRegionException;
 import us.twoguys.shield.flags.Flag;
 
 /**
@@ -142,8 +144,10 @@ public interface ShieldAPI {
 	 * @param region name
 	 * @return true or false
 	 * @throws FlagNotFoundException 
+	 * @throws InvalidRegionException 
+	 * @throws InvalidFlagException 
 	 */
-	public boolean hasFlag(Player player, String flag, String region) throws FlagNotFoundException;
+	public boolean hasFlag(Player player, String flag, String region) throws FlagNotFoundException, InvalidFlagException, InvalidRegionException;
 	
 	/**
 	 * Gets the flag object for the name and region
@@ -151,6 +155,8 @@ public interface ShieldAPI {
 	 * @param region name
 	 * @return Flag
 	 * @throws FlagNotFoundException 
+	 * @throws InvalidRegionException 
+	 * @throws InvalidFlagException 
 	 */
-	public Flag getFlag(String flag, String region) throws FlagNotFoundException;
+	public Flag getFlag(String flag, String region) throws FlagNotFoundException, InvalidFlagException, InvalidRegionException;
 }

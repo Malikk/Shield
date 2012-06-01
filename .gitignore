@@ -42,3 +42,5 @@ Shield/bin/us/twoguys/shield/exceptions/InvalidFlagException.class
 Shield/bin/us/twoguys/shield/exceptions/InvalidRegionException.class
 
 Shield/bin/us/twoguys/shield/flags/Flag.class
+
+Shield/bin/us/twoguys/shield/flags/FlagPersister.class

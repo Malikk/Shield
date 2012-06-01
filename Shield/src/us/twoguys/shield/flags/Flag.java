@@ -46,10 +46,10 @@ public class Flag implements Serializable{
 	}
 	
 	public void addPlayer(Player player){
-		players.add(player);
+		this.players.add(player);
 	}
 	
 	public void removePlayer(Player player){
-		players.remove(player);
+		this.players.remove(player);
 	}
 }
