@@ -37,7 +37,7 @@ public class Shield extends JavaPlugin{
 		
 		loadPlugins();
 		
-		flagPersister.load();
+		//flagPersister.load();
 		
 		log("Enabled");
 	}
