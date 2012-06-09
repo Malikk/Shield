@@ -8,4 +8,6 @@ public class Region {
 	//still interacting with regions solely through their respective plugins?
 	
 	//Region manager needs methods to get region sets and get the highest priority region (config file?). 
+	
+	//Region manager needs region create methods/etc. basic stuff
 }
