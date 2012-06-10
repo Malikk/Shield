@@ -12,10 +12,8 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.RegisteredServiceProvider;
 
 import couk.Adamki11s.Regios.API.RegiosAPI;
-import couk.Adamki11s.Regios.Checks.Checks;
 import couk.Adamki11s.Regios.Main.Regios;
 import couk.Adamki11s.Regios.Regions.Region;
 
@@ -29,7 +27,6 @@ public class Protect_Regios implements Listener, Protect {
 	private final String pack = "couk.Adamki11s.Regios.Main.Regios";
 	private static int instanceCount = 0;
 	private static Regios protect = null;
-	private static Checks checks = null;
 	private static RegiosAPI api = null;
 	
 	public Protect_Regios(Shield instance){
@@ -45,7 +42,7 @@ public class Protect_Regios implements Listener, Protect {
 	            
 				if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
 					protect = (Regios) p;
-					setupInterfaces();
+					api = new RegiosAPI();
 					shield.pm.addClassToInstantiatedPluginClassesArrayList(name);
 				}
 			}
@@ -62,7 +59,7 @@ public class Protect_Regios implements Listener, Protect {
 
 			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
 				protect = (Regios) p;
-				setupInterfaces();
+				api = new RegiosAPI();
 				shield.pm.addClassToInstantiatedPluginClassesArrayList(name);
 				shield.log(String.format("%s hooked.", name));
 			}
@@ -74,18 +71,10 @@ public class Protect_Regios implements Listener, Protect {
 		if (protect != null) {
 			if (event.getPlugin().getDescription().getName().equals(name)) {
 				protect = null;
+				api = null;
 				shield.log(String.format("%s unhooked.", name));
 			}
 		}
-	}
-	
-	private void setupInterfaces(){
-		RegisteredServiceProvider<Checks> provider = shield.getServer().getServicesManager().getRegistration(Checks.class);
-        if (provider != null) {
-            checks = provider.getProvider();
-        }
-        
-        api = new RegiosAPI();
 	}
 	
 	public boolean isEnabled(){
@@ -109,10 +98,8 @@ public class Protect_Regios implements Listener, Protect {
 	public ArrayList<String> getRegions(Entity entity){
 		ArrayList<String> names = new ArrayList<String>();
 		
-		if (entity instanceof Player){
-			names.add(api.getRegion((Player)entity).getName());
-		}else{
-			shield.incompat.incompatible(name, "getRegions", "non-player entities", "always returning null");
+		for (Region r: api.getRegions(entity.getLocation())){
+			names.add(r.getName());
 		}
 		
 		return names;
@@ -121,42 +108,27 @@ public class Protect_Regios implements Listener, Protect {
 	public ArrayList<String> getRegions(Location loc){
 		ArrayList<String> names = new ArrayList<String>();
 		
-		shield.incompat.incompatible(name, "getRegions", "locations", "always returning null");
+		for (Region r: api.getRegions(loc)){
+			names.add(r.getName());
+		}
 		
 		return names;
 	}
 
 	public boolean isInRegion(Entity entity) {
-		//Regios currently can only check for Players, defaults false for other entity types
-		if (entity instanceof Player){
-			return (api.isInRegion((Player)entity) ? true : false);
-		}else{
-			shield.incompat.incompatible(name, "isInRegion", "non-player entities", "always returning false");
-			return false;
-		}
+		return api.isInRegion(entity.getLocation());
 	}
 
 	public boolean isInRegion(Location loc) {
-		shield.incompat.incompatible(name, "isInRegion", "locations", "always returning false");
-		return false;
+		return api.isInRegion(loc);
 	}
 
 	public boolean canBuild(Player player) {
-		if (api == null){
-        	shield.log("api is null");
-        }
-        
-        if (checks == null){
-        	shield.log("checks is null");
-        }
-        
-		//return (checks.canBuild(player) ? true : false);
-        return true;
+		return api.getRegion(player).canBuild(player);
 	}
 
 	public boolean canBuild(Player player, Location loc) {
-		// TODO Auto-generated method stub
-		return true;
+		return api.getRegion(loc).canBuild(player);
 	}
 
 	public boolean canUse(Player player) {
