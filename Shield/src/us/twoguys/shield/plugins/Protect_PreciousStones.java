@@ -16,6 +16,7 @@ import org.bukkit.plugin.PluginManager;
 import net.sacredlabyrinth.Phaed.PreciousStones.PreciousStones;
 
 import us.twoguys.shield.*;
+import us.twoguys.shield.regions.ShieldRegion;
 
 public class Protect_PreciousStones implements Listener, Protect {
 	
@@ -79,17 +80,17 @@ public class Protect_PreciousStones implements Listener, Protect {
 		return name;
 	}
 	
-	public ArrayList<String> getRegions() {
+	public ArrayList<ShieldRegion> getRegions() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public ArrayList<String> getRegions(Entity entity) {
+	public ArrayList<ShieldRegion> getRegions(Entity entity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public ArrayList<String> getRegions(Location loc) {
+	public ArrayList<ShieldRegion> getRegions(Location loc) {
 		// TODO Auto-generated method stub
 		return null;
 	}

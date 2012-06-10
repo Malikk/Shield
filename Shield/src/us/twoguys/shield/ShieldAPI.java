@@ -10,6 +10,7 @@ import us.twoguys.shield.exceptions.FlagNotFoundException;
 import us.twoguys.shield.exceptions.InvalidFlagException;
 import us.twoguys.shield.exceptions.InvalidRegionException;
 import us.twoguys.shield.flags.Flag;
+import us.twoguys.shield.regions.ShieldRegion;
 
 /**
  * The main API
@@ -24,23 +25,23 @@ public interface ShieldAPI {
 	/**
 	 * @return a list of all found regions
 	 */
-	public ArrayList<String> getRegions();
+	public ArrayList<ShieldRegion> getRegions();
 	
 	/**
 	 * Gets the regions that the Entity is in
 	 * 
 	 * @param entity
-	 * @return region name, or null
+	 * @return region objects
 	 */
-	public ArrayList<String> getRegions(Entity entity);
+	public ArrayList<ShieldRegion> getRegions(Entity entity);
 	
 	/**
 	 * Gets the regions that the Location is in
 	 * 
 	 * @param entity
-	 * @return region name, or null
+	 * @return region objects
 	 */
-	public ArrayList<String> getRegions(Location loc);
+	public ArrayList<ShieldRegion> getRegions(Location loc);
 	
 	/**
 	 * Checks whether or not the player is in any regions

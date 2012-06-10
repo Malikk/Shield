@@ -1,13 +1,19 @@
 package us.twoguys.shield.regions;
 
-public class Region {
-
+public class ShieldRegion {
 	
-	//Should I loop through every instantiated plugin class and populate a set of my own region objects on startup (serialize?)? 
-	//Or should I only use my region objects to associate region names and their plugins during runtime,
-	//still interacting with regions solely through their respective plugins?
+	protected String name, protect;
 	
-	//Region manager needs methods to get region sets and get the highest priority region (config file?). 
+	public ShieldRegion (String name, String protect){
+		this.name = name;
+		this.protect = protect;
+	}
 	
-	//Region manager needs region create methods/etc. basic stuff
+	public String getName(){
+		return name;
+	}
+	
+	public String getProtectionPluginName(){
+		return protect;
+	}
 }

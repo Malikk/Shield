@@ -1,7 +1,6 @@
 package us.twoguys.shield.plugins;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -19,6 +18,7 @@ import com.bekvon.bukkit.residence.protection.FlagPermissions;
 import com.bekvon.bukkit.residence.protection.ResidenceManager;
 
 import us.twoguys.shield.*;
+import us.twoguys.shield.regions.ShieldRegion;
 
 public class Protect_Residence implements Listener, Protect {
 	
@@ -85,27 +85,32 @@ public class Protect_Residence implements Listener, Protect {
 		return name;
 	}
 	
-	public ArrayList<String> getRegions(){
-		try{
-			return new ArrayList<String>(Arrays.asList(rmanager.getResidenceList()));
-		}catch(Exception e){
-			return new ArrayList<String>();
-		}
+	public ArrayList<ShieldRegion> getRegions(){
+		return getShieldRegions(rmanager.getResidenceList());
 	}
 	
-	public ArrayList<String> getRegions(Entity entity){
-		try{
-			return new ArrayList<String>(Arrays.asList(rmanager.getByLoc(entity.getLocation()).getName()));
-		}catch(Exception e){
-			return new ArrayList<String>();
-		}
+	public ArrayList<ShieldRegion> getRegions(Entity entity){
+		String [] s = {rmanager.getByLoc(entity.getLocation()).getName()};
+		return getShieldRegions(s);
 	}
 	
-	public ArrayList<String> getRegions(Location loc){
+	public ArrayList<ShieldRegion> getRegions(Location loc){
+		String [] s = {rmanager.getByLoc(loc).getName()};
+		return getShieldRegions(s);
+	}
+	
+	public ArrayList<ShieldRegion> getShieldRegions(String[] names){
+		ArrayList<ShieldRegion> regions = new ArrayList<ShieldRegion>();
+		
 		try{
-			return new ArrayList<String>(Arrays.asList(rmanager.getByLoc(loc).getName()));
+			for (String r: names){
+				regions.add(shield.rm.createRegionObject(r, name));
+			}
+			
+			return regions;
+			
 		}catch(Exception e){
-			return new ArrayList<String>();
+			return regions;
 		}
 	}
 

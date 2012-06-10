@@ -23,6 +23,7 @@ import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
 import us.twoguys.shield.*;
+import us.twoguys.shield.regions.ShieldRegion;
 
 public class Protect_WorldGuard implements Listener, Protect {
 	
@@ -86,37 +87,35 @@ public class Protect_WorldGuard implements Listener, Protect {
 		return name;
 	}
 	
-	public ArrayList<String> getRegions(){
-		ArrayList<String> allRegions = new ArrayList<String>();
+	public ArrayList<ShieldRegion> getRegions(){
+		ArrayList<ShieldRegion> regions = new ArrayList<ShieldRegion>();
 		List<World> worlds = Bukkit.getServer().getWorlds();
 		
 		for (World world: worlds){
 			for (String s: protect.getRegionManager(world).getRegions().keySet()){
-				allRegions.add(s);
+				regions.add(shield.rm.createRegionObject(s, name));
 			}
 		}
 		
-		return allRegions;
+		return regions;
 	}
 	
-	public ArrayList<String> getRegions(Entity entity){
-		ArrayList<String> allRegions = new ArrayList<String>();
-		
-		for (ProtectedRegion r :getAppRegionSet(entity)){
-			allRegions.add(r.getId());
-		}
-		
-		return allRegions;
+	public ArrayList<ShieldRegion> getRegions(Entity entity){
+		return getShieldRegions(getAppRegionSet(entity));
 	}
 	
-	public ArrayList<String> getRegions(Location loc){
-		ArrayList<String> allRegions = new ArrayList<String>();
+	public ArrayList<ShieldRegion> getRegions(Location loc){
+		return getShieldRegions(getAppRegionSet(loc));
+	}
+	
+	public ArrayList<ShieldRegion> getShieldRegions(ApplicableRegionSet app){
+		ArrayList<ShieldRegion> regions = new ArrayList<ShieldRegion>();
 		
-		for (ProtectedRegion r :getAppRegionSet(loc)){
-			allRegions.add(r.getId());
+		for (ProtectedRegion region: app){
+			regions.add(shield.rm.createRegionObject(region.getId(), name));
 		}
 		
-		return allRegions;
+		return regions;
 	}
 	
 	public boolean isInRegion(Entity entity) {

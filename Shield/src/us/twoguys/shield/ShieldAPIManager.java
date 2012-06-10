@@ -10,6 +10,7 @@ import us.twoguys.shield.exceptions.FlagNotFoundException;
 import us.twoguys.shield.exceptions.InvalidFlagException;
 import us.twoguys.shield.exceptions.InvalidRegionException;
 import us.twoguys.shield.flags.Flag;
+import us.twoguys.shield.regions.ShieldRegion;
 
 public class ShieldAPIManager implements ShieldAPI{
 	
@@ -24,21 +25,17 @@ public class ShieldAPIManager implements ShieldAPI{
 	 */
 	
 	@Override
-	public ArrayList<String> getRegions(){
-		for (String s :plugin.pm.getRegions()){
-			plugin.log(s);
-		}
-		
+	public ArrayList<ShieldRegion> getRegions(){
 		return plugin.pm.getRegions();
 	}
 	
 	@Override
-	public ArrayList<String> getRegions(Entity entity) {
+	public ArrayList<ShieldRegion> getRegions(Entity entity) {
 		return plugin.pm.getRegions(entity);
 	}
 
 	@Override
-	public ArrayList<String> getRegions(Location loc) {
+	public ArrayList<ShieldRegion> getRegions(Location loc) {
 		return plugin.pm.getRegions(loc);
 	}
 

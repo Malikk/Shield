@@ -6,6 +6,8 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
+import us.twoguys.shield.regions.ShieldRegion;
+
 public interface Protect {
 	
 	//List of methods that every protect class MUST have. Does NOT extend the actual Api.
@@ -14,11 +16,11 @@ public interface Protect {
 	
 	public String getPluginName();
 	
-	public ArrayList<String> getRegions();
+	public ArrayList<ShieldRegion> getRegions();
 	
-	public ArrayList<String> getRegions(Entity entity);
+	public ArrayList<ShieldRegion> getRegions(Entity entity);
 	
-	public ArrayList<String> getRegions(Location loc);
+	public ArrayList<ShieldRegion> getRegions(Location loc);
 	
 	public boolean isInRegion(Entity entity);
 	

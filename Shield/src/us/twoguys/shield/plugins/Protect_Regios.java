@@ -18,6 +18,7 @@ import couk.Adamki11s.Regios.Main.Regios;
 import couk.Adamki11s.Regios.Regions.Region;
 
 import us.twoguys.shield.*;
+import us.twoguys.shield.regions.ShieldRegion;
 
 public class Protect_Regios implements Listener, Protect {
 	
@@ -85,34 +86,34 @@ public class Protect_Regios implements Listener, Protect {
 		return name;
 	}
 	
-	public ArrayList<String> getRegions(){
-		ArrayList<String> names = new ArrayList<String>();
+	public ArrayList<ShieldRegion> getRegions(){
+		ArrayList<ShieldRegion> regions = new ArrayList<ShieldRegion>();
 		
 		for (Region r: api.getRegions()){
-			names.add(r.getName());
+			regions.add(shield.rm.createRegionObject(r.getName(), name));
 		}
 		
-		return names;
+		return regions;
 	}
 	
-	public ArrayList<String> getRegions(Entity entity){
-		ArrayList<String> names = new ArrayList<String>();
+	public ArrayList<ShieldRegion> getRegions(Entity entity){
+		ArrayList<ShieldRegion> regions = new ArrayList<ShieldRegion>();
 		
 		for (Region r: api.getRegions(entity.getLocation())){
-			names.add(r.getName());
+			regions.add(shield.rm.createRegionObject(r.getName(), name));
 		}
 		
-		return names;
+		return regions;
 	}
 	
-	public ArrayList<String> getRegions(Location loc){
-		ArrayList<String> names = new ArrayList<String>();
+	public ArrayList<ShieldRegion> getRegions(Location loc){
+		ArrayList<ShieldRegion> regions = new ArrayList<ShieldRegion>();
 		
 		for (Region r: api.getRegions(loc)){
-			names.add(r.getName());
+			regions.add(shield.rm.createRegionObject(r.getName(), name));
 		}
 		
-		return names;
+		return regions;
 	}
 
 	public boolean isInRegion(Entity entity) {
@@ -124,30 +125,26 @@ public class Protect_Regios implements Listener, Protect {
 	}
 
 	public boolean canBuild(Player player) {
-		return api.getRegion(player).canBuild(player);
+		return api.getRegion(player).canBypassProtection(player);
 	}
 
 	public boolean canBuild(Player player, Location loc) {
-		return api.getRegion(loc).canBuild(player);
+		return api.getRegion(loc).canBypassProtection(player);
 	}
 
 	public boolean canUse(Player player) {
-		// TODO Auto-generated method stub
-		return true;
+		return api.getRegion(player).canBypassProtection(player);
 	}
 
 	public boolean canUse(Player player, Location loc) {
-		// TODO Auto-generated method stub
-		return true;
+		return api.getRegion(loc).canBypassProtection(player);
 	}
 
 	public boolean canOpen(Player player) {
-		// TODO Auto-generated method stub
-		return true;
+		return api.getRegion(player).canBypassProtection(player);
 	}
 
 	public boolean canOpen(Player player, Location loc) {
-		// TODO Auto-generated method stub
-		return true;
+		return api.getRegion(loc).canBypassProtection(player);
 	}
 }

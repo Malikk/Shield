@@ -48,3 +48,7 @@ Shield/bin/us/twoguys/shield/flags/FlagPersister.class
 Shield/bin/us/twoguys/shield/regions/Region.class
 
 Shield/bin/us/twoguys/shield/regions/RegionManager.class
+
+Shield/bin/us/twoguys/shield/ShieldConfig.class
+
+Shield/bin/us/twoguys/shield/regions/ShieldRegion.class

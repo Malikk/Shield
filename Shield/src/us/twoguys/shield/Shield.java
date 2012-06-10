@@ -10,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import us.twoguys.shield.flags.*;
 import us.twoguys.shield.plugins.*;
+import us.twoguys.shield.regions.RegionManager;
 
 public class Shield extends JavaPlugin{
 	
@@ -27,8 +28,10 @@ public class Shield extends JavaPlugin{
 	//Shield Classes
 	public IncompatibilityHandler incompat = new IncompatibilityHandler(this);
 	public FlagPersister flagPersister = new FlagPersister(this);
+	public ShieldConfig config = new ShieldConfig(this);
 	public ShieldPluginManager pm = new ShieldPluginManager(this);
 	public FlagManager fm = new FlagManager(this);
+	public RegionManager rm = new RegionManager(this);
 	
 	public void onEnable(){
 		registerAPI();
@@ -36,6 +39,8 @@ public class Shield extends JavaPlugin{
 		pdfile = this.getDescription();
 		
 		loadPlugins();
+		
+		config.loadConfig();
 		
 		//flagPersister.load();
 		
