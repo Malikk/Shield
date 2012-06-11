@@ -2,7 +2,9 @@ package us.twoguys.shield.plugins;
 
 import java.util.ArrayList;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -86,25 +88,36 @@ public class Protect_Residence implements Listener, Protect {
 	}
 	
 	public ArrayList<ShieldRegion> getRegions(){
-		return getShieldRegions(rmanager.getResidenceList());
+		ArrayList<ShieldRegion> regions = new ArrayList<ShieldRegion>();
+		
+		try{
+			for (String r: rmanager.getResidenceList()){
+				regions.add(shield.rm.createRegionObject(r, name, Bukkit.getWorld(rmanager.getByName(r).getWorld())));
+			}
+			
+			return regions;
+			
+		}catch(Exception e){
+			return regions;
+		}
 	}
 	
 	public ArrayList<ShieldRegion> getRegions(Entity entity){
 		String [] s = {rmanager.getByLoc(entity.getLocation()).getName()};
-		return getShieldRegions(s);
+		return getShieldRegions(s, entity.getWorld());
 	}
 	
 	public ArrayList<ShieldRegion> getRegions(Location loc){
 		String [] s = {rmanager.getByLoc(loc).getName()};
-		return getShieldRegions(s);
+		return getShieldRegions(s, loc.getWorld());
 	}
 	
-	public ArrayList<ShieldRegion> getShieldRegions(String[] names){
+	public ArrayList<ShieldRegion> getShieldRegions(String[] names, World world){
 		ArrayList<ShieldRegion> regions = new ArrayList<ShieldRegion>();
 		
 		try{
 			for (String r: names){
-				regions.add(shield.rm.createRegionObject(r, name));
+				regions.add(shield.rm.createRegionObject(r, name, world));
 			}
 			
 			return regions;

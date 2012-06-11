@@ -25,6 +25,11 @@ public class ShieldAPIManager implements ShieldAPI{
 	 */
 	
 	@Override
+	public ShieldRegion getHighestPriority(ArrayList<ShieldRegion> regions){
+		return plugin.config.getHighestPriority(regions);
+	}
+	
+	@Override
 	public ArrayList<ShieldRegion> getRegions(){
 		return plugin.pm.getRegions();
 	}

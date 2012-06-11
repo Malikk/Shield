@@ -1,6 +1,9 @@
 package us.twoguys.shield.plugins;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -20,6 +23,7 @@ import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
+import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
 import us.twoguys.shield.*;
@@ -87,13 +91,37 @@ public class Protect_WorldGuard implements Listener, Protect {
 		return name;
 	}
 	
+	public ShieldRegion getHighestPriority(ArrayList<ShieldRegion> regions){
+		
+		HashMap<ShieldRegion, Integer> priorities = new HashMap<ShieldRegion, Integer>();
+		
+		for (ShieldRegion r: regions){
+			RegionManager rm = protect.getRegionManager(r.getWorld());
+			
+			ProtectedRegion region = rm.getRegion(r.getName());
+			
+			priorities.put(r, region.getPriority());
+		}
+		
+		Collection<Integer> values = priorities.values();
+		int highest = Collections.max(values);
+		
+		for (ShieldRegion r: regions){
+			if (priorities.get(r) == highest){
+				return r;
+			}
+		}
+		
+		return null;
+	}
+	
 	public ArrayList<ShieldRegion> getRegions(){
 		ArrayList<ShieldRegion> regions = new ArrayList<ShieldRegion>();
 		List<World> worlds = Bukkit.getServer().getWorlds();
 		
 		for (World world: worlds){
 			for (String s: protect.getRegionManager(world).getRegions().keySet()){
-				regions.add(shield.rm.createRegionObject(s, name));
+				regions.add(shield.rm.createRegionObject(s, name, world));
 			}
 		}
 		
@@ -101,18 +129,18 @@ public class Protect_WorldGuard implements Listener, Protect {
 	}
 	
 	public ArrayList<ShieldRegion> getRegions(Entity entity){
-		return getShieldRegions(getAppRegionSet(entity));
+		return getShieldRegions(getAppRegionSet(entity), entity.getWorld());
 	}
 	
 	public ArrayList<ShieldRegion> getRegions(Location loc){
-		return getShieldRegions(getAppRegionSet(loc));
+		return getShieldRegions(getAppRegionSet(loc), loc.getWorld());
 	}
 	
-	public ArrayList<ShieldRegion> getShieldRegions(ApplicableRegionSet app){
+	public ArrayList<ShieldRegion> getShieldRegions(ApplicableRegionSet app, World world){
 		ArrayList<ShieldRegion> regions = new ArrayList<ShieldRegion>();
 		
 		for (ProtectedRegion region: app){
-			regions.add(shield.rm.createRegionObject(region.getId(), name));
+			regions.add(shield.rm.createRegionObject(region.getId(), name, world));
 		}
 		
 		return regions;

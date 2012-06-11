@@ -90,7 +90,7 @@ public class Protect_Regios implements Listener, Protect {
 		ArrayList<ShieldRegion> regions = new ArrayList<ShieldRegion>();
 		
 		for (Region r: api.getRegions()){
-			regions.add(shield.rm.createRegionObject(r.getName(), name));
+			regions.add(shield.rm.createRegionObject(r.getName(), name, r.getWorld()));
 		}
 		
 		return regions;
@@ -100,7 +100,7 @@ public class Protect_Regios implements Listener, Protect {
 		ArrayList<ShieldRegion> regions = new ArrayList<ShieldRegion>();
 		
 		for (Region r: api.getRegions(entity.getLocation())){
-			regions.add(shield.rm.createRegionObject(r.getName(), name));
+			regions.add(shield.rm.createRegionObject(r.getName(), name, r.getWorld()));
 		}
 		
 		return regions;
@@ -110,7 +110,7 @@ public class Protect_Regios implements Listener, Protect {
 		ArrayList<ShieldRegion> regions = new ArrayList<ShieldRegion>();
 		
 		for (Region r: api.getRegions(loc)){
-			regions.add(shield.rm.createRegionObject(r.getName(), name));
+			regions.add(shield.rm.createRegionObject(r.getName(), name, r.getWorld()));
 		}
 		
 		return regions;

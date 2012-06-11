@@ -33,8 +33,26 @@ public class ShieldConfig {
 		
 		while (config.get("Priority." + counter) != null){
 			for (ShieldRegion region: regions){
-				if (region.getProtectionPluginName() == config.getString("Priority." + counter)){
-					return region;
+				
+				String name = region.getPluginName();
+				
+				if (name.equalsIgnoreCase(config.getString("Priority." + counter))){
+					
+					if (name.equalsIgnoreCase("WorldGuard")){
+						
+						ArrayList<ShieldRegion> worldGuardRegions = new ArrayList<ShieldRegion>();
+						
+						for (ShieldRegion region2: regions){
+							
+							if (name.equalsIgnoreCase("WorldGuard")){
+								worldGuardRegions.add(region2);
+							}
+						}
+						
+						return plugin.worldGuard.getHighestPriority(worldGuardRegions);
+					}else{
+						return region;
+					}
 				}
 			}
 			

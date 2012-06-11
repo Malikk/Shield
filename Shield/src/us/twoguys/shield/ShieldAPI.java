@@ -23,6 +23,16 @@ public interface ShieldAPI {
 	 */
 	
 	/**
+	 * Gets the region with the highest priority, according to the plugin otder in the config file.
+	 * 
+	 * @param regions
+	 * @return highest priority ShieldRegion
+	 */
+	public ShieldRegion getHighestPriority(ArrayList<ShieldRegion> regions);
+	
+	/**
+	 * Gets all regions from all plugins
+	 * 
 	 * @return a list of all found regions
 	 */
 	public ArrayList<ShieldRegion> getRegions();
