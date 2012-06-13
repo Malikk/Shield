@@ -115,7 +115,12 @@ public class ShieldAPIManager implements ShieldAPI{
 
 	@Override
 	public boolean getFlagValue(Player player, String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException, InvalidRegionException {
-		return plugin.fm.hasFlag(player, flag, region);
+		return plugin.fm.getFlagAndValue(player, flag, region);
+	}
+	
+	@Override
+	public boolean getFlagValue(Player player, Flag flag){
+		return plugin.fm.getValue(player, flag);
 	}
 
 	@Override

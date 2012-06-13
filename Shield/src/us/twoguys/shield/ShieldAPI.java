@@ -177,10 +177,20 @@ public interface ShieldAPI {
 	public boolean getFlagValue(Player player, String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException, InvalidRegionException;
 	
 	/**
+	 * Checks the value of a flag for a specific Player.
+	 * <p>
+	 * If the flag's Player list contains the player passed in, then this will return the flag's value. If not, it will return the opposite of the flags value.
+	 * @param player - player
+	 * @param flag - {@link Flag} object
+	 * @return Boolean
+	 */
+	public boolean getFlagValue(Player player, Flag flag);
+	
+	/**
 	 * Gets the flag object for the name and region
 	 * @param flag - flag name, String
 	 * @param region - {@link ShieldRegion}
-	 * @return Flag
+	 * @return {@link Flag}
 	 * @throws FlagNotFoundException 
 	 * @throws InvalidRegionException 
 	 * @throws InvalidFlagException 

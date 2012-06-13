@@ -44,10 +44,14 @@ public class FlagManager {
 		flags.add(f);
 	}
 	
-	public boolean hasFlag(Player player, String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException, InvalidRegionException{
+	public boolean getFlagAndValue(Player player, String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException, InvalidRegionException{
 		
 		Flag f = getFlag(flag, region);
 		
+		return getValue(player, f);
+	}
+	
+	public boolean getValue(Player player, Flag f){
 		boolean fValue = f.getValue();
 		
 		if (f.getPlayers().contains(player)){
@@ -55,7 +59,6 @@ public class FlagManager {
 		}else{
 			return !fValue;
 		}
-		
 	}
 	
 	public Flag getFlag(String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException, InvalidRegionException{
