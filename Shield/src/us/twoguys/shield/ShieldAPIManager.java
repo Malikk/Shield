@@ -25,8 +25,18 @@ public class ShieldAPIManager implements ShieldAPI{
 	 */
 	
 	@Override
-	public ShieldRegion getHighestPriority(ArrayList<ShieldRegion> regions){
+	public ShieldRegion getPriorityRegion(ArrayList<ShieldRegion> regions){
 		return plugin.config.getHighestPriority(regions);
+	}
+	
+	@Override
+	public ShieldRegion getPriorityRegion(Entity entity){
+		return plugin.config.getHighestPriority(getRegions(entity));
+	}
+	
+	@Override
+	public ShieldRegion getPriorityRegion(Location loc){
+		return plugin.config.getHighestPriority(getRegions(loc));
 	}
 	
 	@Override
@@ -99,17 +109,17 @@ public class ShieldAPIManager implements ShieldAPI{
 	}
 
 	@Override
-	public void createFlag(String flag, String region, ArrayList<Player> players, boolean value) {
+	public void setFlag(String flag, ShieldRegion region, ArrayList<Player> players, boolean value) {
 		plugin.fm.createFlag(flag, region, players, value);
 	}
 
 	@Override
-	public boolean hasFlag(Player player, String flag, String region) throws FlagNotFoundException, InvalidFlagException, InvalidRegionException {
+	public boolean getFlagValue(Player player, String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException, InvalidRegionException {
 		return plugin.fm.hasFlag(player, flag, region);
 	}
 
 	@Override
-	public Flag getFlag(String flag, String region) throws FlagNotFoundException, InvalidFlagException, InvalidRegionException {
+	public Flag getFlag(String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException, InvalidRegionException {
 		return plugin.fm.getFlag(flag, region);
 	}
 

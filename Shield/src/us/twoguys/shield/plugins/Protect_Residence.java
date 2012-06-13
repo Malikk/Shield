@@ -103,13 +103,21 @@ public class Protect_Residence implements Listener, Protect {
 	}
 	
 	public ArrayList<ShieldRegion> getRegions(Entity entity){
-		String [] s = {rmanager.getByLoc(entity.getLocation()).getName()};
-		return getShieldRegions(s, entity.getWorld());
+		try{
+			String [] s = {rmanager.getByLoc(entity.getLocation()).getName()};
+			return getShieldRegions(s, entity.getWorld());
+		}catch(Exception e){
+			return new ArrayList<ShieldRegion>();
+		}
 	}
 	
 	public ArrayList<ShieldRegion> getRegions(Location loc){
-		String [] s = {rmanager.getByLoc(loc).getName()};
-		return getShieldRegions(s, loc.getWorld());
+		try{
+			String [] s = {rmanager.getByLoc(loc).getName()};
+			return getShieldRegions(s, loc.getWorld());
+		}catch(Exception e){
+			return new ArrayList<ShieldRegion>();
+		}
 	}
 	
 	public ArrayList<ShieldRegion> getShieldRegions(String[] names, World world){

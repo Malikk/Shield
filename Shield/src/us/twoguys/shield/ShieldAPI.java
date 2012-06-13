@@ -13,7 +13,7 @@ import us.twoguys.shield.flags.Flag;
 import us.twoguys.shield.regions.ShieldRegion;
 
 /**
- * The main API
+ * This is the interface for the main Shield API. It can be used to get all of Shield's Methods, aside from the methods within the {@link Flag} and {@link ShieldRegion} objects.
  * 
  */
 public interface ShieldAPI {
@@ -23,17 +23,31 @@ public interface ShieldAPI {
 	 */
 	
 	/**
-	 * Gets the region with the highest priority, according to the plugin otder in the config file.
+	 * Gets the region with the highest priority, according to the plugin order in the config file.
 	 * 
-	 * @param regions
-	 * @return highest priority ShieldRegion
+	 * @param regions - ArrayList of regions
+	 * @return {@link ShieldRegion} - The highest priority ShieldRegion
 	 */
-	public ShieldRegion getHighestPriority(ArrayList<ShieldRegion> regions);
+	public ShieldRegion getPriorityRegion(ArrayList<ShieldRegion> regions);
+	
+	/**
+	 * Gets the highest priority region at the location of the specific entity. 
+	 * @param entity 
+	 * @return {@link ShieldRegion} - The highest priority ShieldRegion
+	 */
+	public ShieldRegion getPriorityRegion(Entity entity);
+	
+	/**
+	 * Gets the highest priority region at the specific location.
+	 * @param location
+	 * @return {@link ShieldRegion} - The highest priority ShieldRegion
+	 */
+	public ShieldRegion getPriorityRegion(Location location);
 	
 	/**
 	 * Gets all regions from all plugins
 	 * 
-	 * @return a list of all found regions
+	 * @return ArrayList<{@link ShieldRegion}>
 	 */
 	public ArrayList<ShieldRegion> getRegions();
 	
@@ -41,31 +55,31 @@ public interface ShieldAPI {
 	 * Gets the regions that the Entity is in
 	 * 
 	 * @param entity
-	 * @return region objects
+	 * @return {@link ShieldRegion}
 	 */
 	public ArrayList<ShieldRegion> getRegions(Entity entity);
 	
 	/**
 	 * Gets the regions that the Location is in
 	 * 
-	 * @param entity
-	 * @return region objects
+	 * @param location
+	 * @return {@link ShieldRegion}
 	 */
-	public ArrayList<ShieldRegion> getRegions(Location loc);
+	public ArrayList<ShieldRegion> getRegions(Location location);
 	
 	/**
-	 * Checks whether or not the player is in any regions
-	 * @param player
-	 * @return true or false
+	 * Checks whether or not the entity is in any regions
+	 * @param entity
+	 * @return Boolean
 	 */
 	public boolean isInRegion(Entity entity);
 	
 	/**
 	 * Checks if the location is in any region
-	 * @param loc
-	 * @return true or false
+	 * @param location
+	 * @return Boolean
 	 */
-	public boolean isInRegion(Location loc);
+	public boolean isInRegion(Location location);
 	
 	/**
 	 * Checks whether or not the player owns the region they are in
@@ -77,47 +91,47 @@ public interface ShieldAPI {
 	/**
 	 * Checks if the player can build where they are standing
 	 * @param player
-	 * @return true or false
+	 * @return Boolean
 	 */
 	public boolean canBuild(Player player);
 	
 	/**
 	 * Checks if the player can build at the specified location
 	 * @param player
-	 * @param loc
-	 * @return true or false
+	 * @param location
+	 * @return Boolean
 	 */
-	public boolean canBuild(Player player, Location loc);
+	public boolean canBuild(Player player, Location location);
 	
 	/**
 	 * Checks if the player can use doors, buttons, levers, etc at their current location
 	 * @param player
-	 * @return true or false
+	 * @return Boolean
 	 */
 	public boolean canUse(Player player);
 	
 	/**
 	 * Checks if the player can use doors, buttons, levers, etc at the specified location
 	 * @param player
-	 * @param loc
-	 * @return true or false
+	 * @param location
+	 * @return Boolean
 	 */
-	public boolean canUse(Player player, Location loc);
+	public boolean canUse(Player player, Location location);
 	
 	/**
 	 * Checks if the player can open chests, furnaces, and dispensers at their current location
 	 * @param player
-	 * @return true or false
+	 * @return Boolean
 	 */
 	public boolean canOpen(Player player);
 	
 	/**
 	 * Checks if the player can open chests, furnaces, and dispensers at the specified location
 	 * @param player
-	 * @param loc
-	 * @return true or false
+	 * @param location
+	 * @return Boolean
 	 */
-	public boolean canOpen(Player player, Location loc);
+	public boolean canOpen(Player player, Location location);
 	
 	/*
 	 * Custom Flag Methods
@@ -126,48 +140,50 @@ public interface ShieldAPI {
 	/**
 	 * Adds a flag to the valid flag list
 	 * 
-	 * @param flag name
+	 * @param flag - flag name, String
 	 */
 	public void addValidFlag(String flag);
 	
 	/**
 	 * Checks if a flag is in the valid flag list
 	 * 
-	 * @param flag name
-	 * @return true or false
+	 * @param flag - flag name, String
+	 * @return Boolean
 	 */
 	public boolean isValidFlag(String flag);
 	
 	/**
-	 * Creates a Custom flag
+	 * Sets a Custom flag
 	 * 
-	 * @param flag name
-	 * @param region name
-	 * @param players that the value is applied to (can be null)
-	 * @param value that is applied
+	 * @param flag - flag name, String
+	 * @param region - {@link ShieldRegion}
+	 * @param players  - ArrayList<{@linkplain Player}> that the value is applied to (can be null)
+	 * @param value - Boolean value that is applied
 	 */
-	public void createFlag(String flag, String region, ArrayList<Player> players, boolean value);
+	public void setFlag(String flag, ShieldRegion region, ArrayList<Player> players, boolean value);
 	
 	/**
-	 * Checks the value of a flag for a specific Player
-	 * @param player
-	 * @param flag name
-	 * @param region name
-	 * @return true or false
+	 * Checks the value of a flag for a specific Player.
+	 * <p>
+	 * If the flag's Player list contains the player passed in, then this will return the flag's value. If not, it will return the opposite of the flags value.
+	 * @param player - player
+	 * @param flag - flag name, String
+	 * @param region - {@link ShieldRegion}
+	 * @return Boolean
 	 * @throws FlagNotFoundException 
 	 * @throws InvalidRegionException 
 	 * @throws InvalidFlagException 
 	 */
-	public boolean hasFlag(Player player, String flag, String region) throws FlagNotFoundException, InvalidFlagException, InvalidRegionException;
+	public boolean getFlagValue(Player player, String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException, InvalidRegionException;
 	
 	/**
 	 * Gets the flag object for the name and region
-	 * @param flag name
-	 * @param region name
+	 * @param flag - flag name, String
+	 * @param region - {@link ShieldRegion}
 	 * @return Flag
 	 * @throws FlagNotFoundException 
 	 * @throws InvalidRegionException 
 	 * @throws InvalidFlagException 
 	 */
-	public Flag getFlag(String flag, String region) throws FlagNotFoundException, InvalidFlagException, InvalidRegionException;
+	public Flag getFlag(String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException, InvalidRegionException;
 }

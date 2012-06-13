@@ -9,6 +9,7 @@ import us.twoguys.shield.Shield;
 import us.twoguys.shield.exceptions.FlagNotFoundException;
 import us.twoguys.shield.exceptions.InvalidFlagException;
 import us.twoguys.shield.exceptions.InvalidRegionException;
+import us.twoguys.shield.regions.ShieldRegion;
 
 public class FlagManager {
 
@@ -31,12 +32,19 @@ public class FlagManager {
 		return (validFlags.contains(flag) ? true : false);
 	}
 	
-	public void createFlag(String flag, String region, ArrayList<Player> players, boolean value){
+	public void createFlag(String flag, ShieldRegion region, ArrayList<Player> players, boolean value){
 		Flag f = new Flag(flag, region, players, value);
+		
+		for (Flag f1: flags){
+			if (f1.getName().equalsIgnoreCase(flag) && plugin.rm.regionsAreEqual(region, f1.getRegion())){
+				flags.remove(f1);
+			}
+		}
+		
 		flags.add(f);
 	}
 	
-	public boolean hasFlag(Player player, String flag, String region) throws FlagNotFoundException, InvalidFlagException, InvalidRegionException{
+	public boolean hasFlag(Player player, String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException, InvalidRegionException{
 		
 		Flag f = getFlag(flag, region);
 		
@@ -50,7 +58,7 @@ public class FlagManager {
 		
 	}
 	
-	public Flag getFlag(String flag, String region) throws FlagNotFoundException, InvalidFlagException, InvalidRegionException{
+	public Flag getFlag(String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException, InvalidRegionException{
 		
 		//Check if flag is valid
 		if (!isValidFlag(flag)){
@@ -63,7 +71,7 @@ public class FlagManager {
 		}
 		
 		for (Flag f: flags){
-			if (f.getName().equalsIgnoreCase(flag) && f.getRegion().equalsIgnoreCase(region)){
+			if (f.getName().equalsIgnoreCase(flag) && f.getRegion() == region){
 				return f;
 			}
 		}

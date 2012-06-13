@@ -18,8 +18,11 @@ public class RegionManager {
 		return new ShieldRegion(name, protect, world);
 	}
 	
-	public ShieldRegion getHighestPriority(ArrayList<ShieldRegion> regions){
-		//TODO
-		return null;
+	public boolean regionsAreEqual(ShieldRegion region1, ShieldRegion region2){
+		if (region1.getName() == region2.getName() && region1.getPluginName() == region2.getPluginName()){
+			return true;
+		}else{
+			return false;
+		}
 	}
 }

@@ -98,7 +98,9 @@ public class Protect_WorldGuard implements Listener, Protect {
 		for (ShieldRegion r: regions){
 			RegionManager rm = protect.getRegionManager(r.getWorld());
 			
-			ProtectedRegion region = rm.getRegion(r.getName());
+			shield.log(r.getName());
+			
+			ProtectedRegion region = rm.getRegionExact(r.getName());
 			
 			priorities.put(r, region.getPriority());
 		}

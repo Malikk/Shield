@@ -12,6 +12,13 @@ import us.twoguys.shield.flags.*;
 import us.twoguys.shield.plugins.*;
 import us.twoguys.shield.regions.RegionManager;
 
+/**
+ * Shield - A collection of common Bukkit protection plugin API
+ * <p>
+ * For help implementing Shield, please visit the <a href="https://github.com/Malikk/Shield">Shield Github</a>
+ * @author Malikk
+ *
+ */
 public class Shield extends JavaPlugin{
 	
 	protected Logger log = Logger.getLogger("Minecraft");
@@ -70,6 +77,10 @@ public class Shield extends JavaPlugin{
 		Bukkit.getServicesManager().register(ShieldAPI.class, api, this, ServicePriority.Normal);
 	}
 	
+	/**
+	 * Gets the Shield API Interface
+	 * @return ShieldAPI
+	 */
 	public ShieldAPI getAPI(){
 		RegisteredServiceProvider<ShieldAPI> provider = getServer().getServicesManager().getRegistration(us.twoguys.shield.ShieldAPI.class);
         ShieldAPI api = provider.getProvider();

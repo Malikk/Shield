@@ -19,10 +19,13 @@ public class ShieldPluginManager implements Protect{
 		plugin = instance;
 	}
 	
-	public boolean isValidRegion(String region){
-		ArrayList<ShieldRegion> names = getRegions();
-		
-		return (names.contains(region) ? true : false);
+	public boolean isValidRegion(ShieldRegion region1){
+		for (ShieldRegion region2: getRegions()){
+			if (plugin.rm.regionsAreEqual(region1, region2)){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	@Override
@@ -212,6 +215,9 @@ public class ShieldPluginManager implements Protect{
 		//plugin.log("------------" + methodName + "------------");
 		
 		for (String className: temp){
+			
+			//plugin.log(className);
+			
 			Class<?> protect = null;
 			try {
 				protect = Class.forName("us.twoguys.shield.plugins." + className, true, this.getClass().getClassLoader());
@@ -321,7 +327,7 @@ public class ShieldPluginManager implements Protect{
 		}
 		if (outcomeType.equalsIgnoreCase("boolean")){
 			return booleanOutcomes;
-		}else if (outcomeType.equalsIgnoreCase("ArrayList<String>")){
+		}else if (outcomeType.equalsIgnoreCase("ArrayList<Region>")){
 			return regionOutcomes;
 		}else{
 			return booleanOutcomes;
