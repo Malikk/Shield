@@ -9,6 +9,7 @@ import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import us.twoguys.shield.flags.*;
+import us.twoguys.shield.metrics.Metrics;
 import us.twoguys.shield.plugins.*;
 import us.twoguys.shield.regions.RegionManager;
 
@@ -41,15 +42,16 @@ public class Shield extends JavaPlugin{
 	public RegionManager rm = new RegionManager(this);
 	
 	public void onEnable(){
-		registerAPI();
-		
 		pdfile = this.getDescription();
 		
 		loadPlugins();
+		registerAPI();
 		
 		config.loadConfig();
 		
 		//flagPersister.load();
+		
+		startMetrics();
 		
 		log("Enabled");
 	}
@@ -129,6 +131,15 @@ public class Shield extends JavaPlugin{
 			return true;
 		}catch (Exception e){
 			return false;
+		}
+	}
+	
+	public void startMetrics(){
+		try{
+			Metrics metrics = new Metrics(this);
+			metrics.start();
+		}catch(Exception e){
+			//ignore exception
 		}
 	}
 
