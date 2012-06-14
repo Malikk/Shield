@@ -6,6 +6,9 @@ import org.bukkit.World;
  * A ShieldRegion is simply an object which contains the association between the name of a region and the plugin is comes from. The purpose is to avoid conflicts with region names across protection plugins.
  * @author Malikk
  *
+ * @see {@link #getName()}
+ * @see {@link #getPluginName()}
+ * @see {@link #getWorld()} 
  */
 public class ShieldRegion {
 	

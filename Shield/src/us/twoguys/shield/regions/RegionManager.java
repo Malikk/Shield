@@ -1,7 +1,5 @@
 package us.twoguys.shield.regions;
 
-import java.util.ArrayList;
-
 import org.bukkit.World;
 
 import us.twoguys.shield.Shield;

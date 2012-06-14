@@ -9,8 +9,15 @@ import us.twoguys.shield.regions.ShieldRegion;
 
 /**
  * A flag object allows for lists of players to be assigned boolean values in certain regions.
- * 
  * @author Malikk
+ * @see {@link #getName()}
+ * @see {@link #getRegion()}
+ * @see {@link #getPlayers()}
+ * @see {@link #getValue()}
+ * @see {@link #setPlayers(ArrayList)}
+ * @see {@link #setValue(boolean)}
+ * @see {@link #addPlayer(Player)}
+ * @see {@link #removePlayer(Player)}
  */
 public class Flag implements Serializable{
 

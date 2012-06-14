@@ -17,7 +17,7 @@ import us.twoguys.shield.regions.RegionManager;
  * <p>
  * For help implementing Shield, please visit the <a href="https://github.com/Malikk/Shield">Shield Github</a>
  * @author Malikk
- *
+ * @version v0.1, 6-13-2012
  */
 public class Shield extends JavaPlugin{
 	
