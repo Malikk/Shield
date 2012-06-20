@@ -123,7 +123,7 @@ public class Protect_WorldGuard implements Listener, Protect {
 		
 		for (World world: worlds){
 			for (String s: protect.getRegionManager(world).getRegions().keySet()){
-				regions.add(shield.rm.createRegionObject(s, name, world));
+				regions.add(shield.rm.createShieldRegion(s, name, world));
 			}
 		}
 		
@@ -142,7 +142,7 @@ public class Protect_WorldGuard implements Listener, Protect {
 		ArrayList<ShieldRegion> regions = new ArrayList<ShieldRegion>();
 		
 		for (ProtectedRegion region: app){
-			regions.add(shield.rm.createRegionObject(region.getId(), name, world));
+			regions.add(shield.rm.createShieldRegion(region.getId(), name, world));
 		}
 		
 		return regions;

@@ -19,6 +19,12 @@ public class ShieldPluginManager implements Protect{
 		plugin = instance;
 	}
 	
+	/**
+	 * Checks whether the ShieldRegion matches up to an actual region
+	 * 
+	 * @param region1
+	 * @return boolean
+	 */
 	public boolean isValidRegion(ShieldRegion region1){
 		for (ShieldRegion region2: getRegions()){
 			if (plugin.rm.regionsAreEqual(region1, region2)){

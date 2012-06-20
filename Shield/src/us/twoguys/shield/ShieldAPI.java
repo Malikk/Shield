@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import us.twoguys.shield.exceptions.FlagNotFoundException;
 import us.twoguys.shield.exceptions.InvalidFlagException;
 import us.twoguys.shield.exceptions.InvalidRegionException;
+import us.twoguys.shield.exceptions.RegionNotFoundException;
 import us.twoguys.shield.flags.Flag;
 import us.twoguys.shield.regions.ShieldRegion;
 
@@ -21,6 +22,32 @@ public interface ShieldAPI {
 	/*
 	 * Plugin Methods
 	 */
+	
+	/**
+	 * Gets the ShieldRegion by the passed in name and plugin.
+	 * 
+	 * @param name
+	 * @param pluginName
+	 * @return {@link ShieldRegion} - The highest priority ShieldRegion
+	 * @throws RegionNotFoundException 
+	 */
+	public ShieldRegion getShieldRegion(String name, String pluginName) throws RegionNotFoundException;
+	
+	/**
+	 * Gets the highest priority region
+	 * 
+	 * @return {@link ShieldRegion} - The highest priority ShieldRegion
+	 */
+	public ShieldRegion getPriorityRegion();
+	
+	/**
+	 * Gets the highest priority ShieldRegion by the passed in name
+	 * 
+	 * @param name
+	 * @return {@link ShieldRegion} - The highest priority ShieldRegion
+	 * @throws RegionNotFoundException 
+	 */
+	public ShieldRegion getPriorityRegion(String name) throws RegionNotFoundException;
 	
 	/**
 	 * Gets the region with the highest priority, according to the plugin order in the config file.
@@ -50,6 +77,15 @@ public interface ShieldAPI {
 	 * @return ArrayList<{@link ShieldRegion}>
 	 */
 	public ArrayList<ShieldRegion> getRegions();
+	
+	/**
+	 * Gets the regions by the passed in name
+	 * 
+	 * @param name
+	 * @return ArrayList<{@link ShieldRegion}>
+	 * @throws RegionNotFoundException 
+	 */
+	public ArrayList<ShieldRegion> getRegions(String name) throws RegionNotFoundException;
 	
 	/**
 	 * Gets the regions that the Entity is in

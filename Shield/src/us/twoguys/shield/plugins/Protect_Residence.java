@@ -92,7 +92,7 @@ public class Protect_Residence implements Listener, Protect {
 		
 		try{
 			for (String r: rmanager.getResidenceList()){
-				regions.add(shield.rm.createRegionObject(r, name, Bukkit.getWorld(rmanager.getByName(r).getWorld())));
+				regions.add(shield.rm.createShieldRegion(r, name, Bukkit.getWorld(rmanager.getByName(r).getWorld())));
 			}
 			
 			return regions;
@@ -125,7 +125,7 @@ public class Protect_Residence implements Listener, Protect {
 		
 		try{
 			for (String r: names){
-				regions.add(shield.rm.createRegionObject(r, name, world));
+				regions.add(shield.rm.createShieldRegion(r, name, world));
 			}
 			
 			return regions;

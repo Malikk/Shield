@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import us.twoguys.shield.exceptions.FlagNotFoundException;
 import us.twoguys.shield.exceptions.InvalidFlagException;
 import us.twoguys.shield.exceptions.InvalidRegionException;
+import us.twoguys.shield.exceptions.RegionNotFoundException;
 import us.twoguys.shield.flags.Flag;
 import us.twoguys.shield.regions.ShieldRegion;
 
@@ -24,6 +25,21 @@ public class ShieldAPIManager implements ShieldAPI{
 	 * Plugin Methods
 	 */
 	
+	@Override
+	public ShieldRegion getShieldRegion(String name, String pluginName) throws RegionNotFoundException {
+		return plugin.rm.getShieldRegion(name, pluginName);
+	}
+
+	@Override
+	public ShieldRegion getPriorityRegion() {
+		return plugin.config.getHighestPriority(getRegions());
+	}
+
+	@Override
+	public ShieldRegion getPriorityRegion(String name) throws RegionNotFoundException {
+		return plugin.config.getHighestPriority(plugin.rm.getShieldRegions(name));
+	}
+
 	@Override
 	public ShieldRegion getPriorityRegion(ArrayList<ShieldRegion> regions){
 		return plugin.config.getHighestPriority(regions);
@@ -44,6 +60,11 @@ public class ShieldAPIManager implements ShieldAPI{
 		return plugin.pm.getRegions();
 	}
 	
+	@Override
+	public ArrayList<ShieldRegion> getRegions(String name) throws RegionNotFoundException {
+		return plugin.rm.getShieldRegions(name);
+	}
+
 	@Override
 	public ArrayList<ShieldRegion> getRegions(Entity entity) {
 		return plugin.pm.getRegions(entity);

@@ -14,9 +14,11 @@ import us.twoguys.shield.plugins.*;
 import us.twoguys.shield.regions.RegionManager;
 
 /**
- * Shield - A collection of common Bukkit protection plugin API
+ * <b>Shield</b> - A collection of common Bukkit protection plugin API
  * <p>
  * For help implementing Shield, please visit the <a href="https://github.com/Malikk/Shield">Shield Github</a>
+ * <p>
+ * <img src="/Users/Jordan/git/Shield/Shield/Library/Logo.png">
  * @author Malikk
  * @version v0.1, 6-13-2012
  */

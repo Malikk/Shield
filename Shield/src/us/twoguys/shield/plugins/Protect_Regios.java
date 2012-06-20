@@ -91,7 +91,7 @@ public class Protect_Regios implements Listener, Protect {
 		
 		if (api.getRegions() != null){
 			for (Region r: api.getRegions()){
-				regions.add(shield.rm.createRegionObject(r.getName(), name, r.getWorld()));
+				regions.add(shield.rm.createShieldRegion(r.getName(), name, r.getWorld()));
 			}
 		}
 		
@@ -103,7 +103,7 @@ public class Protect_Regios implements Listener, Protect {
 		
 		if (api.getRegions(entity.getLocation()) != null){
 			for (Region r: api.getRegions(entity.getLocation())){
-				regions.add(shield.rm.createRegionObject(r.getName(), name, r.getWorld()));
+				regions.add(shield.rm.createShieldRegion(r.getName(), name, r.getWorld()));
 			}
 		}
 		
@@ -115,7 +115,7 @@ public class Protect_Regios implements Listener, Protect {
 		
 		if (api.getRegions(loc) != null){
 			for (Region r: api.getRegions(loc)){
-				regions.add(shield.rm.createRegionObject(r.getName(), name, r.getWorld()));
+				regions.add(shield.rm.createShieldRegion(r.getName(), name, r.getWorld()));
 			}
 		}
 		

@@ -60,3 +60,5 @@ Shield/bin/us/twoguys/shield/metrics/Metrics$Graph.class
 Shield/bin/us/twoguys/shield/metrics/Metrics$Plotter.class
 
 Shield/bin/us/twoguys/shield/metrics/Metrics.class
+
+Shield/bin/us/twoguys/shield/exceptions/RegionNotFoundException.class
