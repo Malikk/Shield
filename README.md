@@ -62,5 +62,5 @@ boolean inRegion = api.isInRegion(loc);
 ```
 
 ```java
-ArrayList<String> regions = api.getRegions();
+ArrayList<ShieldRegion> regions = api.getRegions();
 ```
