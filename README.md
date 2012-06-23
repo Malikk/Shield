@@ -64,3 +64,11 @@ boolean inRegion = api.isInRegion(loc);
 ```java
 ArrayList<ShieldRegion> regions = api.getRegions();
 ```
+
+```java
+ShieldRegion region = api.getPriorityRegion(location);
+```
+
+```java
+boolean canBuild = api.canBuild(player);
+```
