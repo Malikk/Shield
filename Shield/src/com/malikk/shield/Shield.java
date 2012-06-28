@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *  
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Shield.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package com.malikk.shield;
@@ -38,7 +38,7 @@ import com.malikk.shield.regions.RegionManager;
  * <p>
  * For help implementing Shield, please visit the <a href="https://github.com/Malikk/Shield">Shield Github</a>
  * <p>
- * <img src="/Users/Jordan/git/Shield/Shield/Library/Logo.png">
+ * <img src="/Users/Jordan/git/Shield/Shield/lib/Logo.png">
  * @author Malikk
  * @version v0.1, 6-13-2012
  */

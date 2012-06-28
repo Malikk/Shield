@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *  
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Shield.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package com.malikk.shield;
@@ -31,7 +31,6 @@ import com.malikk.shield.exceptions.InvalidRegionException;
 import com.malikk.shield.exceptions.RegionNotFoundException;
 import com.malikk.shield.flags.Flag;
 import com.malikk.shield.regions.ShieldRegion;
-
 
 /**
  * This is the interface for the main Shield API. It can be used to get all of Shield's Methods, aside from the methods within the {@link Flag} and {@link ShieldRegion} objects.

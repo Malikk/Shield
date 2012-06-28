@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *  
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Shield.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package com.malikk.shield.plugins;
@@ -46,7 +46,6 @@ import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-
 
 public class Protect_WorldGuard implements Listener, Protect {
 	

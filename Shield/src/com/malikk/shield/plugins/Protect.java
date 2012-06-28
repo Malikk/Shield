@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *  
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Shield.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package com.malikk.shield.plugins;
@@ -26,7 +26,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import com.malikk.shield.regions.ShieldRegion;
-
 
 public interface Protect {
 	
