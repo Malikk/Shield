@@ -6,8 +6,8 @@ Shield/.settings/org.eclipse.jdt.core.prefs
 
 Shield/runnable.jardesc
 
-/bin
+Shield/bin/*
 
-.class
+*.class
 
 Shield/.DS_Store
