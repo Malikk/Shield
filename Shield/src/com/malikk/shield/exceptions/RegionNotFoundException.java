@@ -1,4 +1,4 @@
-package us.twoguys.shield.exceptions;
+package com.malikk.shield.exceptions;
 
 /**
  * This exception is thrown when a valid ShieldRegion could not be found for the desired name and/or plugin.

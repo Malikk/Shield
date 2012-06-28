@@ -1,4 +1,4 @@
-package us.twoguys.shield.plugins;
+package com.malikk.shield.plugins;
 
 import java.util.ArrayList;
 
@@ -13,12 +13,13 @@ import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
+import com.malikk.shield.*;
+import com.malikk.shield.regions.ShieldRegion;
+
 import couk.Adamki11s.Regios.API.RegiosAPI;
 import couk.Adamki11s.Regios.Main.Regios;
 import couk.Adamki11s.Regios.Regions.Region;
 
-import us.twoguys.shield.*;
-import us.twoguys.shield.regions.ShieldRegion;
 
 public class Protect_Regios implements Listener, Protect {
 	

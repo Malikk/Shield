@@ -1,11 +1,12 @@
-package us.twoguys.shield.regions;
+package com.malikk.shield.regions;
 
 import java.util.ArrayList;
 
 import org.bukkit.World;
 
-import us.twoguys.shield.Shield;
-import us.twoguys.shield.exceptions.RegionNotFoundException;
+import com.malikk.shield.Shield;
+import com.malikk.shield.exceptions.RegionNotFoundException;
+
 
 public class RegionManager {
 

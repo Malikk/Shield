@@ -1,4 +1,4 @@
-package us.twoguys.shield.plugins;
+package com.malikk.shield.plugins;
 
 import java.util.ArrayList;
 
@@ -18,9 +18,9 @@ import org.bukkit.plugin.PluginManager;
 import com.bekvon.bukkit.residence.Residence;
 import com.bekvon.bukkit.residence.protection.FlagPermissions;
 import com.bekvon.bukkit.residence.protection.ResidenceManager;
+import com.malikk.shield.*;
+import com.malikk.shield.regions.ShieldRegion;
 
-import us.twoguys.shield.*;
-import us.twoguys.shield.regions.ShieldRegion;
 
 public class Protect_Residence implements Listener, Protect {
 	

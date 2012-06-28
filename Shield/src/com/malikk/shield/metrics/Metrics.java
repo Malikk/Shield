@@ -1,4 +1,4 @@
-package us.twoguys.shield.metrics;
+package com.malikk.shield.metrics;
 
 /*
 * Copyright 2011 Tyler Blair. All rights reserved.

@@ -1,4 +1,4 @@
-package us.twoguys.shield.exceptions;
+package com.malikk.shield.exceptions;
 
 /**
  * This exception is thrown only when both the flag and region are valid, but the flag is not set for the region.

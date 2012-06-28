@@ -1,15 +1,16 @@
-package us.twoguys.shield.flags;
+package com.malikk.shield.flags;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 
 import org.bukkit.entity.Player;
 
-import us.twoguys.shield.Shield;
-import us.twoguys.shield.exceptions.FlagNotFoundException;
-import us.twoguys.shield.exceptions.InvalidFlagException;
-import us.twoguys.shield.exceptions.InvalidRegionException;
-import us.twoguys.shield.regions.ShieldRegion;
+import com.malikk.shield.Shield;
+import com.malikk.shield.exceptions.FlagNotFoundException;
+import com.malikk.shield.exceptions.InvalidFlagException;
+import com.malikk.shield.exceptions.InvalidRegionException;
+import com.malikk.shield.regions.ShieldRegion;
+
 
 public class FlagManager {
 

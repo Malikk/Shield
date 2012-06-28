@@ -1,4 +1,4 @@
-package us.twoguys.shield.plugins;
+package com.malikk.shield.plugins;
 
 import java.util.ArrayList;
 
@@ -13,10 +13,11 @@ import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
+import com.malikk.shield.*;
+import com.malikk.shield.regions.ShieldRegion;
+
 import net.sacredlabyrinth.Phaed.PreciousStones.PreciousStones;
 
-import us.twoguys.shield.*;
-import us.twoguys.shield.regions.ShieldRegion;
 
 public class Protect_PreciousStones implements Listener, Protect {
 	

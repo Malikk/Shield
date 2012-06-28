@@ -1,4 +1,4 @@
-package us.twoguys.shield.regions;
+package com.malikk.shield.regions;
 
 import org.bukkit.World;
 

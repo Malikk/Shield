@@ -1,4 +1,4 @@
-package us.twoguys.shield;
+package com.malikk.shield;
 
 import java.util.ArrayList;
 
@@ -6,12 +6,13 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-import us.twoguys.shield.exceptions.FlagNotFoundException;
-import us.twoguys.shield.exceptions.InvalidFlagException;
-import us.twoguys.shield.exceptions.InvalidRegionException;
-import us.twoguys.shield.exceptions.RegionNotFoundException;
-import us.twoguys.shield.flags.Flag;
-import us.twoguys.shield.regions.ShieldRegion;
+import com.malikk.shield.exceptions.FlagNotFoundException;
+import com.malikk.shield.exceptions.InvalidFlagException;
+import com.malikk.shield.exceptions.InvalidRegionException;
+import com.malikk.shield.exceptions.RegionNotFoundException;
+import com.malikk.shield.flags.Flag;
+import com.malikk.shield.regions.ShieldRegion;
+
 
 public class ShieldAPIManager implements ShieldAPI{
 	

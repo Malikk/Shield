@@ -1,4 +1,4 @@
-package us.twoguys.shield.exceptions;
+package com.malikk.shield.exceptions;
 
 /**
  * This exception is thrown when the flag name being checked is not valid. 

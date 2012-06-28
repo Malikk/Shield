@@ -1,4 +1,4 @@
-package us.twoguys.shield.plugins;
+package com.malikk.shield.plugins;
 
 import java.util.ArrayList;
 
@@ -6,7 +6,8 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-import us.twoguys.shield.regions.ShieldRegion;
+import com.malikk.shield.regions.ShieldRegion;
+
 
 public interface Protect {
 	

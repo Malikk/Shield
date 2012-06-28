@@ -1,4 +1,4 @@
-package us.twoguys.shield;
+package com.malikk.shield;
 
 import java.util.logging.Logger;
 
@@ -8,10 +8,11 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import us.twoguys.shield.flags.*;
-import us.twoguys.shield.metrics.Metrics;
-import us.twoguys.shield.plugins.*;
-import us.twoguys.shield.regions.RegionManager;
+import com.malikk.shield.flags.*;
+import com.malikk.shield.metrics.Metrics;
+import com.malikk.shield.plugins.*;
+import com.malikk.shield.regions.RegionManager;
+
 
 /**
  * <b>Shield</b> - A collection of common Bukkit protection plugin API
@@ -86,7 +87,7 @@ public class Shield extends JavaPlugin{
 	 * @return ShieldAPI
 	 */
 	public ShieldAPI getAPI(){
-		RegisteredServiceProvider<ShieldAPI> provider = getServer().getServicesManager().getRegistration(us.twoguys.shield.ShieldAPI.class);
+		RegisteredServiceProvider<ShieldAPI> provider = getServer().getServicesManager().getRegistration(com.malikk.shield.ShieldAPI.class);
         ShieldAPI api = provider.getProvider();
         return api;
 	}

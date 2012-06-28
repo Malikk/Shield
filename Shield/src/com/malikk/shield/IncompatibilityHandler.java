@@ -1,4 +1,4 @@
-package us.twoguys.shield;
+package com.malikk.shield;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package us.twoguys.shield;
+package com.malikk.shield;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -7,8 +7,9 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-import us.twoguys.shield.plugins.Protect;
-import us.twoguys.shield.regions.ShieldRegion;
+import com.malikk.shield.plugins.Protect;
+import com.malikk.shield.regions.ShieldRegion;
+
 
 public class ShieldPluginManager implements Protect{
 	

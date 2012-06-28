@@ -1,8 +1,9 @@
-package us.twoguys.shield;
+package com.malikk.shield;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
-import us.twoguys.shield.regions.ShieldRegion;
+import com.malikk.shield.regions.ShieldRegion;
+
 
 import java.util.ArrayList;
 

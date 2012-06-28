@@ -1,11 +1,12 @@
-package us.twoguys.shield.flags;
+package com.malikk.shield.flags;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.bukkit.entity.Player;
 
-import us.twoguys.shield.regions.ShieldRegion;
+import com.malikk.shield.regions.ShieldRegion;
+
 
 /**
  * A flag object allows for lists of players to be assigned boolean values in certain regions.
