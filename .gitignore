@@ -6,7 +6,6 @@ Shield/.settings/org.eclipse.jdt.core.prefs
 
 Shield/runnable.jardesc
 
-
 Shield/bin/com/malikk/shield/IncompatibilityHandler.class
 
 Shield/bin/com/malikk/shield/Shield.class
@@ -42,3 +41,5 @@ Shield/bin/com/malikk/shield/plugins/Protect_WorldGuard.class
 Shield/bin/com/malikk/shield/regions/RegionManager.class
 
 Shield/bin/com/malikk/shield/regions/ShieldRegion.class
+
+*.class
