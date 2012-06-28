@@ -6,8 +6,12 @@ Shield/.settings/org.eclipse.jdt.core.prefs
 
 Shield/runnable.jardesc
 
+<<<<<<< HEAD
 Shield/bin/*
 
 *.class
+=======
+Shield/bin
+>>>>>>> Finally, added entire bin to gitignore. Adding everything back in.
 
 Shield/.DS_Store
