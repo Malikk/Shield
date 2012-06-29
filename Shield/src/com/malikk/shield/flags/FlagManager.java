@@ -88,7 +88,7 @@ public class FlagManager {
 		}
 		
 		//Check if Region is valid
-		if (!plugin.pm.isValidRegion(region)){
+		if (!plugin.rm.isValidRegion(region)){
 			throw new InvalidRegionException();
 		}
 		

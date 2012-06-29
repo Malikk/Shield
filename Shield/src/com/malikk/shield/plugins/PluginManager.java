@@ -17,40 +17,23 @@
  * along with Shield.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.malikk.shield;
+package com.malikk.shield.plugins;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-import com.malikk.shield.plugins.Protect;
+import com.malikk.shield.Shield;
 import com.malikk.shield.regions.ShieldRegion;
 
-public class ShieldPluginManager implements Protect{
+public class PluginManager implements Protect{
 	
-	Shield plugin;
-	static ArrayList<String> plugins = new ArrayList<String>();
+	Shield shield;
 	
-	public ShieldPluginManager(Shield instance){
-		plugin = instance;
-	}
-	
-	/**
-	 * Checks whether the ShieldRegion matches up to an actual region
-	 * 
-	 * @param region
-	 * @return boolean
-	 */
-	public boolean isValidRegion(ShieldRegion region){
-		for (ShieldRegion region2: getRegions()){
-			if (plugin.rm.regionsAreEqual(region, region2)){
-				return true;
-			}
-		}
-		return false;
+	public PluginManager(Shield instance){
+		shield = instance;
 	}
 	
 	@Override
@@ -58,7 +41,7 @@ public class ShieldPluginManager implements Protect{
 		Object[] args = {};
 		
 		@SuppressWarnings("unchecked")
-		ArrayList<ShieldRegion> outcomes = (ArrayList<ShieldRegion>) getOutcomes("getRegions", "ArrayList<Region>", args);
+		ArrayList<ShieldRegion> outcomes = (ArrayList<ShieldRegion>) getOutcomes("getRegions", "ArrayList<Region>", args, null);
 		
 		return outcomes;
 	}
@@ -68,7 +51,7 @@ public class ShieldPluginManager implements Protect{
 		Object[] args = {entity};
 		
 		@SuppressWarnings("unchecked")
-		ArrayList<ShieldRegion> outcomes = (ArrayList<ShieldRegion>) getOutcomes("getRegions", "ArrayList<Region>", args);
+		ArrayList<ShieldRegion> outcomes = (ArrayList<ShieldRegion>) getOutcomes("getRegions", "ArrayList<Region>", args, null);
 		
 		return outcomes;
 	}
@@ -78,7 +61,7 @@ public class ShieldPluginManager implements Protect{
 		Object[] args = {loc};
 		
 		@SuppressWarnings("unchecked")
-		ArrayList<ShieldRegion> outcomes = (ArrayList<ShieldRegion>) getOutcomes("getRegions", "ArrayList<Region>", args);
+		ArrayList<ShieldRegion> outcomes = (ArrayList<ShieldRegion>) getOutcomes("getRegions", "ArrayList<Region>", args, null);
 		
 		return outcomes;
 	}
@@ -91,7 +74,7 @@ public class ShieldPluginManager implements Protect{
 		Object[] args = {entity};
 		
 		@SuppressWarnings("unchecked")
-		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes("isInRegion", "boolean", args);
+		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes("isInRegion", "boolean", args, null);
 		
 		for (boolean outcome: outcomes){
 			if (outcome == true){
@@ -109,7 +92,7 @@ public class ShieldPluginManager implements Protect{
 		Object[] args = {loc};
 		
 		@SuppressWarnings("unchecked")
-		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes("isInRegion", "boolean", args);
+		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes("isInRegion", "boolean", args, null);
 		
 		for (boolean outcome: outcomes){
 			if (outcome == true){
@@ -127,7 +110,7 @@ public class ShieldPluginManager implements Protect{
 		Object[] args = {player};
 		
 		@SuppressWarnings("unchecked")
-		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes("canBuild", "boolean", args);
+		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes("canBuild", "boolean", args, null);
 		
 		for (boolean outcome: outcomes){
 			if (outcome == false){
@@ -145,7 +128,7 @@ public class ShieldPluginManager implements Protect{
 		Object[] args = {player, loc};
 		
 		@SuppressWarnings("unchecked")
-		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes("canBuild", "boolean", args);
+		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes("canBuild", "boolean", args, null);
 		
 		for (boolean outcome: outcomes){
 			if (outcome == false){
@@ -163,7 +146,7 @@ public class ShieldPluginManager implements Protect{
 		Object[] args = {player};
 		
 		@SuppressWarnings("unchecked")
-		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes("canUse", "boolean", args);
+		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes("canUse", "boolean", args, null);
 		
 		for (boolean outcome: outcomes){
 			if (outcome == false){
@@ -181,7 +164,7 @@ public class ShieldPluginManager implements Protect{
 		Object[] args = {player, loc};
 		
 		@SuppressWarnings("unchecked")
-		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes("canUse", "boolean", args);
+		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes("canUse", "boolean", args, null);
 		
 		for (boolean outcome: outcomes){
 			if (outcome == false){
@@ -199,7 +182,7 @@ public class ShieldPluginManager implements Protect{
 		Object[] args = {player};
 		
 		@SuppressWarnings("unchecked")
-		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes("canOpen", "boolean", args);
+		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes("canOpen", "boolean", args, null);
 		
 		for (boolean outcome: outcomes){
 			if (outcome == false){
@@ -217,7 +200,7 @@ public class ShieldPluginManager implements Protect{
 		Object[] args = {player, loc};
 		
 		@SuppressWarnings("unchecked")
-		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes("canOpen", "boolean", args);
+		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes("canOpen", "boolean", args, null);
 		
 		for (boolean outcome: outcomes){
 			if (outcome == false){
@@ -228,145 +211,12 @@ public class ShieldPluginManager implements Protect{
 	}
 	
 	public void addClassToInstantiatedPluginClassesArrayList(String className){
-		plugins.add("Protect_" + className);
+		MethodInvoker.plugins.add("Protect_" + className);
 	}
 	
-	@SuppressWarnings("unchecked")
-	public ArrayList<?> getOutcomes(String methodName, String outcomeType, Object[] args){
-		ArrayList<String> temp = (ArrayList<String>) plugins.clone();
-		ArrayList<Boolean> booleanOutcomes = new ArrayList<Boolean>();
-		ArrayList<ShieldRegion> regionOutcomes = new ArrayList<ShieldRegion>();
-		
-		//plugin.log("------------" + methodName + "------------");
-		
-		for (String className: temp){
-			
-			//plugin.log(className);
-			
-			Class<?> protect = null;
-			try {
-				protect = Class.forName("us.twoguys.shield.plugins." + className, true, this.getClass().getClassLoader());
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-			
-			Object obj = null;
-			try {
-				obj = ((Class<?>)protect).getConstructor(Class.forName("us.twoguys.shield.Shield")).newInstance(plugin);
-			} catch (Exception e){
-				e.printStackTrace();
-			}
-			
-			Method[] methods = protect.getDeclaredMethods();
-			
-			boolean assigned = false;
-			
-			for (Method method: methods){
-				
-				if (assigned == true){break;}
-				
-				Class<?>[] methodArgsTypes = method.getParameterTypes();
-				Class<?>[] argsTypes = new Class<?>[args.length];
-				
-				int counter = 0;
-				
-				for (Object arg: args){
-					if (arg instanceof Player){
-						argsTypes[counter] = Player.class;
-						counter++;
-					}else if (arg instanceof Entity){
-						argsTypes[counter] = Entity.class;
-						counter++;
-					}else if (arg instanceof Location){
-						argsTypes[counter] = Location.class;
-						counter++;
-					}
-				}
-				
-				if (method.getName().equalsIgnoreCase(methodName) && methodArgsTypes.length == argsTypes.length){
-					
-					if (outcomeType.equalsIgnoreCase("boolean")){
-						boolean outcome = false;
-						
-						try {
-							if (methodArgsTypes.length == 0){
-								outcome = (Boolean) method.invoke(obj);
-								assigned = true;
-							}else if (methodArgsTypes.length == 1){
-								if (equalsOrExtends(argsTypes[0], methodArgsTypes[0])){
-									outcome = (Boolean) method.invoke(obj, args[0]);
-									assigned = true;
-								}
-							}else if (methodArgsTypes.length == 2){
-								if (equalsOrExtends(argsTypes[0], methodArgsTypes[0])){
-									outcome = (Boolean) method.invoke(obj, args[0], args[1]);
-									assigned = true;
-								}else if (equalsOrExtends(argsTypes[0], methodArgsTypes[1])){
-									outcome = (Boolean) method.invoke(obj, args[1], args[0]);
-									assigned = true;
-								}
-							}
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-						
-						if (assigned == true){
-							//plugin.log(protect.getSimpleName() + ": " + outcome);
-							booleanOutcomes.add(outcome);
-						}
-						
-					}else if (outcomeType.equalsIgnoreCase("ArrayList<Region>")){
-						ArrayList<ShieldRegion> outcome = new ArrayList<ShieldRegion>();
-						
-						try {
-							if (methodArgsTypes.length == 0){
-								outcome = (ArrayList<ShieldRegion>) method.invoke(obj);
-								assigned = true;
-							}else if (methodArgsTypes.length == 1){
-								if (equalsOrExtends(argsTypes[0], methodArgsTypes[0])){
-									outcome = (ArrayList<ShieldRegion>) method.invoke(obj, args[0]);
-									assigned = true;
-								}
-							}else if (methodArgsTypes.length == 2){
-								if (equalsOrExtends(argsTypes[0], methodArgsTypes[0])){
-									outcome = (ArrayList<ShieldRegion>) method.invoke(obj, args[0], args[1]);
-									assigned = true;
-								}else if (equalsOrExtends(argsTypes[0], methodArgsTypes[1])){
-									outcome = (ArrayList<ShieldRegion>) method.invoke(obj, args[1], args[0]);
-									assigned = true;
-								}
-							}
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-						
-						if (assigned == true){
-							for (ShieldRegion s: outcome){
-								//plugin.log(protect.getSimpleName() + ": " + s.getName());
-								regionOutcomes.add(s);
-							}
-						}
-					}
-				}
-			}
-		}
-		if (outcomeType.equalsIgnoreCase("boolean")){
-			return booleanOutcomes;
-		}else if (outcomeType.equalsIgnoreCase("ArrayList<Region>")){
-			return regionOutcomes;
-		}else{
-			return booleanOutcomes;
-		}
-	}
-	
-	public boolean equalsOrExtends(Class<?> c1, Class<?> c2){
-		if (c1 == c2){
-			return true;
-		}else if (c2.isAssignableFrom(c1)){
-			return true;
-		}else{
-			return false;
-		}
+	public ArrayList<?> getOutcomes(String method, String outcomeType, Object[] args, String plugin){
+		MethodInvoker invoker = new MethodInvoker(shield);
+		return invoker.invoke(method, outcomeType, args, plugin);
 	}
 
 	@Override
