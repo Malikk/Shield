@@ -28,7 +28,7 @@ import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.malikk.shield.flags.*;
-import com.malikk.shield.metrics.Metrics;
+import com.malikk.shield.metrics.MetricsHandler;
 import com.malikk.shield.plugins.*;
 import com.malikk.shield.regions.RegionManager;
 
@@ -73,7 +73,7 @@ public class Shield extends JavaPlugin{
 		
 		//flagPersister.load();
 		
-		startMetrics();
+		new MetricsHandler(this);
 		
 		log("Enabled");
 	}
@@ -156,13 +156,4 @@ public class Shield extends JavaPlugin{
 		}
 	}
 	
-	public void startMetrics(){
-		try{
-			Metrics metrics = new Metrics(this);
-			metrics.start();
-		}catch(Exception e){
-			//ignore exception
-		}
-	}
-
 }

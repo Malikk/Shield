@@ -1,4 +1,4 @@
 name: Shield
-main: us.twoguys.shield.Shield
+main: com.malikk.shield.Shield
 version: 0.1
-authors: [Malikk, Arzeyt]
+authors: [Malikk]
