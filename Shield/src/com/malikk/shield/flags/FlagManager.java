@@ -19,15 +19,12 @@
 
 package com.malikk.shield.flags;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import org.bukkit.entity.Player;
 
 import com.malikk.shield.Shield;
-import com.malikk.shield.exceptions.FlagNotFoundException;
-import com.malikk.shield.exceptions.InvalidFlagException;
-import com.malikk.shield.exceptions.InvalidRegionException;
+import com.malikk.shield.exceptions.*;
 import com.malikk.shield.regions.ShieldRegion;
 
 public class FlagManager {
@@ -52,16 +49,23 @@ public class FlagManager {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void createFlag(String flag, ShieldRegion region, ArrayList<Player> players, boolean value){
-		Flag f = new Flag(flag, region, players, value);
+	public void createFlag(String flag, ShieldRegion region, HashSet<Player> players, boolean value){
+		Flag f = new Flag(flag, region, convertPlayersToNames(players), value);
 		
 		for (Flag f1: (HashSet<Flag>)flags.clone()){
 			if (f1.getName().equalsIgnoreCase(flag) && plugin.rm.regionsAreEqual(region, f1.getRegion())){
-				flags.remove(f1);
+				consolidateFlags(f, f1);
+				return;
 			}
 		}
 		
 		flags.add(f);
+	}
+	
+	public void createFlag(String flag, ShieldRegion region, Player player, boolean value){
+		HashSet<Player> players = new HashSet<Player>();
+		players.add(player);
+		createFlag(flag, region, players, value);
 	}
 	
 	public boolean getFlagAndValue(Player player, String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException, InvalidRegionException{
@@ -102,5 +106,21 @@ public class FlagManager {
 		throw new FlagNotFoundException();
 	}
 	
+	public HashSet<String> convertPlayersToNames(HashSet<Player> players){
+		HashSet<String> set = new HashSet<String>();
+		
+		for (Player p: players){
+			set.add(p.getName());
+		}
+		
+		return set;
+	}
 	
+	public void consolidateFlags(Flag f1, Flag f2){
+		if (f1.getValue() == f2.getValue()){
+			f1.addPlayers(f2.getPlayerNames());
+		}else{
+			f1.removePlayers(f2.getPlayerNames());
+		}
+	}
 }

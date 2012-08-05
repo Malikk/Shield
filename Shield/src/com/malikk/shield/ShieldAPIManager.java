@@ -20,6 +20,7 @@
 package com.malikk.shield;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -149,8 +150,13 @@ public class ShieldAPIManager implements ShieldAPI{
 	}
 
 	@Override
-	public void setFlag(String flag, ShieldRegion region, ArrayList<Player> players, boolean value) {
+	public void setFlag(String flag, ShieldRegion region, HashSet<Player> players, boolean value) {
 		plugin.fm.createFlag(flag, region, players, value);
+	}
+	
+	@Override
+	public void setFlag(String flag, ShieldRegion region, Player player, boolean value) {
+		plugin.fm.createFlag(flag, region, player, value);
 	}
 
 	@Override

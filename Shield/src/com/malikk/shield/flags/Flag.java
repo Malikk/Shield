@@ -20,8 +20,9 @@
 package com.malikk.shield.flags;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashSet;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import com.malikk.shield.regions.ShieldRegion;
@@ -33,10 +34,12 @@ import com.malikk.shield.regions.ShieldRegion;
  * @see {@link #getRegion()}
  * @see {@link #getPlayers()}
  * @see {@link #getValue()}
- * @see {@link #setPlayers(ArrayList)}
+ * @see {@link #setPlayers(HashSet)}
  * @see {@link #setValue(boolean)}
  * @see {@link #addPlayer(Player)}
+ * @see {@link #addPlayers(HashSet)}
  * @see {@link #removePlayer(Player)}
+ * @see {@link #removePlayers(Player)}
  */
 public class Flag implements Serializable{
 
@@ -44,10 +47,10 @@ public class Flag implements Serializable{
 	
 	private String name;
 	private ShieldRegion region;
-	private ArrayList<Player> players;
+	private HashSet<String> players;
 	private boolean value;
 
-	public Flag(String flag, ShieldRegion region, ArrayList<Player> players, boolean value){
+	public Flag(String flag, ShieldRegion region, HashSet<String> players, boolean value){
 		this.name = flag;
 		this.region = region;
 		this.players = players;
@@ -75,9 +78,24 @@ public class Flag implements Serializable{
 	/**
 	 * Gets all the Players that the flag is assigned to
 	 * 
-	 * @param players - an ArrayList<{@linkplain Player}>
+	 * @param players - an HashSet<{@linkplain Player}>
 	 */
-	public ArrayList<Player> getPlayers(){
+	public HashSet<Player> getPlayers(){
+		HashSet<Player> set = new HashSet<Player>();
+		
+		for (String p: getPlayerNames()){
+			set.add(Bukkit.getPlayer(p));
+		}
+		
+		return set;
+	}
+	
+	/**
+	 * Gets all the Players that the flag is assigned to, as Strings
+	 * 
+	 * @param players - an HashSet<{@linkplain Player}>
+	 */
+	public HashSet<String> getPlayerNames(){
 		return players;
 	}
 	
@@ -95,7 +113,7 @@ public class Flag implements Serializable{
 	 * 
 	 * @param players - an ArrayList<{@linkplain Player}>
 	 */
-	public void setPlayers(ArrayList<Player> players){
+	public void setPlayers(HashSet<String> players){
 		this.players = players;
 	}
 	
@@ -114,15 +132,37 @@ public class Flag implements Serializable{
 	 * @param player
 	 */
 	public void addPlayer(Player player){
-		this.players.add(player);
+		this.players.add(player.getName());
 	}
 	
 	/**
-	 * Removes a player from the flag's current ArrayList.
+	 * Adds players to the flag's current ArrayList.
+	 * 
+	 * @param players - ArrayList
+	 */
+	public void addPlayers(HashSet<String> players){
+		for (String p: players){
+			this.players.add(p);
+		}
+	}
+	
+	/**
+	 * Removes a player from the flag's current Set.
 	 * 
 	 * @param player
 	 */
 	public void removePlayer(Player player){
-		this.players.remove(player);
+		this.players.remove(player.getName());
+	}
+	
+	/**
+	 * Removes players from the flag's current List.
+	 * 
+	 * @param players - ArrayList
+	 */
+	public void removePlayers(HashSet<String> players){
+		for (String p: players){
+			this.players.remove(p);
+		}
 	}
 }

@@ -20,6 +20,7 @@
 package com.malikk.shield;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -208,14 +209,24 @@ public interface ShieldAPI {
 	public boolean isValidFlag(String flag);
 	
 	/**
-	 * Sets a Custom flag
+	 * Sets a Custom flag for multiple Players
 	 * 
 	 * @param flag - flag name, String
 	 * @param region - {@link ShieldRegion}
-	 * @param players  - ArrayList<{@linkplain Player}> that the value is applied to (can be null)
+	 * @param players  - HashSet<{@linkplain Player}> that the value is applied to (can be null)
 	 * @param value - Boolean value that is applied
 	 */
-	public void setFlag(String flag, ShieldRegion region, ArrayList<Player> players, boolean value);
+	public void setFlag(String flag, ShieldRegion region, HashSet<Player> players, boolean value);
+	
+	/**
+	 * Sets a Custom flag for a single Player
+	 * 
+	 * @param flag - flag name, String
+	 * @param region - {@link ShieldRegion}
+	 * @param player  - {@linkplain Player} that the value is applied to (can be null)
+	 * @param value - Boolean value that is applied
+	 */
+	public void setFlag(String flag, ShieldRegion region, Player player, boolean value);
 	
 	/**
 	 * Checks the value of a flag for a specific Player.
