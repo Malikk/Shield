@@ -28,18 +28,18 @@ import org.bukkit.entity.Player;
 import com.malikk.shield.regions.ShieldRegion;
 
 /**
- * A flag object allows for lists of players to be assigned boolean values in certain regions.
+ * A flag object allows for sets of players to be assigned boolean values in certain regions.
  * @author Malikk
  * @see {@link #getName()}
  * @see {@link #getRegion()}
  * @see {@link #getPlayers()}
  * @see {@link #getValue()}
- * @see {@link #setPlayers(HashSet)}
+ * @see {@link #setPlayers(players)}
  * @see {@link #setValue(boolean)}
- * @see {@link #addPlayer(Player)}
- * @see {@link #addPlayers(HashSet)}
- * @see {@link #removePlayer(Player)}
- * @see {@link #removePlayers(Player)}
+ * @see {@link #addPlayer(player)}
+ * @see {@link #addPlayers(players)}
+ * @see {@link #removePlayer(player)}
+ * @see {@link #removePlayers(players)}
  */
 public class Flag implements Serializable{
 
@@ -69,7 +69,7 @@ public class Flag implements Serializable{
 	/**
 	 * Gets the ShieldRegion the flag is set at.
 	 * 
-	 * @return {@link ShieldRegion} - region that the flag is set on
+	 * @return {@link ShieldRegion} that the flag is set on
 	 */
 	public ShieldRegion getRegion(){
 		return region;
@@ -78,7 +78,7 @@ public class Flag implements Serializable{
 	/**
 	 * Gets all the Players that the flag is assigned to
 	 * 
-	 * @param players - an HashSet<{@linkplain Player}>
+	 * @param players - HashSet<{@linkplain Player}>
 	 */
 	public HashSet<Player> getPlayers(){
 		HashSet<Player> set = new HashSet<Player>();
@@ -91,27 +91,27 @@ public class Flag implements Serializable{
 	}
 	
 	/**
-	 * Gets all the Players that the flag is assigned to, as Strings
+	 * Gets all the Player's names that the flag is assigned to
 	 * 
-	 * @param players - an HashSet<{@linkplain Player}>
+	 * @param players - HashSet<{@linkplain String}>
 	 */
 	public HashSet<String> getPlayerNames(){
 		return players;
 	}
 	
 	/**
-	 * Gets the value that the flag will return for players in its ArrayList. For players not in the ArrayList, the opposite of this value will be returned.
+	 * Gets the value that the flag will return for players in its HashSet. For players not in the HashSet, the opposite of this value will be returned.
 	 * 
-	 * @return Boolean value assigned to the flag
+	 * @return value - {@link Boolean} assigned to the flag
 	 */
 	public boolean getValue(){
 		return value;
 	}
 	
 	/**
-	 * Sets the ArrayList<Player> for this flag to the ArrayList passed in. (Will completely overwrite the previous list)
+	 * Sets the HashSet of player names for this flag to the one passed in. (Will completely overwrite the previous Set)
 	 * 
-	 * @param players - an ArrayList<{@linkplain Player}>
+	 * @param players - HashSet<{@linkplain String}>
 	 */
 	public void setPlayers(HashSet<String> players){
 		this.players = players;
@@ -120,25 +120,25 @@ public class Flag implements Serializable{
 	/**
 	 * Sets the value of the flag.
 	 * 
-	 * @param value - Boolean value
+	 * @param value - {@link Boolean}
 	 */
 	public void setValue(boolean value){
 		this.value = value;
 	}
 	
 	/**
-	 * Adds a player to the flag's current ArrayList.
+	 * Adds a player to the flag's current HashSet.
 	 * 
-	 * @param player
+	 * @param player - {@link Player}
 	 */
 	public void addPlayer(Player player){
 		this.players.add(player.getName());
 	}
 	
 	/**
-	 * Adds players to the flag's current ArrayList.
+	 * Adds players to the flag's current HashSet.
 	 * 
-	 * @param players - ArrayList
+	 * @param players - HashSet<{@linkplain String}>
 	 */
 	public void addPlayers(HashSet<String> players){
 		for (String p: players){
@@ -149,16 +149,16 @@ public class Flag implements Serializable{
 	/**
 	 * Removes a player from the flag's current Set.
 	 * 
-	 * @param player
+	 * @param player - {@link Player}
 	 */
 	public void removePlayer(Player player){
 		this.players.remove(player.getName());
 	}
 	
 	/**
-	 * Removes players from the flag's current List.
+	 * Removes players from the flag's current Set.
 	 * 
-	 * @param players - ArrayList
+	 * @param players - HashSet<{@linkplain String}>
 	 */
 	public void removePlayers(HashSet<String> players){
 		for (String p: players){
