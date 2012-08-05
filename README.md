@@ -44,7 +44,7 @@ Next, on your onEnable, we are going to actually hook in Shield. This code will 
 
 ```java
 Plugin x = plugin.getServer().getPluginManager().getPlugin("Shield");
-if (x != null & x instanceof Shield){
+if (x != null && x instanceof Shield){
 	shield = (Shield) x;
 	api = shield.getAPI();
 	plugin.log(String.format("Hooked %s %s", shield.getDescription().getName(), shield.getDescription().getVersion()));
