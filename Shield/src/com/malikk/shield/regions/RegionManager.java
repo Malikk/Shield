@@ -74,7 +74,7 @@ public class RegionManager {
 	
 	//Not always Valid
 	public ShieldRegion createShieldRegion(String name, String protect, World world){
-		return new ShieldRegion(name, protect, world);
+		return new ShieldRegion(plugin, name, protect, world);
 	}
 	
 	public boolean regionsAreEqual(ShieldRegion region1, ShieldRegion region2){

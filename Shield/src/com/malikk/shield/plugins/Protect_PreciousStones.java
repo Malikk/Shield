@@ -153,6 +153,25 @@ public class Protect_PreciousStones implements Listener, Protect {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	//Region info Getters
+	@Override
+	public Location getMaxLoc(ShieldRegion region) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Location getMinLoc(ShieldRegion region) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean contains(ShieldRegion region, Location loc) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }
 

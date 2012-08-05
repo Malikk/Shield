@@ -59,7 +59,7 @@ public class Shield extends JavaPlugin{
 	public IncompatibilityHandler incompat = new IncompatibilityHandler(this);
 	public FlagPersister flagPersister = new FlagPersister(this);
 	public ShieldConfig config = new ShieldConfig(this);
-	public PluginManager pm = new PluginManager(this);
+	public ProtectionManager pm = new ProtectionManager(this);
 	public FlagManager fm = new FlagManager(this);
 	public RegionManager rm = new RegionManager(this);
 	

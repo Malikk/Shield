@@ -35,6 +35,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
 import com.bekvon.bukkit.residence.Residence;
+import com.bekvon.bukkit.residence.protection.ClaimedResidence;
 import com.bekvon.bukkit.residence.protection.FlagPermissions;
 import com.bekvon.bukkit.residence.protection.ResidenceManager;
 import com.malikk.shield.*;
@@ -195,5 +196,28 @@ public class Protect_Residence implements Listener, Protect {
 		FlagPermissions flags = Residence.getPermsByLoc(loc);
 		
 		return flags.playerHas(player.getName(), player.getWorld().getName(), "container", true);
+	}
+	
+	//Region info Getters
+	private ClaimedResidence getRegion(ShieldRegion region){
+		return rmanager.getByName(region.getName());
+	}
+	
+	@Override
+	public Location getMaxLoc(ShieldRegion region) {
+		//TODO Not sure if i want to keep working on this feature, since not all plugins use cuboid regions.
+		return null;
+	}
+
+	@Override
+	public Location getMinLoc(ShieldRegion region) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean contains(ShieldRegion region, Location loc) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

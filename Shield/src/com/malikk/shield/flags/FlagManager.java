@@ -51,10 +51,11 @@ public class FlagManager {
 		return (validFlags.contains(flag) ? true : false);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void createFlag(String flag, ShieldRegion region, ArrayList<Player> players, boolean value){
 		Flag f = new Flag(flag, region, players, value);
 		
-		for (Flag f1: flags){
+		for (Flag f1: (HashSet<Flag>)flags.clone()){
 			if (f1.getName().equalsIgnoreCase(flag) && plugin.rm.regionsAreEqual(region, f1.getRegion())){
 				flags.remove(f1);
 			}

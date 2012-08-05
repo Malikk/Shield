@@ -40,6 +40,8 @@ import org.bukkit.plugin.PluginManager;
 
 import com.malikk.shield.*;
 import com.malikk.shield.regions.ShieldRegion;
+import com.sk89q.worldedit.BlockVector;
+import com.sk89q.worldedit.Vector;
 import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
@@ -240,5 +242,24 @@ public class Protect_WorldGuard implements Listener, Protect {
 	public ApplicableRegionSet getAppRegionSet(Location loc){
 		return protect.getRegionManager(loc.getWorld()).getApplicableRegions(loc);
 	}
+	
+	//Region Info Getters
+	private ProtectedRegion getRegion(ShieldRegion region){
+		return protect.getRegionManager(region.getWorld()).getRegionExact(region.getName());
+	}
+	
+	public Location getMaxLoc(ShieldRegion region){
+		BlockVector vector = getRegion(region).getMaximumPoint();
+		return new Location(region.getWorld(), vector.getBlockX(), vector.getBlockY(), vector.getBlockZ());
+	}
+	
+	public Location getMinLoc(ShieldRegion region){
+		BlockVector vector = getRegion(region).getMinimumPoint();
+		return new Location(region.getWorld(), vector.getBlockX(), vector.getBlockY(), vector.getBlockZ());
+	}
 
+	public boolean contains(ShieldRegion region, Location loc){
+		Vector vec = new Vector(loc.getX(), loc.getY(), loc.getZ());
+		return getRegion(region).contains(vec);
+	}
 }

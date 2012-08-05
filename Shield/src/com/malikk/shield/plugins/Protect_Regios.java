@@ -172,4 +172,23 @@ public class Protect_Regios implements Listener, Protect {
 	public boolean canOpen(Player player, Location loc) {
 		return api.getRegion(loc).canBypassProtection(player);
 	}
+
+	//Region info Getters
+	@Override
+	public Location getMaxLoc(ShieldRegion region) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Location getMinLoc(ShieldRegion region) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean contains(ShieldRegion region, Location loc) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

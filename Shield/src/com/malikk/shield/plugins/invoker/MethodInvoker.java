@@ -1,4 +1,4 @@
-package com.malikk.shield.plugins;
+package com.malikk.shield.plugins.invoker;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -17,6 +17,7 @@ public class MethodInvoker {
 	public static ArrayList<String> plugins = new ArrayList<String>();
 	private ArrayList<Boolean> booleanOutcomes = new ArrayList<Boolean>();
 	private ArrayList<ShieldRegion> regionOutcomes = new ArrayList<ShieldRegion>();
+	private Location locOutcome = null;
 	
 	private Method method = null;
 	private Class<?>[] methodArgsTypes = null;
@@ -28,19 +29,22 @@ public class MethodInvoker {
 	
 	private boolean Boolean = false;
 	private boolean ArrayListRegion = false;
+	private boolean location = false;
 	
 	public MethodInvoker(Shield instance){
 		shield = instance;
 	}
 
-	public ArrayList<?> invoke(String methodName, String outcomeType, Object[] args, String plugin){
+	public Object invoke(String methodName, OutcomeType type, Object[] args, String plugin){
 		
-		//plugin.log("------------" + methodName + "------------");
+		shield.log("------------" + methodName + "------------");
 		
-		if (outcomeType.equalsIgnoreCase("boolean")){
+		if (type == OutcomeType.BOOLEAN){
 			Boolean = true;
-		}else if (outcomeType.equalsIgnoreCase("ArrayList<Region>")){
+		}else if (type == OutcomeType.REGION_ARRAY){
 			ArrayListRegion = true;
+		}else if (type == OutcomeType.LOCATION){
+			location = true;
 		}
 		
 		this.args = args;
@@ -52,20 +56,21 @@ public class MethodInvoker {
 				continue;
 			}
 			
-			//plugin.log(className);
+			shield.log(className);
 			
 			Class<?> protect = null;
 			try {
-				protect = Class.forName("us.twoguys.shield.plugins." + className, true, this.getClass().getClassLoader());
+				protect = Class.forName("com.malikk.shield.plugins." + className, true, this.getClass().getClassLoader());
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
 			
-			try {
-				obj = ((Class<?>)protect).getConstructor(Class.forName("us.twoguys.shield.Shield")).newInstance(plugin);
-			} catch (Exception e){
+			try{
+				obj = protect.getConstructor(com.malikk.shield.Shield.class).newInstance(shield);
+			}catch(Exception e){
 				e.printStackTrace();
 			}
+			
 			
 			Method[] methods = protect.getDeclaredMethods();
 			
@@ -91,6 +96,8 @@ public class MethodInvoker {
 					}else if (arg instanceof Location){
 						passedArgsTypes[counter] = Location.class;
 						counter++;
+					}else if (arg instanceof ShieldRegion){
+						passedArgsTypes[counter] = ShieldRegion.class;
 					}
 				}
 				
@@ -100,6 +107,8 @@ public class MethodInvoker {
 						setBooleanOutcomes();
 					}else if (ArrayListRegion){
 						setRegionOutcomes();
+					}else if (location){
+						setLocation();
 					}
 				}
 			}
@@ -110,6 +119,8 @@ public class MethodInvoker {
 			return booleanOutcomes;
 		}else if (ArrayListRegion){
 			return regionOutcomes;
+		}else if (location){
+			return locOutcome;
 		}else{
 			return booleanOutcomes;
 		}
@@ -141,7 +152,7 @@ public class MethodInvoker {
 		}
 		
 		if (assigned == true){
-			//plugin.log(protect.getSimpleName() + ": " + outcome);
+			//shield.log(protect.getSimpleName() + ": " + outcome);
 			booleanOutcomes.add(outcome);
 		}
 	}
@@ -174,11 +185,36 @@ public class MethodInvoker {
 
 		if (assigned == true){
 			for (ShieldRegion s: outcome){
-				//plugin.log(protect.getSimpleName() + ": " + s.getName());
+				//shield.log(protect.getSimpleName() + ": " + s.getName());
 				regionOutcomes.add(s);
 			}
 		}
 		
+	}
+	
+	public void setLocation(){
+		try {
+			if (methodArgsTypes.length == 0){
+				locOutcome = (Location) method.invoke(obj);
+				assigned = true;
+			}else if (methodArgsTypes.length == 1){
+				if (equalsOrExtends(passedArgsTypes[0], methodArgsTypes[0])){
+					locOutcome = (Location) method.invoke(obj, args[0]);
+					assigned = true;
+				}
+			}else if (methodArgsTypes.length == 2){
+				if (equalsOrExtends(passedArgsTypes[0], methodArgsTypes[0])){
+					locOutcome = (Location) method.invoke(obj, args[0], args[1]);
+					assigned = true;
+				}else if (equalsOrExtends(passedArgsTypes[0], methodArgsTypes[1])){
+					locOutcome = (Location) method.invoke(obj, args[1], args[0]);
+					assigned = true;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 	
 	public boolean equalsOrExtends(Class<?> c1, Class<?> c2){

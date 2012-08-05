@@ -56,4 +56,10 @@ public interface Protect {
 	public boolean canOpen(Player player);
 	
 	public boolean canOpen(Player player, Location loc);
+	
+	public Location getMaxLoc(ShieldRegion region);
+	
+	public Location getMinLoc(ShieldRegion region);
+	
+	public boolean contains(ShieldRegion region, Location loc);
 }
