@@ -1,3 +1,22 @@
+/*
+ * Copyright 2012 Jordan Hobgood
+ * 
+ * This file is part of Shield.
+ *
+ * Shield is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Shield is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *  
+ * You should have received a copy of the GNU General Public License
+ * along with Shield.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.malikk.shield.plugins.invoker;
 
 import java.lang.reflect.Method;
@@ -35,11 +54,13 @@ public class MethodInvoker {
 		shield = instance;
 	}
 
-	public Object invoke(String methodName, OutcomeType type, Object[] args, String plugin){
+	public Object invoke(CheckMethod check, Object[] args, String plugin){
 		
-		shield.log("------------" + methodName + "------------");
+		shield.log("------------" + check.getName() + "------------");
 		
-		if (type == OutcomeType.BOOLEAN){
+		OutcomeType type = check.getType();
+		
+		if (type == OutcomeType.BOOLEAN_ARRAY){
 			Boolean = true;
 		}else if (type == OutcomeType.REGION_ARRAY){
 			ArrayListRegion = true;
@@ -101,7 +122,7 @@ public class MethodInvoker {
 					}
 				}
 				
-				if (method.getName().equalsIgnoreCase(methodName) && methodArgsTypes.length == passedArgsTypes.length){
+				if (method.getName().equalsIgnoreCase(check.getName()) && methodArgsTypes.length == passedArgsTypes.length){
 					
 					if (Boolean){
 						setBooleanOutcomes();

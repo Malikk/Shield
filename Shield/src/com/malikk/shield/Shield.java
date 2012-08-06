@@ -81,6 +81,8 @@ public class Shield extends JavaPlugin{
 	public void onDisable(){
 		flagPersister.save();
 		
+		getServer().getScheduler().cancelTasks(this);
+		
 		log("Disabled");
 	}
 	
@@ -118,25 +120,25 @@ public class Shield extends JavaPlugin{
 		//Attempt to load PreciousStones
 		if (packageExists("net.sacredlabyrinth.Phaed.PreciousStones.PreciousStones")){
 			preciousStones = new Protect_PreciousStones(this);
-			log(String.format("Detected PreciousStones: %s", preciousStones.isEnabled() ? "Hooked" : "Waiting"));
+			log(String.format("Detected PreciousStones: %s", preciousStones.isEnabled() ? "Hooked v" + preciousStones.getVersion() : "Waiting"));
 		}
 		
 		//Attempt to load Regios
 		if (packageExists("couk.Adamki11s.Regios.Main.Regios")){
 			regios = new Protect_Regios(this);
-			log(String.format("Detected Regios: %s", regios.isEnabled() ? "Hooked" : "Waiting"));
+			log(String.format("Detected Regios: %s", regios.isEnabled() ? "Hooked v" + regios.getVersion() : "Waiting"));
 		}
 		
 		//Attempt to load Residence
 		if (packageExists("com.bekvon.bukkit.residence.Residence")){
 			residence = new Protect_Residence(this);
-			log(String.format("Detected Residence: %s", residence.isEnabled() ? "Hooked" : "Waiting"));
+			log(String.format("Detected Residence: %s", residence.isEnabled() ? "Hooked v" + residence.getVersion() : "Waiting"));
 		}
 		
 		//Attempt to load WorldGuard
 		if (packageExists("com.sk89q.worldguard.bukkit.WorldGuardPlugin")){
 			worldGuard = new Protect_WorldGuard(this);
-			log(String.format("Detected WorldGuard: %s", worldGuard.isEnabled() ? "Hooked" : "Waiting"));
+			log(String.format("Detected WorldGuard: %s", worldGuard.isEnabled() ? "Hooked v" + worldGuard.getVersion() : "Waiting"));
 		}
 		
 		if (foundPlugin == false){

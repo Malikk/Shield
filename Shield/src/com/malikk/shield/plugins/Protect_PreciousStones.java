@@ -76,7 +76,7 @@ public class Protect_PreciousStones implements Listener, Protect {
 			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
 				protect = (PreciousStones) p;
 				//shield.pm.addClassToInstantiatedPluginClassesArrayList(name);
-				shield.log(String.format("%s hooked.", name));
+				shield.log(String.format("Hooked %s v" + getVersion(), name));
 			}
 		}
 	}
@@ -97,6 +97,10 @@ public class Protect_PreciousStones implements Listener, Protect {
 	
 	public String getPluginName(){
 		return name;
+	}
+	
+	public String getVersion(){
+		return protect.getDescription().getVersion();
 	}
 	
 	public ArrayList<ShieldRegion> getRegions() {

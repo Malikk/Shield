@@ -26,8 +26,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import com.malikk.shield.Shield;
+import com.malikk.shield.plugins.invoker.CheckMethod;
 import com.malikk.shield.plugins.invoker.MethodInvoker;
-import com.malikk.shield.plugins.invoker.OutcomeType;
 import com.malikk.shield.regions.ShieldRegion;
 
 public class ProtectionManager implements Protect{
@@ -43,7 +43,7 @@ public class ProtectionManager implements Protect{
 		Object[] args = {};
 		
 		@SuppressWarnings("unchecked")
-		ArrayList<ShieldRegion> outcomes = (ArrayList<ShieldRegion>) getOutcomes("getRegions", OutcomeType.REGION_ARRAY, args, null);
+		ArrayList<ShieldRegion> outcomes = (ArrayList<ShieldRegion>) getOutcomes(CheckMethod.GET_REGIONS, args, null);
 		
 		return outcomes;
 	}
@@ -53,7 +53,7 @@ public class ProtectionManager implements Protect{
 		Object[] args = {entity};
 		
 		@SuppressWarnings("unchecked")
-		ArrayList<ShieldRegion> outcomes = (ArrayList<ShieldRegion>) getOutcomes("getRegions", OutcomeType.REGION_ARRAY, args, null);
+		ArrayList<ShieldRegion> outcomes = (ArrayList<ShieldRegion>) getOutcomes(CheckMethod.GET_REGIONS, args, null);
 		
 		return outcomes;
 	}
@@ -63,7 +63,7 @@ public class ProtectionManager implements Protect{
 		Object[] args = {loc};
 		
 		@SuppressWarnings("unchecked")
-		ArrayList<ShieldRegion> outcomes = (ArrayList<ShieldRegion>) getOutcomes("getRegions", OutcomeType.REGION_ARRAY, args, null);
+		ArrayList<ShieldRegion> outcomes = (ArrayList<ShieldRegion>) getOutcomes(CheckMethod.GET_REGIONS, args, null);
 		
 		return outcomes;
 	}
@@ -76,7 +76,7 @@ public class ProtectionManager implements Protect{
 		Object[] args = {entity};
 		
 		@SuppressWarnings("unchecked")
-		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes("isInRegion", OutcomeType.BOOLEAN, args, null);
+		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes(CheckMethod.IS_IN_REGION, args, null);
 		
 		for (boolean outcome: outcomes){
 			if (outcome == true){
@@ -94,7 +94,7 @@ public class ProtectionManager implements Protect{
 		Object[] args = {loc};
 		
 		@SuppressWarnings("unchecked")
-		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes("isInRegion", OutcomeType.BOOLEAN, args, null);
+		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes(CheckMethod.IS_IN_REGION, args, null);
 		
 		for (boolean outcome: outcomes){
 			if (outcome == true){
@@ -112,7 +112,7 @@ public class ProtectionManager implements Protect{
 		Object[] args = {player};
 		
 		@SuppressWarnings("unchecked")
-		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes("canBuild", OutcomeType.BOOLEAN, args, null);
+		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes(CheckMethod.CAN_BUILD, args, null);
 		
 		for (boolean outcome: outcomes){
 			if (outcome == false){
@@ -130,7 +130,7 @@ public class ProtectionManager implements Protect{
 		Object[] args = {player, loc};
 		
 		@SuppressWarnings("unchecked")
-		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes("canBuild", OutcomeType.BOOLEAN, args, null);
+		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes(CheckMethod.CAN_BUILD, args, null);
 		
 		for (boolean outcome: outcomes){
 			if (outcome == false){
@@ -148,7 +148,7 @@ public class ProtectionManager implements Protect{
 		Object[] args = {player};
 		
 		@SuppressWarnings("unchecked")
-		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes("canUse", OutcomeType.BOOLEAN, args, null);
+		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes(CheckMethod.CAN_USE, args, null);
 		
 		for (boolean outcome: outcomes){
 			if (outcome == false){
@@ -166,7 +166,7 @@ public class ProtectionManager implements Protect{
 		Object[] args = {player, loc};
 		
 		@SuppressWarnings("unchecked")
-		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes("canUse", OutcomeType.BOOLEAN, args, null);
+		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes(CheckMethod.CAN_USE, args, null);
 		
 		for (boolean outcome: outcomes){
 			if (outcome == false){
@@ -184,7 +184,7 @@ public class ProtectionManager implements Protect{
 		Object[] args = {player};
 		
 		@SuppressWarnings("unchecked")
-		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes("canOpen", OutcomeType.BOOLEAN, args, null);
+		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes(CheckMethod.CAN_OPEN, args, null);
 		
 		for (boolean outcome: outcomes){
 			if (outcome == false){
@@ -202,7 +202,7 @@ public class ProtectionManager implements Protect{
 		Object[] args = {player, loc};
 		
 		@SuppressWarnings("unchecked")
-		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes("canOpen", OutcomeType.BOOLEAN, args, null);
+		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes(CheckMethod.CAN_OPEN, args, null);
 		
 		for (boolean outcome: outcomes){
 			if (outcome == false){
@@ -215,13 +215,13 @@ public class ProtectionManager implements Protect{
 	@Override
 	public Location getMaxLoc(ShieldRegion region) {
 		Object[] args = {region};
-		return (Location) getOutcomes("getMaxLoc", OutcomeType.LOCATION, args, region.getPluginName());
+		return (Location) getOutcomes(CheckMethod.GET_MAX_LOC, args, region.getPluginName());
 	}
 
 	@Override
 	public Location getMinLoc(ShieldRegion region) {
 		Object[] args = {region};
-		return (Location) getOutcomes("getMinLoc", OutcomeType.LOCATION, args, region.getPluginName());
+		return (Location) getOutcomes(CheckMethod.GET_MIN_LOC, args, region.getPluginName());
 	}
 
 	/**
@@ -232,7 +232,7 @@ public class ProtectionManager implements Protect{
 		Object[] args = {region, loc};
 		
 		@SuppressWarnings("unchecked")
-		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes("getMaxLoc", OutcomeType.BOOLEAN, args, region.getPluginName());
+		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes(CheckMethod.CONTAINS_LOC, args, region.getPluginName());
 		
 		return outcomes.get(0);
 	}
@@ -241,9 +241,9 @@ public class ProtectionManager implements Protect{
 		MethodInvoker.plugins.add("Protect_" + className);
 	}
 	
-	public Object getOutcomes(String method, OutcomeType type, Object[] args, String plugin){
+	public Object getOutcomes(CheckMethod check, Object[] args, String plugin){
 		MethodInvoker invoker = new MethodInvoker(shield);
-		return invoker.invoke(method, type, args, plugin);
+		return invoker.invoke(check, args, plugin);
 	}
 
 	@Override
@@ -254,6 +254,12 @@ public class ProtectionManager implements Protect{
 
 	@Override
 	public String getPluginName() {
+		// Dont use
+		return null;
+	}
+	
+	@Override
+	public String getVersion() {
 		// Dont use
 		return null;
 	}

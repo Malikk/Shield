@@ -35,6 +35,8 @@ public interface Protect {
 	
 	public String getPluginName();
 	
+	public String getVersion();
+	
 	public ArrayList<ShieldRegion> getRegions();
 	
 	public ArrayList<ShieldRegion> getRegions(Entity entity);

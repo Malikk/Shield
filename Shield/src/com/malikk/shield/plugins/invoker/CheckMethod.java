@@ -19,8 +19,29 @@
 
 package com.malikk.shield.plugins.invoker;
 
-public enum OutcomeType {
-	BOOLEAN_ARRAY(),
-	LOCATION(),
-	REGION_ARRAY();
+public enum CheckMethod {
+	GET_REGIONS("getRegions", OutcomeType.REGION_ARRAY),
+	IS_IN_REGION("isInRegion", OutcomeType.BOOLEAN_ARRAY),
+	CAN_BUILD("canBuild", OutcomeType.BOOLEAN_ARRAY),
+	CAN_OPEN("canOpen", OutcomeType.BOOLEAN_ARRAY),
+	CAN_USE("canUse", OutcomeType.BOOLEAN_ARRAY),
+	GET_MAX_LOC("getMaxLoc", OutcomeType.LOCATION),
+	GET_MIN_LOC("getMinLoc", OutcomeType.LOCATION),
+	CONTAINS_LOC("contains", OutcomeType.BOOLEAN_ARRAY);
+	
+	private String name = null;
+	private OutcomeType outcome = null;
+	
+	CheckMethod(String name, OutcomeType outcome){
+		this.name = name;
+		this.outcome = outcome;
+	}
+	
+	public String getName(){
+		return name;
+	}
+	
+	public OutcomeType getType(){
+		return outcome;
+	}
 }

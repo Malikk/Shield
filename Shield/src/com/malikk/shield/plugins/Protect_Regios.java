@@ -81,7 +81,7 @@ public class Protect_Regios implements Listener, Protect {
 				protect = (Regios) p;
 				api = new RegiosAPI();
 				shield.pm.addClassToInstantiatedPluginClassesArrayList(name);
-				shield.log(String.format("%s hooked.", name));
+				shield.log(String.format("Hooked %s v" + getVersion(), name));
 			}
 		}
 	}
@@ -103,6 +103,10 @@ public class Protect_Regios implements Listener, Protect {
 	
 	public String getPluginName(){
 		return name;
+	}
+	
+	public String getVersion(){
+		return protect.getDescription().getVersion();
 	}
 	
 	public ArrayList<ShieldRegion> getRegions(){
@@ -174,6 +178,11 @@ public class Protect_Regios implements Listener, Protect {
 	}
 
 	//Region info Getters
+	
+	private Region getRegion(ShieldRegion region){
+		return api.getRegion(region.getName());
+	}
+	
 	@Override
 	public Location getMaxLoc(ShieldRegion region) {
 		// TODO Auto-generated method stub
@@ -188,7 +197,6 @@ public class Protect_Regios implements Listener, Protect {
 
 	@Override
 	public boolean contains(ShieldRegion region, Location loc) {
-		// TODO Auto-generated method stub
-		return false;
+		return (api.getRegion(loc) != null ? true : false);
 	}
 }

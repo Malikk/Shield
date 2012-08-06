@@ -9,31 +9,29 @@ import com.malikk.shield.plugins.Protect;
 public class MetricsHandler {
 
 	Shield plugin;
+	Metrics metrics = null;
 	
 	public MetricsHandler(Shield instance){
 		plugin = instance;
+		
+		try {
+			metrics = new Metrics(plugin);
+		} catch (IOException e) {
+			plugin.logWarning("Failed to start plugin Metrics.");
+		}
 		
 		startMetrics();
 	}
 	
 	private void startMetrics(){
 		
-		try {
-			Metrics metrics = new Metrics(plugin);
-			
-			Graph graph = metrics.createGraph("Protection Plugins Used");
-			setGraphPlotters(graph);
-			
-			metrics.start();
-			
-		} catch (IOException e) {
-			plugin.logWarning("Failed to start plugin Metrics.");
-		}
+		setGraphPlotters();
 		
+		metrics.start();
 	}
 	
-	private void setGraphPlotters(Graph graph){
-		graph.addPlotter(new Metrics.Plotter("WorldGuard"){
+	private void setGraphPlotters(){
+		metrics.addCustomData(new Metrics.Plotter("WorldGuard"){
 
 			@Override
 			public int getValue() {
@@ -42,7 +40,7 @@ public class MetricsHandler {
 			
 		});
 		
-		graph.addPlotter(new Metrics.Plotter("Residence"){
+		metrics.addCustomData(new Metrics.Plotter("Residence"){
 
 			@Override
 			public int getValue() {
@@ -51,7 +49,7 @@ public class MetricsHandler {
 			
 		});
 		
-		graph.addPlotter(new Metrics.Plotter("Regios"){
+		metrics.addCustomData(new Metrics.Plotter("Regios"){
 
 			@Override
 			public int getValue() {
@@ -60,7 +58,7 @@ public class MetricsHandler {
 			
 		});
 		
-		graph.addPlotter(new Metrics.Plotter("PreciousStones"){
+		metrics.addCustomData(new Metrics.Plotter("PreciousStones"){
 
 			@Override
 			public int getValue() {
