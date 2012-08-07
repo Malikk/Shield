@@ -68,7 +68,7 @@ public class FlagManager {
 		createFlag(flag, region, players, value);
 	}
 	
-	public boolean getFlagAndValue(Player player, String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException, InvalidRegionException{
+	public boolean getFlagAndValue(Player player, String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException {
 		
 		Flag f = getFlag(flag, region);
 		
@@ -85,16 +85,11 @@ public class FlagManager {
 		}
 	}
 	
-	public Flag getFlag(String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException, InvalidRegionException{
+	public Flag getFlag(String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException {
 		
 		//Check if flag is valid
 		if (!isValidFlag(flag)){
 			throw new InvalidFlagException();
-		}
-		
-		//Check if Region is valid
-		if (!plugin.rm.isValidRegion(region)){
-			throw new InvalidRegionException();
 		}
 		
 		for (Flag f: flags){

@@ -26,10 +26,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-import com.malikk.shield.exceptions.FlagNotFoundException;
-import com.malikk.shield.exceptions.InvalidFlagException;
-import com.malikk.shield.exceptions.InvalidRegionException;
-import com.malikk.shield.exceptions.RegionNotFoundException;
+import com.malikk.shield.exceptions.*;
 import com.malikk.shield.flags.Flag;
 import com.malikk.shield.regions.ShieldRegion;
 
@@ -51,11 +48,6 @@ public class ShieldAPIManager implements ShieldAPI{
 	}
 
 	@Override
-	public ShieldRegion getPriorityRegion() {
-		return plugin.config.getHighestPriority(getRegions());
-	}
-
-	@Override
 	public ShieldRegion getPriorityRegion(String name) throws RegionNotFoundException {
 		return plugin.config.getHighestPriority(plugin.rm.getShieldRegions(name));
 	}
@@ -66,17 +58,17 @@ public class ShieldAPIManager implements ShieldAPI{
 	}
 	
 	@Override
-	public ShieldRegion getPriorityRegion(Entity entity){
+	public ShieldRegion getPriorityRegion(Entity entity) throws RegionNotFoundException{
 		return plugin.config.getHighestPriority(getRegions(entity));
 	}
 	
 	@Override
-	public ShieldRegion getPriorityRegion(Location loc){
+	public ShieldRegion getPriorityRegion(Location loc) throws RegionNotFoundException{
 		return plugin.config.getHighestPriority(getRegions(loc));
 	}
 	
 	@Override
-	public ArrayList<ShieldRegion> getRegions(){
+	public ArrayList<ShieldRegion> getRegions() throws RegionNotFoundException{
 		return plugin.pm.getRegions();
 	}
 	
@@ -86,12 +78,12 @@ public class ShieldAPIManager implements ShieldAPI{
 	}
 
 	@Override
-	public ArrayList<ShieldRegion> getRegions(Entity entity) {
+	public ArrayList<ShieldRegion> getRegions(Entity entity) throws RegionNotFoundException {
 		return plugin.pm.getRegions(entity);
 	}
 
 	@Override
-	public ArrayList<ShieldRegion> getRegions(Location loc) {
+	public ArrayList<ShieldRegion> getRegions(Location loc) throws RegionNotFoundException {
 		return plugin.pm.getRegions(loc);
 	}
 
@@ -160,7 +152,7 @@ public class ShieldAPIManager implements ShieldAPI{
 	}
 
 	@Override
-	public boolean getFlagValue(Player player, String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException, InvalidRegionException {
+	public boolean getFlagValue(Player player, String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException {
 		return plugin.fm.getFlagAndValue(player, flag, region);
 	}
 	
@@ -170,7 +162,7 @@ public class ShieldAPIManager implements ShieldAPI{
 	}
 
 	@Override
-	public Flag getFlag(String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException, InvalidRegionException {
+	public Flag getFlag(String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException {
 		return plugin.fm.getFlag(flag, region);
 	}
 

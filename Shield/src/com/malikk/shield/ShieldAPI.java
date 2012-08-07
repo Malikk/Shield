@@ -26,10 +26,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-import com.malikk.shield.exceptions.FlagNotFoundException;
-import com.malikk.shield.exceptions.InvalidFlagException;
-import com.malikk.shield.exceptions.InvalidRegionException;
-import com.malikk.shield.exceptions.RegionNotFoundException;
+import com.malikk.shield.exceptions.*;
 import com.malikk.shield.flags.Flag;
 import com.malikk.shield.regions.ShieldRegion;
 
@@ -54,13 +51,6 @@ public interface ShieldAPI {
 	public ShieldRegion getShieldRegion(String name, String pluginName) throws RegionNotFoundException;
 	
 	/**
-	 * Gets the highest priority region
-	 * 
-	 * @return {@link ShieldRegion} - The highest priority ShieldRegion
-	 */
-	public ShieldRegion getPriorityRegion();
-	
-	/**
 	 * Gets the highest priority ShieldRegion by the passed in name
 	 * 
 	 * @param name
@@ -81,22 +71,25 @@ public interface ShieldAPI {
 	 * Gets the highest priority region at the location of the specific entity. 
 	 * @param entity 
 	 * @return {@link ShieldRegion} - The highest priority ShieldRegion
+	 * @throws RegionNotFoundException 
 	 */
-	public ShieldRegion getPriorityRegion(Entity entity);
+	public ShieldRegion getPriorityRegion(Entity entity) throws RegionNotFoundException;
 	
 	/**
 	 * Gets the highest priority region at the specific location.
 	 * @param location
 	 * @return {@link ShieldRegion} - The highest priority ShieldRegion
+	 * @throws RegionNotFoundException 
 	 */
-	public ShieldRegion getPriorityRegion(Location location);
+	public ShieldRegion getPriorityRegion(Location location) throws RegionNotFoundException;
 	
 	/**
 	 * Gets all regions from all plugins
 	 * 
 	 * @return ArrayList<{@link ShieldRegion}>
+	 * @throws RegionNotFoundException 
 	 */
-	public ArrayList<ShieldRegion> getRegions();
+	public ArrayList<ShieldRegion> getRegions() throws RegionNotFoundException;
 	
 	/**
 	 * Gets the regions by the passed in name
@@ -112,16 +105,18 @@ public interface ShieldAPI {
 	 * 
 	 * @param entity
 	 * @return {@link ShieldRegion}
+	 * @throws RegionNotFoundException 
 	 */
-	public ArrayList<ShieldRegion> getRegions(Entity entity);
+	public ArrayList<ShieldRegion> getRegions(Entity entity) throws RegionNotFoundException;
 	
 	/**
 	 * Gets the regions that the Location is in
 	 * 
 	 * @param location
 	 * @return {@link ShieldRegion}
+	 * @throws RegionNotFoundException 
 	 */
-	public ArrayList<ShieldRegion> getRegions(Location location);
+	public ArrayList<ShieldRegion> getRegions(Location location) throws RegionNotFoundException;
 	
 	/**
 	 * Checks whether or not the entity is in any regions
@@ -240,7 +235,7 @@ public interface ShieldAPI {
 	 * @throws InvalidRegionException 
 	 * @throws InvalidFlagException 
 	 */
-	public boolean getFlagValue(Player player, String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException, InvalidRegionException;
+	public boolean getFlagValue(Player player, String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException;
 	
 	/**
 	 * Checks the value of a flag for a specific Player.
@@ -261,5 +256,5 @@ public interface ShieldAPI {
 	 * @throws InvalidRegionException 
 	 * @throws InvalidFlagException 
 	 */
-	public Flag getFlag(String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException, InvalidRegionException;
+	public Flag getFlag(String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException;
 }

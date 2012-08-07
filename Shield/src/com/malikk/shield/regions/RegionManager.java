@@ -34,15 +34,6 @@ public class RegionManager {
 		plugin = instance;
 	}
 	
-	public boolean isValidRegion(ShieldRegion region){
-		for (ShieldRegion region2: plugin.pm.getRegions()){
-			if (plugin.rm.regionsAreEqual(region, region2)){
-				return true;
-			}
-		}
-		return false;
-	}
-	
 	//Always valid or Exception is thown
 	public ShieldRegion getShieldRegion(String name, String protect) throws RegionNotFoundException{
 		for (ShieldRegion region: plugin.pm.getRegions()){

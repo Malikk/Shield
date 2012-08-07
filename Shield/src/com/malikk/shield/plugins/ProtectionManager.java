@@ -26,6 +26,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import com.malikk.shield.Shield;
+import com.malikk.shield.exceptions.RegionNotFoundException;
 import com.malikk.shield.plugins.invoker.CheckMethod;
 import com.malikk.shield.plugins.invoker.MethodInvoker;
 import com.malikk.shield.regions.ShieldRegion;
@@ -39,33 +40,33 @@ public class ProtectionManager implements Protect{
 	}
 	
 	@Override
-	public ArrayList<ShieldRegion> getRegions(){
+	public ArrayList<ShieldRegion> getRegions() throws RegionNotFoundException{
 		Object[] args = {};
 		
 		@SuppressWarnings("unchecked")
 		ArrayList<ShieldRegion> outcomes = (ArrayList<ShieldRegion>) getOutcomes(CheckMethod.GET_REGIONS, args, null);
 		
-		return outcomes;
+		return validateArrayList(outcomes);
 	}
 	
 	@Override
-	public ArrayList<ShieldRegion> getRegions(Entity entity){
+	public ArrayList<ShieldRegion> getRegions(Entity entity) throws RegionNotFoundException{
 		Object[] args = {entity};
 		
 		@SuppressWarnings("unchecked")
 		ArrayList<ShieldRegion> outcomes = (ArrayList<ShieldRegion>) getOutcomes(CheckMethod.GET_REGIONS, args, null);
 		
-		return outcomes;
+		return validateArrayList(outcomes);
 	}
 	
 	@Override
-	public ArrayList<ShieldRegion> getRegions(Location loc){
+	public ArrayList<ShieldRegion> getRegions(Location loc) throws RegionNotFoundException{
 		Object[] args = {loc};
 		
 		@SuppressWarnings("unchecked")
 		ArrayList<ShieldRegion> outcomes = (ArrayList<ShieldRegion>) getOutcomes(CheckMethod.GET_REGIONS, args, null);
 		
-		return outcomes;
+		return validateArrayList(outcomes);
 	}
 	
 	/**
@@ -244,6 +245,14 @@ public class ProtectionManager implements Protect{
 	public Object getOutcomes(CheckMethod check, Object[] args, String plugin){
 		MethodInvoker invoker = new MethodInvoker(shield);
 		return invoker.invoke(check, args, plugin);
+	}
+	
+	public ArrayList<ShieldRegion> validateArrayList(ArrayList<ShieldRegion> outcomes) throws RegionNotFoundException{
+		if (outcomes.size() != 0){
+			return outcomes;
+		}else{
+			throw new RegionNotFoundException();
+		}
 	}
 
 	@Override
