@@ -118,25 +118,25 @@ public class Shield extends JavaPlugin{
 		log("Scanning for supported protection plugins...");
 		
 		//Attempt to load PreciousStones
-		if (packageExists("net.sacredlabyrinth.Phaed.PreciousStones.PreciousStones")){
+		if (foundClass("net.sacredlabyrinth.Phaed.PreciousStones.PreciousStones")){
 			preciousStones = new Protect_PreciousStones(this);
 			log(String.format("Detected PreciousStones: %s", preciousStones.isEnabled() ? "Hooked v" + preciousStones.getVersion() : "Waiting"));
 		}
 		
 		//Attempt to load Regios
-		if (packageExists("couk.Adamki11s.Regios.Main.Regios")){
+		if (foundClass("couk.Adamki11s.Regios.Main.Regios")){
 			regios = new Protect_Regios(this);
 			log(String.format("Detected Regios: %s", regios.isEnabled() ? "Hooked v" + regios.getVersion() : "Waiting"));
 		}
 		
 		//Attempt to load Residence
-		if (packageExists("com.bekvon.bukkit.residence.Residence")){
+		if (foundClass("com.bekvon.bukkit.residence.Residence")){
 			residence = new Protect_Residence(this);
 			log(String.format("Detected Residence: %s", residence.isEnabled() ? "Hooked v" + residence.getVersion() : "Waiting"));
 		}
 		
 		//Attempt to load WorldGuard
-		if (packageExists("com.sk89q.worldguard.bukkit.WorldGuardPlugin")){
+		if (foundClass("com.sk89q.worldguard.bukkit.WorldGuardPlugin")){
 			worldGuard = new Protect_WorldGuard(this);
 			log(String.format("Detected WorldGuard: %s", worldGuard.isEnabled() ? "Hooked v" + worldGuard.getVersion() : "Waiting"));
 		}
@@ -146,11 +146,9 @@ public class Shield extends JavaPlugin{
 		}
 	}
 	
-	private boolean packageExists(String...packages){
+	private boolean foundClass(String className){
 		try{
-			for (String pkg : packages){
-				Class.forName(pkg);
-			}
+			Class.forName(className);
 			foundPlugin = true;
 			return true;
 		}catch (Exception e){
