@@ -63,7 +63,7 @@ public class Protect_Regios implements Listener, Protect {
 				if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
 					protect = (Regios) p;
 					api = new RegiosAPI();
-					shield.pm.addClassToInstantiatedPluginClassesArrayList(name);
+					shield.pm.addClassToInstantiatedSet(name);
 				}
 			}
 		}
@@ -80,7 +80,7 @@ public class Protect_Regios implements Listener, Protect {
 			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
 				protect = (Regios) p;
 				api = new RegiosAPI();
-				shield.pm.addClassToInstantiatedPluginClassesArrayList(name);
+				shield.pm.addClassToInstantiatedSet(name);
 				shield.log(String.format("Hooked %s v" + getVersion(), name));
 			}
 		}

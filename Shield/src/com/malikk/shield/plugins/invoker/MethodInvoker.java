@@ -21,6 +21,7 @@ package com.malikk.shield.plugins.invoker;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -33,7 +34,7 @@ public class MethodInvoker {
 	
 	Shield shield;
 	
-	public static ArrayList<String> plugins = new ArrayList<String>();
+	public static HashSet<String> plugins = new HashSet<String>();
 	private ArrayList<Boolean> booleanOutcomes = new ArrayList<Boolean>();
 	private ArrayList<ShieldRegion> regionOutcomes = new ArrayList<ShieldRegion>();
 	private Location locOutcome = null;

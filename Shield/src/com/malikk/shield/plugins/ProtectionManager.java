@@ -238,7 +238,7 @@ public class ProtectionManager implements Protect{
 		return outcomes.get(0);
 	}
 	
-	public void addClassToInstantiatedPluginClassesArrayList(String className){
+	public void addClassToInstantiatedSet(String className){
 		MethodInvoker.plugins.add("Protect_" + className);
 	}
 	

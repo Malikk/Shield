@@ -71,7 +71,7 @@ public class Protect_WorldGuard implements Listener, Protect {
 	            
 				if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
 					protect = (WorldGuardPlugin) p;
-					shield.pm.addClassToInstantiatedPluginClassesArrayList(name);
+					shield.pm.addClassToInstantiatedSet(name);
 				}
 			}
 		}
@@ -87,7 +87,7 @@ public class Protect_WorldGuard implements Listener, Protect {
 
 			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
 				protect = (WorldGuardPlugin) p;
-				shield.pm.addClassToInstantiatedPluginClassesArrayList(name);
+				shield.pm.addClassToInstantiatedSet(name);
 				shield.log(String.format("Hooked %s v" + getVersion(), name));
 			}
 		}
