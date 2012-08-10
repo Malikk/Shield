@@ -19,7 +19,7 @@
 
 package com.malikk.shield.plugins;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -51,7 +51,7 @@ public class Protect_Residence implements Listener, Protect {
 	private static Residence protect = null;
 	
 	//Managers
-	ResidenceManager rmanager = Residence.getResidenceManager();
+	private static ResidenceManager rmanager = null;
 	
 	public Protect_Residence(Shield instance){
 		this.shield = instance;
@@ -66,7 +66,8 @@ public class Protect_Residence implements Listener, Protect {
 	            
 				if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
 					protect = (Residence) p;
-					shield.pm.addClassToInstantiatedSet(name);
+					rmanager = Residence.getResidenceManager();
+					shield.pm.addClassToInstantiatedSet(shield.residence);
 				}
 			}
 		}
@@ -82,7 +83,8 @@ public class Protect_Residence implements Listener, Protect {
 
 			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
 				protect = (Residence) p;
-				shield.pm.addClassToInstantiatedSet(name);
+				rmanager = Residence.getResidenceManager();
+				shield.pm.addClassToInstantiatedSet(shield.residence);
 				shield.log(String.format("Hooked %s v" + getVersion(), name));
 			}
 		}
@@ -110,12 +112,12 @@ public class Protect_Residence implements Listener, Protect {
 		return protect.getDescription().getVersion();
 	}
 	
-	public ArrayList<ShieldRegion> getRegions(){
-		ArrayList<ShieldRegion> regions = new ArrayList<ShieldRegion>();
+	public HashSet<ShieldRegion> getRegions(){
+		HashSet<ShieldRegion> regions = new HashSet<ShieldRegion>();
 		
 		try{
 			for (String r: rmanager.getResidenceList()){
-				regions.add(shield.rm.createShieldRegion(r, name, Bukkit.getWorld(rmanager.getByName(r).getWorld())));
+				regions.add(shield.rm.createShieldRegion(r, shield.residence, Bukkit.getWorld(rmanager.getByName(r).getWorld())));
 			}
 			
 			return regions;
@@ -125,30 +127,30 @@ public class Protect_Residence implements Listener, Protect {
 		}
 	}
 	
-	public ArrayList<ShieldRegion> getRegions(Entity entity){
+	public HashSet<ShieldRegion> getRegions(Entity entity){
 		try{
 			String [] s = {rmanager.getByLoc(entity.getLocation()).getName()};
 			return getShieldRegions(s, entity.getWorld());
 		}catch(Exception e){
-			return new ArrayList<ShieldRegion>();
+			return new HashSet<ShieldRegion>();
 		}
 	}
 	
-	public ArrayList<ShieldRegion> getRegions(Location loc){
+	public HashSet<ShieldRegion> getRegions(Location loc){
 		try{
 			String [] s = {rmanager.getByLoc(loc).getName()};
 			return getShieldRegions(s, loc.getWorld());
 		}catch(Exception e){
-			return new ArrayList<ShieldRegion>();
+			return new HashSet<ShieldRegion>();
 		}
 	}
 	
-	public ArrayList<ShieldRegion> getShieldRegions(String[] names, World world){
-		ArrayList<ShieldRegion> regions = new ArrayList<ShieldRegion>();
+	public HashSet<ShieldRegion> getShieldRegions(String[] names, World world){
+		HashSet<ShieldRegion> regions = new HashSet<ShieldRegion>();
 		
 		try{
 			for (String r: names){
-				regions.add(shield.rm.createShieldRegion(r, name, world));
+				regions.add(shield.rm.createShieldRegion(r, shield.residence, world));
 			}
 			
 			return regions;

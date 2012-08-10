@@ -48,18 +48,19 @@ public class FlagManager {
 		return (validFlags.contains(flag) ? true : false);
 	}
 	
-	@SuppressWarnings("unchecked")
 	public void createFlag(String flag, ShieldRegion region, HashSet<Player> players, boolean value){
-		Flag f = new Flag(flag, region, convertPlayersToNames(players), value);
+		Flag f1 = new Flag(flag, region, convertPlayersToNames(players), value);
 		
-		for (Flag f1: (HashSet<Flag>)flags.clone()){
-			if (f1.getName().equalsIgnoreCase(flag) && plugin.rm.regionsAreEqual(region, f1.getRegion())){
-				consolidateFlags(f, f1);
+		for (Flag f2: flags){
+			if (f1.getName().equalsIgnoreCase(f2.getName()) && plugin.rm.regionsAreEqual(f1.getRegion(), f2.getRegion())){
+				plugin.log("flags should consolidate");
+				consolidateFlags(f2, f1);
 				return;
 			}
 		}
 		
-		flags.add(f);
+		plugin.log("No flag set, setting flag");
+		flags.add(f1);
 	}
 	
 	public void createFlag(String flag, ShieldRegion region, Player player, boolean value){
@@ -71,6 +72,8 @@ public class FlagManager {
 	public boolean getFlagAndValue(Player player, String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException {
 		
 		Flag f = getFlag(flag, region);
+		
+		plugin.log("Got flag");
 		
 		return getValue(player, f);
 	}
@@ -93,7 +96,7 @@ public class FlagManager {
 		}
 		
 		for (Flag f: flags){
-			if (f.getName().equalsIgnoreCase(flag) && f.getRegion() == region){
+			if (f.getName().equalsIgnoreCase(flag) && plugin.rm.regionsAreEqual(f.getRegion(), region)){
 				return f;
 			}
 		}
@@ -111,7 +114,7 @@ public class FlagManager {
 		return set;
 	}
 	
-	public void consolidateFlags(Flag f1, Flag f2){
+	public void consolidateFlags(Flag f2, Flag f1){
 		if (f1.getValue() == f2.getValue()){
 			f1.addPlayers(f2.getPlayerNames());
 		}else{

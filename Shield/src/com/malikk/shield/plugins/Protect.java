@@ -19,13 +19,12 @@
 
 package com.malikk.shield.plugins;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-import com.malikk.shield.exceptions.RegionNotFoundException;
 import com.malikk.shield.regions.ShieldRegion;
 
 public interface Protect {
@@ -38,11 +37,11 @@ public interface Protect {
 	
 	public String getVersion();
 	
-	public ArrayList<ShieldRegion> getRegions() throws RegionNotFoundException;
+	public HashSet<ShieldRegion> getRegions();
 	
-	public ArrayList<ShieldRegion> getRegions(Entity entity) throws RegionNotFoundException;
+	public HashSet<ShieldRegion> getRegions(Entity entity);
 	
-	public ArrayList<ShieldRegion> getRegions(Location loc) throws RegionNotFoundException;
+	public HashSet<ShieldRegion> getRegions(Location loc);
 	
 	public boolean isInRegion(Entity entity);
 	

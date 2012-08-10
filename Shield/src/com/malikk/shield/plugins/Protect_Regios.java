@@ -19,7 +19,7 @@
 
 package com.malikk.shield.plugins;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -63,7 +63,7 @@ public class Protect_Regios implements Listener, Protect {
 				if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
 					protect = (Regios) p;
 					api = new RegiosAPI();
-					shield.pm.addClassToInstantiatedSet(name);
+					shield.pm.addClassToInstantiatedSet(shield.regios);
 				}
 			}
 		}
@@ -80,7 +80,7 @@ public class Protect_Regios implements Listener, Protect {
 			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
 				protect = (Regios) p;
 				api = new RegiosAPI();
-				shield.pm.addClassToInstantiatedSet(name);
+				shield.pm.addClassToInstantiatedSet(shield.regios);
 				shield.log(String.format("Hooked %s v" + getVersion(), name));
 			}
 		}
@@ -109,36 +109,36 @@ public class Protect_Regios implements Listener, Protect {
 		return protect.getDescription().getVersion();
 	}
 	
-	public ArrayList<ShieldRegion> getRegions(){
-		ArrayList<ShieldRegion> regions = new ArrayList<ShieldRegion>();
+	public HashSet<ShieldRegion> getRegions(){
+		HashSet<ShieldRegion> regions = new HashSet<ShieldRegion>();
 		
 		if (api.getRegions() != null){
 			for (Region r: api.getRegions()){
-				regions.add(shield.rm.createShieldRegion(r.getName(), name, r.getWorld()));
+				regions.add(shield.rm.createShieldRegion(r.getName(), shield.regios, r.getWorld()));
 			}
 		}
 		
 		return regions;
 	}
 	
-	public ArrayList<ShieldRegion> getRegions(Entity entity){
-		ArrayList<ShieldRegion> regions = new ArrayList<ShieldRegion>();
+	public HashSet<ShieldRegion> getRegions(Entity entity){
+		HashSet<ShieldRegion> regions = new HashSet<ShieldRegion>();
 		
 		if (api.getRegions(entity.getLocation()) != null){
 			for (Region r: api.getRegions(entity.getLocation())){
-				regions.add(shield.rm.createShieldRegion(r.getName(), name, r.getWorld()));
+				regions.add(shield.rm.createShieldRegion(r.getName(), shield.regios, r.getWorld()));
 			}
 		}
 		
 		return regions;
 	}
 	
-	public ArrayList<ShieldRegion> getRegions(Location loc){
-		ArrayList<ShieldRegion> regions = new ArrayList<ShieldRegion>();
+	public HashSet<ShieldRegion> getRegions(Location loc){
+		HashSet<ShieldRegion> regions = new HashSet<ShieldRegion>();
 		
 		if (api.getRegions(loc) != null){
 			for (Region r: api.getRegions(loc)){
-				regions.add(shield.rm.createShieldRegion(r.getName(), name, r.getWorld()));
+				regions.add(shield.rm.createShieldRegion(r.getName(), shield.regios, r.getWorld()));
 			}
 		}
 		

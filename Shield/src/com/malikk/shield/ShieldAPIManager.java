@@ -53,7 +53,7 @@ public class ShieldAPIManager implements ShieldAPI{
 	}
 
 	@Override
-	public ShieldRegion getPriorityRegion(ArrayList<ShieldRegion> regions){
+	public ShieldRegion getPriorityRegion(HashSet<ShieldRegion> regions){
 		return plugin.config.getHighestPriority(regions);
 	}
 	
@@ -68,22 +68,22 @@ public class ShieldAPIManager implements ShieldAPI{
 	}
 	
 	@Override
-	public ArrayList<ShieldRegion> getRegions() throws RegionNotFoundException{
+	public HashSet<ShieldRegion> getRegions() throws RegionNotFoundException{
 		return plugin.pm.getRegions();
 	}
 	
 	@Override
-	public ArrayList<ShieldRegion> getRegions(String name) throws RegionNotFoundException {
+	public HashSet<ShieldRegion> getRegions(String name) throws RegionNotFoundException {
 		return plugin.rm.getShieldRegions(name);
 	}
 
 	@Override
-	public ArrayList<ShieldRegion> getRegions(Entity entity) throws RegionNotFoundException {
+	public HashSet<ShieldRegion> getRegions(Entity entity) throws RegionNotFoundException {
 		return plugin.pm.getRegions(entity);
 	}
 
 	@Override
-	public ArrayList<ShieldRegion> getRegions(Location loc) throws RegionNotFoundException {
+	public HashSet<ShieldRegion> getRegions(Location loc) throws RegionNotFoundException {
 		return plugin.pm.getRegions(loc);
 	}
 

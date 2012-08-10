@@ -62,10 +62,10 @@ public interface ShieldAPI {
 	/**
 	 * Gets the region with the highest priority, according to the plugin order in the config file.
 	 * 
-	 * @param regions - ArrayList of regions
+	 * @param regions - HashSet of regions
 	 * @return {@link ShieldRegion} - The highest priority ShieldRegion
 	 */
-	public ShieldRegion getPriorityRegion(ArrayList<ShieldRegion> regions);
+	public ShieldRegion getPriorityRegion(HashSet<ShieldRegion> regions);
 	
 	/**
 	 * Gets the highest priority region at the location of the specific entity. 
@@ -86,19 +86,19 @@ public interface ShieldAPI {
 	/**
 	 * Gets all regions from all plugins
 	 * 
-	 * @return ArrayList<{@link ShieldRegion}>
+	 * @return HashSet<{@link ShieldRegion}>
 	 * @throws RegionNotFoundException 
 	 */
-	public ArrayList<ShieldRegion> getRegions() throws RegionNotFoundException;
+	public HashSet<ShieldRegion> getRegions() throws RegionNotFoundException;
 	
 	/**
 	 * Gets the regions by the passed in name
 	 * 
 	 * @param name
-	 * @return ArrayList<{@link ShieldRegion}>
+	 * @return HashSet<{@link ShieldRegion}>
 	 * @throws RegionNotFoundException 
 	 */
-	public ArrayList<ShieldRegion> getRegions(String name) throws RegionNotFoundException;
+	public HashSet<ShieldRegion> getRegions(String name) throws RegionNotFoundException;
 	
 	/**
 	 * Gets the regions that the Entity is in
@@ -107,7 +107,7 @@ public interface ShieldAPI {
 	 * @return {@link ShieldRegion}
 	 * @throws RegionNotFoundException 
 	 */
-	public ArrayList<ShieldRegion> getRegions(Entity entity) throws RegionNotFoundException;
+	public HashSet<ShieldRegion> getRegions(Entity entity) throws RegionNotFoundException;
 	
 	/**
 	 * Gets the regions that the Location is in
@@ -116,7 +116,7 @@ public interface ShieldAPI {
 	 * @return {@link ShieldRegion}
 	 * @throws RegionNotFoundException 
 	 */
-	public ArrayList<ShieldRegion> getRegions(Location location) throws RegionNotFoundException;
+	public HashSet<ShieldRegion> getRegions(Location location) throws RegionNotFoundException;
 	
 	/**
 	 * Checks whether or not the entity is in any regions

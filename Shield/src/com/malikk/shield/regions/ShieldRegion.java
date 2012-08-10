@@ -23,6 +23,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 
 import com.malikk.shield.Shield;
+import com.malikk.shield.plugins.Protect;
 
 /**
  * A ShieldRegion is simply an object which contains the association between the name of a region and the plugin is comes from. The purpose is to avoid conflicts with region names across protection plugins.
@@ -35,10 +36,11 @@ import com.malikk.shield.Shield;
 public class ShieldRegion {
 	
 	private Shield plugin;
-	private String name, protect;
+	private String name;
 	private World world;
+	private Protect protect;
 	
-	public ShieldRegion (Shield instance, String name, String protect, World world){
+	public ShieldRegion (Shield instance, String name, Protect protect, World world){
 		plugin = instance;
 		
 		this.name = name;
@@ -61,6 +63,10 @@ public class ShieldRegion {
 	 * @return String - plugin name
 	 */
 	public String getPluginName(){
+		return protect.getPluginName();
+	}
+	
+	protected Protect getProtectObject(){
 		return protect;
 	}
 	
@@ -73,15 +79,19 @@ public class ShieldRegion {
 		return world;
 	}
 	
+	public boolean contains(Location loc){
+		return plugin.rm.containsLoc(this, loc);
+	}
+	
+	/*
+	 * TODO Not sure if I will continue working on these methods, as not all regions will be cuboid
+	 * 
 	public Location getMaxLoc(){
-		return plugin.pm.getMaxLoc(this);
+		return plugin.rm.getMaxLoc(this);
 	}
 	
 	public Location getMinLoc(){
-		return plugin.pm.getMinLoc(this);
+		return plugin.rm.getMinLoc(this);
 	}
-	
-	public boolean contains(Location loc){
-		return plugin.pm.contains(this, loc);
-	}
+	*/
 }

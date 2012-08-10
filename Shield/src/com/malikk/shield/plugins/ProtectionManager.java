@@ -20,6 +20,7 @@
 package com.malikk.shield.plugins;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -27,250 +28,140 @@ import org.bukkit.entity.Player;
 
 import com.malikk.shield.Shield;
 import com.malikk.shield.exceptions.RegionNotFoundException;
-import com.malikk.shield.plugins.invoker.CheckMethod;
-import com.malikk.shield.plugins.invoker.MethodInvoker;
 import com.malikk.shield.regions.ShieldRegion;
 
-public class ProtectionManager implements Protect{
+public class ProtectionManager {
 	
 	Shield shield;
+	public static HashSet<Protect> plugins = new HashSet<Protect>();
 	
 	public ProtectionManager(Shield instance){
 		shield = instance;
 	}
 	
-	@Override
-	public ArrayList<ShieldRegion> getRegions() throws RegionNotFoundException{
-		Object[] args = {};
+	public HashSet<ShieldRegion> getRegions() throws RegionNotFoundException{
+		HashSet<ShieldRegion> regions = new HashSet<ShieldRegion>();
 		
-		@SuppressWarnings("unchecked")
-		ArrayList<ShieldRegion> outcomes = (ArrayList<ShieldRegion>) getOutcomes(CheckMethod.GET_REGIONS, args, null);
+		for (Protect protect: plugins){
+			regions.addAll(protect.getRegions());
+		}
 		
-		return validateArrayList(outcomes);
+		return validateSet(regions);
 	}
 	
-	@Override
-	public ArrayList<ShieldRegion> getRegions(Entity entity) throws RegionNotFoundException{
-		Object[] args = {entity};
+	public HashSet<ShieldRegion> getRegions(Entity entity) throws RegionNotFoundException{
+		HashSet<ShieldRegion> regions = new HashSet<ShieldRegion>();
 		
-		@SuppressWarnings("unchecked")
-		ArrayList<ShieldRegion> outcomes = (ArrayList<ShieldRegion>) getOutcomes(CheckMethod.GET_REGIONS, args, null);
+		for (Protect protect: plugins){
+			regions.addAll(protect.getRegions(entity));
+		}
 		
-		return validateArrayList(outcomes);
+		return validateSet(regions);
 	}
 	
-	@Override
-	public ArrayList<ShieldRegion> getRegions(Location loc) throws RegionNotFoundException{
-		Object[] args = {loc};
+	public HashSet<ShieldRegion> getRegions(Location loc) throws RegionNotFoundException{
+		HashSet<ShieldRegion> regions = new HashSet<ShieldRegion>();
 		
-		@SuppressWarnings("unchecked")
-		ArrayList<ShieldRegion> outcomes = (ArrayList<ShieldRegion>) getOutcomes(CheckMethod.GET_REGIONS, args, null);
+		for (Protect protect: plugins){
+			regions.addAll(protect.getRegions(loc));
+		}
 		
-		return validateArrayList(outcomes);
+		return validateSet(regions);
 	}
 	
-	/**
-	 * Returns true if ANY Protect classes return true
-	 */
-	@Override
 	public boolean isInRegion(Entity entity) {
-		Object[] args = {entity};
-		
-		@SuppressWarnings("unchecked")
-		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes(CheckMethod.IS_IN_REGION, args, null);
-		
-		for (boolean outcome: outcomes){
-			if (outcome == true){
+		for (Protect protect: plugins){
+			if (protect.isInRegion(entity)){
 				return true;
 			}
 		}
+		
 		return false;
 	}
 
-	/**
-	 * Returns true if ANY Protect classes return true
-	 */
-	@Override
 	public boolean isInRegion(Location loc) {
-		Object[] args = {loc};
-		
-		@SuppressWarnings("unchecked")
-		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes(CheckMethod.IS_IN_REGION, args, null);
-		
-		for (boolean outcome: outcomes){
-			if (outcome == true){
+		for (Protect protect: plugins){
+			if (protect.isInRegion(loc)){
 				return true;
 			}
 		}
+		
 		return false;
 	}
 	
-	/**
-	 * Only returns true if EVERY Protect class returns true
-	 */
-	@Override
 	public boolean canBuild(Player player) {
-		Object[] args = {player};
-		
-		@SuppressWarnings("unchecked")
-		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes(CheckMethod.CAN_BUILD, args, null);
-		
-		for (boolean outcome: outcomes){
-			if (outcome == false){
+		for (Protect protect: plugins){
+			if (!protect.canBuild(player)){
 				return false;
 			}
 		}
+		
 		return true;
 	}
 
-	/**
-	 * Only returns true is EVERY Protect class returns true
-	 */
-	@Override
 	public boolean canBuild(Player player, Location loc) {
-		Object[] args = {player, loc};
-		
-		@SuppressWarnings("unchecked")
-		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes(CheckMethod.CAN_BUILD, args, null);
-		
-		for (boolean outcome: outcomes){
-			if (outcome == false){
+		for (Protect protect: plugins){
+			if (!protect.canBuild(player, loc)){
 				return false;
 			}
 		}
+		
 		return true;
 	}
 
-	/**
-	 * Only returns true is EVERY Protect class returns true
-	 */
-	@Override
 	public boolean canUse(Player player) {
-		Object[] args = {player};
-		
-		@SuppressWarnings("unchecked")
-		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes(CheckMethod.CAN_USE, args, null);
-		
-		for (boolean outcome: outcomes){
-			if (outcome == false){
+		for (Protect protect: plugins){
+			if (!protect.canUse(player)){
 				return false;
 			}
 		}
+		
 		return true;
 	}
 
-	/**
-	 * Only returns true is EVERY Protect class returns true
-	 */
-	@Override
 	public boolean canUse(Player player, Location loc) {
-		Object[] args = {player, loc};
-		
-		@SuppressWarnings("unchecked")
-		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes(CheckMethod.CAN_USE, args, null);
-		
-		for (boolean outcome: outcomes){
-			if (outcome == false){
+		for (Protect protect: plugins){
+			if (!protect.canUse(player, loc)){
 				return false;
 			}
 		}
+		
 		return true;
 	}
 
-	/**
-	 * Only returns true is EVERY Protect class returns true
-	 */
-	@Override
 	public boolean canOpen(Player player) {
-		Object[] args = {player};
-		
-		@SuppressWarnings("unchecked")
-		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes(CheckMethod.CAN_OPEN, args, null);
-		
-		for (boolean outcome: outcomes){
-			if (outcome == false){
+		for (Protect protect: plugins){
+			if (!protect.canOpen(player)){
 				return false;
 			}
 		}
+		
 		return true;
 	}
 
-	/**
-	 * Only returns true is EVERY Protect class returns true
-	 */
-	@Override
 	public boolean canOpen(Player player, Location loc) {
-		Object[] args = {player, loc};
-		
-		@SuppressWarnings("unchecked")
-		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes(CheckMethod.CAN_OPEN, args, null);
-		
-		for (boolean outcome: outcomes){
-			if (outcome == false){
+		for (Protect protect: plugins){
+			if (!protect.canOpen(player, loc)){
 				return false;
 			}
 		}
+		
 		return true;
 	}
 	
-	@Override
-	public Location getMaxLoc(ShieldRegion region) {
-		Object[] args = {region};
-		return (Location) getOutcomes(CheckMethod.GET_MAX_LOC, args, region.getPluginName());
-	}
-
-	@Override
-	public Location getMinLoc(ShieldRegion region) {
-		Object[] args = {region};
-		return (Location) getOutcomes(CheckMethod.GET_MIN_LOC, args, region.getPluginName());
-	}
-
-	/**
-	 * Will only ever return one outcome, since plugin is always specified
+	/*
+	 * Util
 	 */
-	@Override
-	public boolean contains(ShieldRegion region, Location loc) {
-		Object[] args = {region, loc};
-		
-		@SuppressWarnings("unchecked")
-		ArrayList<Boolean> outcomes = (ArrayList<Boolean>) getOutcomes(CheckMethod.CONTAINS_LOC, args, region.getPluginName());
-		
-		return outcomes.get(0);
+	public void addClassToInstantiatedSet(Protect protect){
+		plugins.add(protect);
 	}
 	
-	public void addClassToInstantiatedSet(String className){
-		MethodInvoker.plugins.add("Protect_" + className);
-	}
-	
-	public Object getOutcomes(CheckMethod check, Object[] args, String plugin){
-		MethodInvoker invoker = new MethodInvoker(shield);
-		return invoker.invoke(check, args, plugin);
-	}
-	
-	public ArrayList<ShieldRegion> validateArrayList(ArrayList<ShieldRegion> outcomes) throws RegionNotFoundException{
-		if (outcomes.size() != 0){
-			return outcomes;
+	public HashSet<ShieldRegion> validateSet(HashSet<ShieldRegion> set) throws RegionNotFoundException{
+		if (set.size() != 0){
+			return set;
 		}else{
 			throw new RegionNotFoundException();
 		}
-	}
-
-	@Override
-	public boolean isEnabled() {
-		// Dont use
-		return false;
-	}
-
-	@Override
-	public String getPluginName() {
-		// Dont use
-		return null;
-	}
-	
-	@Override
-	public String getVersion() {
-		// Dont use
-		return null;
 	}
 
 }

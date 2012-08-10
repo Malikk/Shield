@@ -19,7 +19,7 @@
 
 package com.malikk.shield.plugins;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -103,17 +103,17 @@ public class Protect_PreciousStones implements Listener, Protect {
 		return protect.getDescription().getVersion();
 	}
 	
-	public ArrayList<ShieldRegion> getRegions() {
+	public HashSet<ShieldRegion> getRegions() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public ArrayList<ShieldRegion> getRegions(Entity entity) {
+	public HashSet<ShieldRegion> getRegions(Entity entity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public ArrayList<ShieldRegion> getRegions(Location loc) {
+	public HashSet<ShieldRegion> getRegions(Location loc) {
 		// TODO Auto-generated method stub
 		return null;
 	}

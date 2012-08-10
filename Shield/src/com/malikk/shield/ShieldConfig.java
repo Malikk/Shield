@@ -25,6 +25,7 @@ import com.malikk.shield.regions.ShieldRegion;
 
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class ShieldConfig {
 
@@ -49,14 +50,14 @@ public class ShieldConfig {
 		plugin.saveConfig();
 	}
 	
-	public ShieldRegion getHighestPriority(ArrayList<ShieldRegion> regions){
+	public ShieldRegion getHighestPriority(HashSet<ShieldRegion> regions){
 		int counter = 1;
 		
 		plugin.log("Amount of regions passed in: " + regions.size());
-		if (regions.size() == 0){
-			return null;
-		}else if (regions.size() == 1){
-			return regions.get(0);
+		if (regions.size() == 1){
+			for (ShieldRegion region: regions){
+				return region;
+			}
 		}
 		
 		while (config.get("Priority." + counter) != null){
@@ -77,7 +78,7 @@ public class ShieldConfig {
 						
 						plugin.log("Priority is WorldGuard");
 						
-						ArrayList<ShieldRegion> worldGuardRegions = new ArrayList<ShieldRegion>();
+						HashSet<ShieldRegion> worldGuardRegions = new HashSet<ShieldRegion>();
 						
 						for (ShieldRegion region2: regions){
 							

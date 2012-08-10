@@ -19,12 +19,14 @@
 
 package com.malikk.shield.regions;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
+import org.bukkit.Location;
 import org.bukkit.World;
 
 import com.malikk.shield.Shield;
 import com.malikk.shield.exceptions.RegionNotFoundException;
+import com.malikk.shield.plugins.Protect;
 
 public class RegionManager {
 
@@ -46,8 +48,8 @@ public class RegionManager {
 		throw new RegionNotFoundException();
 	}
 	
-	public ArrayList<ShieldRegion> getShieldRegions(String name) throws RegionNotFoundException{
-		ArrayList<ShieldRegion> regions = new ArrayList<ShieldRegion>();
+	public HashSet<ShieldRegion> getShieldRegions(String name) throws RegionNotFoundException{
+		HashSet<ShieldRegion> regions = new HashSet<ShieldRegion>();
 		
 		for (ShieldRegion region: plugin.pm.getRegions()){
 			if (region.getName().equalsIgnoreCase(name)){
@@ -64,7 +66,7 @@ public class RegionManager {
 	}
 	
 	//Not always Valid
-	public ShieldRegion createShieldRegion(String name, String protect, World world){
+	public ShieldRegion createShieldRegion(String name, Protect protect, World world){
 		return new ShieldRegion(plugin, name, protect, world);
 	}
 	
@@ -74,5 +76,10 @@ public class RegionManager {
 		}else{
 			return false;
 		}
+	}
+	
+	//Region Info Getters
+	public boolean containsLoc(ShieldRegion region, Location loc){
+		return (region.getProtectObject().contains(region, loc));
 	}
 }
