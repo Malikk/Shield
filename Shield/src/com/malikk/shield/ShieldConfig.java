@@ -53,7 +53,7 @@ public class ShieldConfig {
 	public ShieldRegion getHighestPriority(HashSet<ShieldRegion> regions){
 		int counter = 1;
 		
-		plugin.log("Amount of regions passed in: " + regions.size());
+		//plugin.log("Amount of regions passed in: " + regions.size());
 		if (regions.size() == 1){
 			for (ShieldRegion region: regions){
 				return region;
@@ -62,21 +62,21 @@ public class ShieldConfig {
 		
 		while (config.get("Priority." + counter) != null){
 			
-			plugin.log("Priority " + counter + "-----------");
+			//plugin.log("Priority " + counter + "-----------");
 			
 			for (ShieldRegion region: regions){
 				
-				plugin.log("Region name: " + region.getName());
+				//plugin.log("Region name: " + region.getName());
 				
 				String name = region.getPluginName();
 				
 				if (name.equalsIgnoreCase(config.getString("Priority." + counter))){
 					
-					plugin.log("Is priority");
+					//plugin.log("Is priority");
 					
 					if (name.equalsIgnoreCase("WorldGuard")){
 						
-						plugin.log("Priority is WorldGuard");
+						//plugin.log("Priority is WorldGuard");
 						
 						HashSet<ShieldRegion> worldGuardRegions = new HashSet<ShieldRegion>();
 						

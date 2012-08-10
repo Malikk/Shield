@@ -19,7 +19,6 @@
 
 package com.malikk.shield.plugins;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import org.bukkit.Location;
@@ -162,6 +161,15 @@ public class ProtectionManager {
 		}else{
 			throw new RegionNotFoundException();
 		}
+	}
+	
+	public Protect getProtectObjectFromName(String plugin){
+		for (Protect protect: plugins){
+			if (protect.getPluginName().equalsIgnoreCase(plugin)){
+				return protect;
+			}
+		}
+		return null;
 	}
 
 }

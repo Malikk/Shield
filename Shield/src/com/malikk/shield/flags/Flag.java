@@ -23,8 +23,10 @@ import java.io.Serializable;
 import java.util.HashSet;
 
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
+import com.malikk.shield.Shield;
 import com.malikk.shield.regions.ShieldRegion;
 
 /**
@@ -43,18 +45,27 @@ import com.malikk.shield.regions.ShieldRegion;
  */
 public class Flag implements Serializable{
 
-	private static final long serialVersionUID = -2914461212107421563L;
+	private static final long serialVersionUID = -8016185180582202784L;
 	
+	//Static
+	public static Shield shield;
+	
+	//Flag Fields
 	private String name;
-	private ShieldRegion region;
 	private HashSet<String> players;
 	private boolean value;
 
+	//Region Fields
+	private String regionName, regionPlugin, world;
+	
 	public Flag(String flag, ShieldRegion region, HashSet<String> players, boolean value){
 		this.name = flag;
-		this.region = region;
 		this.players = players;
 		this.value = value;
+		
+		this.regionName = region.getName();
+		this.regionPlugin = region.getPluginName();
+		this.world = region.getWorld().getName();
 	}
 	
 	/**
@@ -72,7 +83,7 @@ public class Flag implements Serializable{
 	 * @return {@link ShieldRegion} that the flag is set on
 	 */
 	public ShieldRegion getRegion(){
-		return region;
+		return shield.rm.createShieldRegion(regionName, shield.pm.getProtectObjectFromName(regionPlugin), Bukkit.getWorld(world));
 	}
 	
 	/**

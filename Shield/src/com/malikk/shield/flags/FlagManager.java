@@ -53,13 +53,12 @@ public class FlagManager {
 		
 		for (Flag f2: flags){
 			if (f1.getName().equalsIgnoreCase(f2.getName()) && plugin.rm.regionsAreEqual(f1.getRegion(), f2.getRegion())){
-				plugin.log("flags should consolidate");
+				plugin.log("Should consolidate");
 				consolidateFlags(f2, f1);
 				return;
 			}
 		}
 		
-		plugin.log("No flag set, setting flag");
 		flags.add(f1);
 	}
 	
@@ -72,8 +71,6 @@ public class FlagManager {
 	public boolean getFlagAndValue(Player player, String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException {
 		
 		Flag f = getFlag(flag, region);
-		
-		plugin.log("Got flag");
 		
 		return getValue(player, f);
 	}
@@ -121,4 +118,5 @@ public class FlagManager {
 			f1.removePlayers(f2.getPlayerNames());
 		}
 	}
+	
 }

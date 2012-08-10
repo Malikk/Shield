@@ -38,6 +38,14 @@ public class FlagPersister {
 	}
 	
 	public void save(){
+		
+		int amt = plugin.fm.flags.size();
+		
+		if (amt == 0){
+			plugin.log("No flags to save");
+			return;
+		}
+		
 		//create a new File
 		File saveFile = new File(plugin.getDataFolder() + File.separator + "Flags.dat");
 
@@ -55,11 +63,7 @@ public class FlagPersister {
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			
 			//Write file here
-			try{
-				oos.writeInt(plugin.fm.flags.size());
-			}catch(Exception e){
-				plugin.log("No Flags to save!");
-			}
+			oos.writeInt(amt);
 			
 			for (Flag f: plugin.fm.flags){
 				oos.writeObject(f);
@@ -67,7 +71,7 @@ public class FlagPersister {
 				
 			oos.close();
 			
-			plugin.log("Flags Saved");
+			plugin.log(amt + " Flags Saved");
 			
 		}catch(Exception e){
 			e.printStackTrace();
@@ -90,16 +94,13 @@ public class FlagPersister {
 				ois = new ObjectInputStream(fis);
 				
 				Integer recordCount = ois.readInt();
-				int x = 0;
 				
 				for(int i = 0; i < recordCount; i ++){
 					Flag f = (Flag) ois.readObject();
 					plugin.fm.flags.add(f);
-					
-					x = i;
 				}
 				
-				plugin.log(x + " Flags loaded");
+				plugin.log(recordCount + " Flags loaded");
 					
 			}catch(FileNotFoundException e){
 				plugin.log("Could not locate data file... ");

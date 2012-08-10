@@ -43,7 +43,7 @@ import com.malikk.shield.regions.RegionManager;
  * @version v0.1, 6-13-2012
  */
 public class Shield extends JavaPlugin{
-	
+
 	protected Logger log = Logger.getLogger("Minecraft");
 	PluginDescriptionFile pdfile = null;
 	
@@ -71,7 +71,9 @@ public class Shield extends JavaPlugin{
 		
 		config.loadConfig();
 		
-		//flagPersister.load();
+		Flag.shield = this;
+		
+		flagPersister.load();
 		
 		new MetricsHandler(this);
 		

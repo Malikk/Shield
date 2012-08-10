@@ -71,7 +71,8 @@ public class RegionManager {
 	}
 	
 	public boolean regionsAreEqual(ShieldRegion region1, ShieldRegion region2){
-		if (region1.getName() == region2.getName() && region1.getPluginName() == region2.getPluginName()){
+		
+		if (region1.getName().equalsIgnoreCase(region2.getName()) && region1.getPluginName().equalsIgnoreCase(region2.getPluginName())){
 			return true;
 		}else{
 			return false;
