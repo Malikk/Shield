@@ -1,4 +1,25 @@
-package us.twoguys.shield.plugins;
+/*
+ * Copyright 2012 Jordan Hobgood
+ * 
+ * This file is part of Shield.
+ *
+ * Shield is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Shield is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *  
+ * You should have received a copy of the GNU General Public License
+ * along with Shield.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package com.malikk.shield.plugins;
+
+import java.util.HashSet;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -11,39 +32,31 @@ import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
-import Package.location.for.main.class;
+import com.malikk.shield.*;
+import com.malikk.shield.regions.ShieldRegion;
 
-import us.twoguys.shield.*;
-
-public class Protect_PluginName implements Listener, Protect {
+public class Protect_Plugin implements Listener, Protect {
 	
 	Shield shield;
 	
-	private final String name = "PluginName";
-	private final String pack = "Package.location.for.main.class";
-	private static int instanceCount = 0;
-	private static PMainClass protect = null;
+	private final String name = "Plugin Name";
+	private final String pack = "location.of.main.class";
+	private static YourPlugin protect = null;
 	
-	public Protect_PluginName(Shield instance){
+	public Protect_Plugin(Shield instance){
 		this.shield = instance;
 		
 		PluginManager pm = shield.getServer().getPluginManager();
 		pm.registerEvents(this, shield);
 		
-		if (instanceCount == 0){
-			//Load plugin if it was loaded before Shield
-			if (protect == null) {
-				Plugin p = shield.getServer().getPluginManager().getPlugin(name);
-	            
-				if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
-					protect = (PMainClass) p;
-					shield.pm.addClassToInstantiatedPluginClassesArrayList(name);
-				}
+		//Load plugin if it was loaded before Shield
+		if (protect == null) {
+			Plugin p = shield.getServer().getPluginManager().getPlugin(name);
+            
+			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
+				protect = (YourPlugin) p;
 			}
 		}
-		
-		instanceCount++;
-		
 	}
 	
 	@EventHandler(priority = EventPriority.MONITOR)
@@ -52,9 +65,8 @@ public class Protect_PluginName implements Listener, Protect {
 			Plugin p = shield.getServer().getPluginManager().getPlugin(name);
 
 			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
-				protect = (PMainClass) p;
-				shield.pm.addClassToInstantiatedPluginClassesArrayList(name);
-				shield.log(String.format("%s hooked.", name));
+				protect = (YourPlugin) p;
+				shield.log(String.format("Hooked %s v" + getVersion(), name));
 			}
 		}
 	}
@@ -69,51 +81,111 @@ public class Protect_PluginName implements Listener, Protect {
 		}
 	}
 	
+	@Override
 	public boolean isEnabled(){
 		return (protect == null ? false : true);
 	}
 	
+	@Override
 	public String getPluginName(){
 		return name;
 	}
+	
+	@Override
+	public String getVersion(){
+		return protect.getDescription().getVersion();
+	}
+	
+	/*
+	 * If you can figure out how to make ShieldRegions, great, otherwise skip these.
+	 * You'll need to make the object for this class in Shield's main class to pass in.
+	 * 
+	 * shield.rm.createShieldRegion(String regionName, Protect objectForThisClass, World world));
+	 *
+	 */
+	@Override
+	public HashSet<ShieldRegion> getRegions() {
+		// TODO Return a HashSet of all the regions under your plugin
+		return null;
+	}
 
+	@Override
+	public HashSet<ShieldRegion> getRegions(Entity entity) {
+		// TODO Return all the regions that the entity is in
+		return null;
+	}
+
+	@Override
+	public HashSet<ShieldRegion> getRegions(Location loc) {
+		// TODO Return all the regions the location is in
+		return null;
+	}
+
+	@Override
 	public boolean isInRegion(Entity entity) {
-		// TODO Auto-generated method stub
+		// TODO Return whether or not the entity is in any regions
 		return false;
 	}
 
+	@Override
 	public boolean isInRegion(Location loc) {
-		// TODO Auto-generated method stub
+		// TODO Return whether or not the location is in any regions
 		return false;
 	}
 
+	@Override
 	public boolean canBuild(Player player) {
-		// TODO Auto-generated method stub
+		// TODO Return whether or not the player can build at their current location
 		return false;
 	}
-
+	
+	@Override
 	public boolean canBuild(Player player, Location loc) {
-		// TODO Auto-generated method stub
+		// TODO Return whether or not the player can build at the specified location
 		return false;
 	}
 
+	@Override
 	public boolean canUse(Player player) {
-		// TODO Auto-generated method stub
+		// TODO Return whether or not the player can use doors, buttons, levers, etc. at their current location
 		return false;
 	}
 
+	@Override
 	public boolean canUse(Player player, Location loc) {
-		// TODO Auto-generated method stub
+		// TODO Return whether or not the player can use doors, buttons, levers, etc. at the specified location
 		return false;
 	}
 
+	@Override
 	public boolean canOpen(Player player) {
-		// TODO Auto-generated method stub
+		// TODO Return whether or not the player can open chests, furnaces, and dispensers at their current location
 		return false;
 	}
 
+	@Override
 	public boolean canOpen(Player player, Location loc) {
-		// TODO Auto-generated method stub
+		// TODO Return whether or not the player can open chests, furnaces, and dispensers at the specified location
 		return false;
 	}
+	
+	//Region info Getters
+	@Override
+	public Location getMaxLoc(ShieldRegion region) {
+		// TODO Leave this blank, not sure if this will be implemented
+		return null;
+	}
+
+	@Override
+	public Location getMinLoc(ShieldRegion region) {
+		// TODO Leave this blank, not sure if this will be implemented
+		return null;
+	}
+
+	@Override
+	public boolean contains(ShieldRegion region, Location loc) {
+		// TODO Return whether or not the ShieldRegion contains the specified location
+		return false;
+	}
+
 }

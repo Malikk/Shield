@@ -45,7 +45,6 @@ public class Protect_Regios implements Listener, Protect {
 	
 	private final String name = "Regios";
 	private final String pack = "couk.Adamki11s.Regios.Main.Regios";
-	private static int instanceCount = 0;
 	private static Regios protect = null;
 	private static RegiosAPI api = null;
 	
@@ -55,21 +54,16 @@ public class Protect_Regios implements Listener, Protect {
 		PluginManager pm = shield.getServer().getPluginManager();
 		pm.registerEvents(this, shield);
 		
-		if (instanceCount == 0){
-			//Load plugin if it was loaded before Shield
-			if (protect == null) {
-				Plugin p = shield.getServer().getPluginManager().getPlugin(name);
-	            
-				if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
-					protect = (Regios) p;
-					api = new RegiosAPI();
-					shield.pm.addClassToInstantiatedSet(shield.regios);
-				}
+		//Load plugin if it was loaded before Shield
+		if (protect == null) {
+			Plugin p = shield.getServer().getPluginManager().getPlugin(name);
+            
+			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
+				protect = (Regios) p;
+				api = new RegiosAPI();
+				shield.pm.addClassToInstantiatedSet(shield.regios);
 			}
 		}
-		
-		instanceCount++;
-		
 	}
 	
 	@EventHandler(priority = EventPriority.MONITOR)
@@ -97,18 +91,22 @@ public class Protect_Regios implements Listener, Protect {
 		}
 	}
 	
+	@Override
 	public boolean isEnabled(){
 		return (protect == null ? false : true);
 	}
 	
+	@Override
 	public String getPluginName(){
 		return name;
 	}
 	
+	@Override
 	public String getVersion(){
 		return protect.getDescription().getVersion();
 	}
 	
+	@Override
 	public HashSet<ShieldRegion> getRegions(){
 		HashSet<ShieldRegion> regions = new HashSet<ShieldRegion>();
 		
@@ -121,6 +119,7 @@ public class Protect_Regios implements Listener, Protect {
 		return regions;
 	}
 	
+	@Override
 	public HashSet<ShieldRegion> getRegions(Entity entity){
 		HashSet<ShieldRegion> regions = new HashSet<ShieldRegion>();
 		
@@ -133,6 +132,7 @@ public class Protect_Regios implements Listener, Protect {
 		return regions;
 	}
 	
+	@Override
 	public HashSet<ShieldRegion> getRegions(Location loc){
 		HashSet<ShieldRegion> regions = new HashSet<ShieldRegion>();
 		
@@ -145,34 +145,42 @@ public class Protect_Regios implements Listener, Protect {
 		return regions;
 	}
 
+	@Override
 	public boolean isInRegion(Entity entity) {
 		return api.isInRegion(entity.getLocation());
 	}
 
+	@Override
 	public boolean isInRegion(Location loc) {
 		return api.isInRegion(loc);
 	}
 
+	@Override
 	public boolean canBuild(Player player) {
 		return api.getRegion(player).canBypassProtection(player);
 	}
 
+	@Override
 	public boolean canBuild(Player player, Location loc) {
 		return api.getRegion(loc).canBypassProtection(player);
 	}
 
+	@Override
 	public boolean canUse(Player player) {
 		return api.getRegion(player).canBypassProtection(player);
 	}
 
+	@Override
 	public boolean canUse(Player player, Location loc) {
 		return api.getRegion(loc).canBypassProtection(player);
 	}
 
+	@Override
 	public boolean canOpen(Player player) {
 		return api.getRegion(player).canBypassProtection(player);
 	}
 
+	@Override
 	public boolean canOpen(Player player, Location loc) {
 		return api.getRegion(loc).canBypassProtection(player);
 	}

@@ -47,7 +47,6 @@ public class Protect_Residence implements Listener, Protect {
 	
 	private final String name = "Residence";
 	private final String pack = "com.bekvon.bukkit.residence.Residence";
-	private static int instanceCount = 0;
 	private static Residence protect = null;
 	
 	//Managers
@@ -59,21 +58,16 @@ public class Protect_Residence implements Listener, Protect {
 		PluginManager pm = shield.getServer().getPluginManager();
 		pm.registerEvents(this, shield);
 		
-		if (instanceCount == 0){
-			//Load plugin if it was loaded before Shield
-			if (protect == null) {
-				Plugin p = shield.getServer().getPluginManager().getPlugin(name);
-	            
-				if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
-					protect = (Residence) p;
-					rmanager = Residence.getResidenceManager();
-					shield.pm.addClassToInstantiatedSet(shield.residence);
-				}
+		//Load plugin if it was loaded before Shield
+		if (protect == null) {
+			Plugin p = shield.getServer().getPluginManager().getPlugin(name);
+            
+			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
+				protect = (Residence) p;
+				rmanager = Residence.getResidenceManager();
+				shield.pm.addClassToInstantiatedSet(shield.residence);
 			}
 		}
-		
-		instanceCount++;
-		
 	}
 	
 	@EventHandler(priority = EventPriority.MONITOR)
@@ -100,18 +94,22 @@ public class Protect_Residence implements Listener, Protect {
 		}
 	}
 	
+	@Override
 	public boolean isEnabled(){
 		return (protect == null ? false : true);
 	}
 	
+	@Override
 	public String getPluginName(){
 		return name;
 	}
 	
+	@Override
 	public String getVersion(){
 		return protect.getDescription().getVersion();
 	}
 	
+	@Override
 	public HashSet<ShieldRegion> getRegions(){
 		HashSet<ShieldRegion> regions = new HashSet<ShieldRegion>();
 		
@@ -127,6 +125,7 @@ public class Protect_Residence implements Listener, Protect {
 		}
 	}
 	
+	@Override
 	public HashSet<ShieldRegion> getRegions(Entity entity){
 		try{
 			String [] s = {rmanager.getByLoc(entity.getLocation()).getName()};
@@ -136,6 +135,7 @@ public class Protect_Residence implements Listener, Protect {
 		}
 	}
 	
+	@Override
 	public HashSet<ShieldRegion> getRegions(Location loc){
 		try{
 			String [] s = {rmanager.getByLoc(loc).getName()};
@@ -160,44 +160,52 @@ public class Protect_Residence implements Listener, Protect {
 		}
 	}
 
+	@Override
 	public boolean isInRegion(Entity entity) {
 		return (rmanager.getByLoc(entity.getLocation()) != null ? true : false);
 	}
 
+	@Override
 	public boolean isInRegion(Location loc) {
 		return (rmanager.getByLoc(loc) != null ? true : false);
 	}
-
+	
+	@Override
 	public boolean canBuild(Player player) {
 		FlagPermissions flags = Residence.getPermsByLoc(player.getLocation());
 		
 		return flags.playerHas(player.getName(), player.getWorld().getName(), "build", true);
 	}
 
+	@Override
 	public boolean canBuild(Player player, Location loc) {
 		FlagPermissions flags = Residence.getPermsByLoc(loc);
 		
 		return flags.playerHas(player.getName(), player.getWorld().getName(), "build", true);
 	}
 
+	@Override
 	public boolean canUse(Player player) {
 		FlagPermissions flags = Residence.getPermsByLoc(player.getLocation());
 		
 		return flags.playerHas(player.getName(), player.getWorld().getName(), "use", true);
 	}
 
+	@Override
 	public boolean canUse(Player player, Location loc) {
 		FlagPermissions flags = Residence.getPermsByLoc(loc);
 		
 		return flags.playerHas(player.getName(), player.getWorld().getName(), "use", true);
 	}
 
+	@Override
 	public boolean canOpen(Player player) {
 		FlagPermissions flags = Residence.getPermsByLoc(player.getLocation());
 		
 		return flags.playerHas(player.getName(), player.getWorld().getName(), "container", true);
 	}
 
+	@Override
 	public boolean canOpen(Player player, Location loc) {
 		FlagPermissions flags = Residence.getPermsByLoc(loc);
 		

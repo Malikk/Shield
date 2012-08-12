@@ -55,7 +55,6 @@ public class Protect_WorldGuard implements Listener, Protect {
 	
 	private final String name = "WorldGuard";
 	private final String pack = "com.sk89q.worldguard.bukkit.WorldGuardPlugin";
-	private static int instanceCount = 0;
 	private static WorldGuardPlugin protect = null;
 	
 	public Protect_WorldGuard(Shield instance){
@@ -64,20 +63,15 @@ public class Protect_WorldGuard implements Listener, Protect {
 		PluginManager pm = shield.getServer().getPluginManager();
 		pm.registerEvents(this, shield);
 		
-		if (instanceCount == 0){
-			//Load plugin if it was loaded before Shield
-			if (protect == null) {
-				Plugin p = shield.getServer().getPluginManager().getPlugin(name);
-	            
-				if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
-					protect = (WorldGuardPlugin) p;
-					shield.pm.addClassToInstantiatedSet(shield.worldGuard);
-				}
+		//Load plugin if it was loaded before Shield
+		if (protect == null) {
+			Plugin p = shield.getServer().getPluginManager().getPlugin(name);
+            
+			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
+				protect = (WorldGuardPlugin) p;
+				shield.pm.addClassToInstantiatedSet(shield.worldGuard);
 			}
 		}
-		
-		instanceCount++;
-		
 	}
 	
 	@EventHandler(priority = EventPriority.MONITOR)
@@ -103,14 +97,17 @@ public class Protect_WorldGuard implements Listener, Protect {
 		}
 	}
 	
+	@Override
 	public boolean isEnabled(){
 		return (protect == null ? false : true);
 	}
 	
+	@Override
 	public String getPluginName(){
 		return name;
 	}
 	
+	@Override
 	public String getVersion(){
 		return protect.getDescription().getVersion();
 	}
@@ -141,6 +138,7 @@ public class Protect_WorldGuard implements Listener, Protect {
 		return null;
 	}
 	
+	@Override
 	public HashSet<ShieldRegion> getRegions(){
 		HashSet<ShieldRegion> regions = new HashSet<ShieldRegion>();
 		List<World> worlds = Bukkit.getServer().getWorlds();
@@ -154,10 +152,12 @@ public class Protect_WorldGuard implements Listener, Protect {
 		return regions;
 	}
 	
+	@Override
 	public HashSet<ShieldRegion> getRegions(Entity entity){
 		return getShieldRegions(getAppRegionSet(entity), entity.getWorld());
 	}
 	
+	@Override
 	public HashSet<ShieldRegion> getRegions(Location loc){
 		return getShieldRegions(getAppRegionSet(loc), loc.getWorld());
 	}
@@ -172,6 +172,7 @@ public class Protect_WorldGuard implements Listener, Protect {
 		return regions;
 	}
 	
+	@Override
 	public boolean isInRegion(Entity entity) {
 		return (getAppRegionSet(entity).size() > 0 ? true : false);
 	}
@@ -191,18 +192,22 @@ public class Protect_WorldGuard implements Listener, Protect {
 		return (priority == null ? null : priority.getId());
 	}
 	
+	@Override
 	public boolean isInRegion(Location loc) {
 		return (getAppRegionSet(loc).size() > 0 ? true : false);
 	}
 	
+	@Override
 	public boolean canBuild(Player player) {
 		return protect.canBuild(player, player.getLocation());
 	}
 
+	@Override
 	public boolean canBuild(Player player, Location loc) {
 		return protect.canBuild(player, loc);
 	}
 	
+	@Override
 	public boolean canUse(Player player){
 		ApplicableRegionSet regionSet = getAppRegionSet((Entity)player);
 		LocalPlayer lPlayer = protect.wrapPlayer(player);
@@ -212,6 +217,7 @@ public class Protect_WorldGuard implements Listener, Protect {
 		return (regionSet.allows(DefaultFlag.USE, lPlayer) ? true : false);
 	}
 	
+	@Override
 	public boolean canUse(Player player, Location loc){
 		ApplicableRegionSet regionSet = getAppRegionSet(loc);
 		LocalPlayer lPlayer = protect.wrapPlayer(player);
@@ -221,6 +227,7 @@ public class Protect_WorldGuard implements Listener, Protect {
 		return (regionSet.allows(DefaultFlag.USE, lPlayer) ? true : false);
 	}
 	
+	@Override
 	public boolean canOpen(Player player){
 		ApplicableRegionSet regionSet = getAppRegionSet((Entity)player);
 		LocalPlayer lPlayer = protect.wrapPlayer(player);
@@ -230,6 +237,7 @@ public class Protect_WorldGuard implements Listener, Protect {
 		return (regionSet.allows(DefaultFlag.CHEST_ACCESS, lPlayer) ? true : false);
 	}
 	
+	@Override
 	public boolean canOpen(Player player, Location loc){
 		ApplicableRegionSet regionSet = getAppRegionSet(loc);
 		LocalPlayer lPlayer = protect.wrapPlayer(player);
@@ -252,16 +260,19 @@ public class Protect_WorldGuard implements Listener, Protect {
 		return protect.getRegionManager(region.getWorld()).getRegionExact(region.getName());
 	}
 	
+	@Override
 	public Location getMaxLoc(ShieldRegion region){
 		BlockVector vector = getRegion(region).getMaximumPoint();
 		return new Location(region.getWorld(), vector.getBlockX(), vector.getBlockY(), vector.getBlockZ());
 	}
 	
+	@Override
 	public Location getMinLoc(ShieldRegion region){
 		BlockVector vector = getRegion(region).getMinimumPoint();
 		return new Location(region.getWorld(), vector.getBlockX(), vector.getBlockY(), vector.getBlockZ());
 	}
 
+	@Override
 	public boolean contains(ShieldRegion region, Location loc){
 		Vector vec = new Vector(loc.getX(), loc.getY(), loc.getZ());
 		return getRegion(region).contains(vec);

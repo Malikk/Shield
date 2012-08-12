@@ -43,7 +43,6 @@ public class Protect_PreciousStones implements Listener, Protect {
 	
 	private final String name = "PreciousStones";
 	private final String pack = "net.sacredlabyrinth.Phaed.PreciousStones.PreciousStones";
-	private static int instanceCount = 0;
 	private static PreciousStones protect = null;
 	
 	public Protect_PreciousStones(Shield instance){
@@ -52,20 +51,15 @@ public class Protect_PreciousStones implements Listener, Protect {
 		PluginManager pm = shield.getServer().getPluginManager();
 		pm.registerEvents(this, shield);
 		
-		if (instanceCount == 0){
-			//Load plugin if it was loaded before Shield
-			if (protect == null) {
-				Plugin p = shield.getServer().getPluginManager().getPlugin(name);
-	            
-				if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
-					protect = (PreciousStones) p;
-					//shield.pm.addClassToInstantiatedPluginClassesArrayList(name);
-				}
+		//Load plugin if it was loaded before Shield
+		if (protect == null) {
+			Plugin p = shield.getServer().getPluginManager().getPlugin(name);
+            
+			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
+				protect = (PreciousStones) p;
+				//shield.pm.addClassToInstantiatedPluginClassesArrayList(name);
 			}
 		}
-		
-		instanceCount++;
-		
 	}
 	
 	@EventHandler(priority = EventPriority.MONITOR)
@@ -91,68 +85,82 @@ public class Protect_PreciousStones implements Listener, Protect {
 		}
 	}
 	
+	@Override
 	public boolean isEnabled(){
 		return (protect == null ? false : true);
 	}
 	
+	@Override
 	public String getPluginName(){
 		return name;
 	}
 	
+	@Override
 	public String getVersion(){
 		return protect.getDescription().getVersion();
 	}
 	
+	@Override
 	public HashSet<ShieldRegion> getRegions() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
 	public HashSet<ShieldRegion> getRegions(Entity entity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
 	public HashSet<ShieldRegion> getRegions(Location loc) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
 	public boolean isInRegion(Entity entity) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
+	@Override
 	public boolean isInRegion(Location loc) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
+	@Override
 	public boolean canBuild(Player player) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	
+	@Override
 	public boolean canBuild(Player player, Location loc) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
+	@Override
 	public boolean canUse(Player player) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
+	@Override
 	public boolean canUse(Player player, Location loc) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
+	@Override
 	public boolean canOpen(Player player) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
+	@Override
 	public boolean canOpen(Player player, Location loc) {
 		// TODO Auto-generated method stub
 		return false;
