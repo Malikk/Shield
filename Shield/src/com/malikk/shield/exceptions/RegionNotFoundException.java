@@ -20,7 +20,7 @@
 package com.malikk.shield.exceptions;
 
 /**
- * This exception is thrown when a valid ShieldRegion could not be found for the desired name and/or plugin.
+ * This exception is thrown when no regions could be found for the particular search
  * <p>
  * In the catch block, you should set the default action to take when this occurs.
  * @author Malikk

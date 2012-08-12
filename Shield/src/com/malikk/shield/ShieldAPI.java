@@ -19,7 +19,6 @@
 
 package com.malikk.shield;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import org.bukkit.Location;
@@ -44,7 +43,7 @@ public interface ShieldAPI {
 	 * Gets the ShieldRegion by the passed in name and plugin.
 	 * 
 	 * @param name
-	 * @param pluginName
+	 * @param pluginName 
 	 * @return {@link ShieldRegion} - The highest priority ShieldRegion
 	 * @throws RegionNotFoundException 
 	 */
@@ -68,7 +67,7 @@ public interface ShieldAPI {
 	public ShieldRegion getPriorityRegion(HashSet<ShieldRegion> regions);
 	
 	/**
-	 * Gets the highest priority region at the location of the specific entity. 
+	 * Gets the highest priority region at the location of the specified entity. 
 	 * @param entity 
 	 * @return {@link ShieldRegion} - The highest priority ShieldRegion
 	 * @throws RegionNotFoundException 
@@ -76,7 +75,7 @@ public interface ShieldAPI {
 	public ShieldRegion getPriorityRegion(Entity entity) throws RegionNotFoundException;
 	
 	/**
-	 * Gets the highest priority region at the specific location.
+	 * Gets the highest priority region at the specified location.
 	 * @param location
 	 * @return {@link ShieldRegion} - The highest priority ShieldRegion
 	 * @throws RegionNotFoundException 
@@ -92,7 +91,7 @@ public interface ShieldAPI {
 	public HashSet<ShieldRegion> getRegions() throws RegionNotFoundException;
 	
 	/**
-	 * Gets the regions by the passed in name
+	 * Gets all the regions by the passed in name
 	 * 
 	 * @param name
 	 * @return HashSet<{@link ShieldRegion}>
@@ -101,19 +100,19 @@ public interface ShieldAPI {
 	public HashSet<ShieldRegion> getRegions(String name) throws RegionNotFoundException;
 	
 	/**
-	 * Gets the regions that the Entity is in
+	 * Gets all the regions that the Entity is in
 	 * 
 	 * @param entity
-	 * @return {@link ShieldRegion}
+	 * @return HashSet<{@link ShieldRegion}>
 	 * @throws RegionNotFoundException 
 	 */
 	public HashSet<ShieldRegion> getRegions(Entity entity) throws RegionNotFoundException;
 	
 	/**
-	 * Gets the regions that the Location is in
+	 * Gets all the regions that the Location is in
 	 * 
 	 * @param location
-	 * @return {@link ShieldRegion}
+	 * @return HashSet<{@link ShieldRegion}>
 	 * @throws RegionNotFoundException 
 	 */
 	public HashSet<ShieldRegion> getRegions(Location location) throws RegionNotFoundException;
@@ -126,7 +125,7 @@ public interface ShieldAPI {
 	public boolean isInRegion(Entity entity);
 	
 	/**
-	 * Checks if the location is in any region
+	 * Checks if the location is in any regions
 	 * @param location
 	 * @return Boolean
 	 */
@@ -208,7 +207,7 @@ public interface ShieldAPI {
 	 * 
 	 * @param flag - flag name, String
 	 * @param region - {@link ShieldRegion}
-	 * @param players  - HashSet<{@linkplain Player}> that the value is applied to (can be null)
+	 * @param players  - HashSet<{@linkplain Player}> that the value is applied to (can be empty)
 	 * @param value - Boolean value that is applied
 	 */
 	public void setFlag(String flag, ShieldRegion region, HashSet<Player> players, boolean value);
@@ -218,7 +217,7 @@ public interface ShieldAPI {
 	 * 
 	 * @param flag - flag name, String
 	 * @param region - {@link ShieldRegion}
-	 * @param player  - {@linkplain Player} that the value is applied to (can be null)
+	 * @param player  - {@linkplain Player} that the value is applied to 
 	 * @param value - Boolean value that is applied
 	 */
 	public void setFlag(String flag, ShieldRegion region, Player player, boolean value);
@@ -231,8 +230,7 @@ public interface ShieldAPI {
 	 * @param flag - flag name, String
 	 * @param region - {@link ShieldRegion}
 	 * @return Boolean
-	 * @throws FlagNotFoundException 
-	 * @throws InvalidRegionException 
+	 * @throws FlagNotFoundException  
 	 * @throws InvalidFlagException 
 	 */
 	public boolean getFlagValue(Player player, String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException;
@@ -252,8 +250,7 @@ public interface ShieldAPI {
 	 * @param flag - flag name, String
 	 * @param region - {@link ShieldRegion}
 	 * @return {@link Flag}
-	 * @throws FlagNotFoundException 
-	 * @throws InvalidRegionException 
+	 * @throws FlagNotFoundException  
 	 * @throws InvalidFlagException 
 	 */
 	public Flag getFlag(String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException;

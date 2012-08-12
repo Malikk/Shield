@@ -112,10 +112,14 @@ public class FlagManager {
 	}
 	
 	public void consolidateFlags(Flag f2, Flag f1){
+		if (f1.getPlayerNames().size() == 0){
+			return;
+		}
+		
 		if (f1.getValue() == f2.getValue()){
-			f1.addPlayers(f2.getPlayerNames());
+			f2.addPlayers(f1.getPlayerNames());
 		}else{
-			f1.removePlayers(f2.getPlayerNames());
+			f2.removePlayers(f1.getPlayerNames());
 		}
 	}
 	

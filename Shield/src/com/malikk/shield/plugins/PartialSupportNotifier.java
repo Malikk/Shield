@@ -17,24 +17,26 @@
  * along with Shield.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.malikk.shield;
+package com.malikk.shield.plugins;
 
 import java.util.ArrayList;
 
-public class IncompatibilityHandler {
+import com.malikk.shield.Shield;
+
+public class PartialSupportNotifier {
 
 	Shield plugin;
 	
 	ArrayList<String> known = new ArrayList<String>();
 	
-	public IncompatibilityHandler(Shield instance){
+	public PartialSupportNotifier(Shield instance){
 		plugin = instance;
 	}
 	
 	public void incompatible(String name, String method, String lookingFor, String instead){
 		String warning = name + "." + method;
 		
-		if (!known.contains(warning)){
+		if (!known.contains(warning) && plugin.config.AlertsAreEnabled()){
 			plugin.logWarning(String.format("%s API does not support '%s' for %s. Instead, %s", name, method, lookingFor, instead));
 			known.add(warning);
 		}

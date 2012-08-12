@@ -39,7 +39,13 @@ public class ShieldConfig {
 	public void loadConfig(){
 		config = plugin.getConfig();
 		
-		config.options().header("\n Shield v" + plugin.pdfile.getVersion() + "\n By Malikk \n ");
+		config.options().header("\n Shield v" + plugin.pdfile.getVersion() + "\n By Malikk \n \n " +
+				"AlertsEnabled: \n" +
+				"     This section defines whether or not you are notified in the server console when a plugin using Shield calls a method that a protection plugin on your server does not support.\n \n" +
+				"Priority: \n" +
+				"     This section sets which plugins have greater priority in the event of overlapping regions.\n \n");
+		
+		config.addDefault("AlertsEnabled", true);
 		
 		config.addDefault("Priority.1", "WorldGuard");
 		config.addDefault("Priority.2", "Residence");
@@ -102,5 +108,13 @@ public class ShieldConfig {
 			
 		}
 		return null;
+	}
+	
+	public boolean AlertsAreEnabled(){
+		if (config.getBoolean("AlertsEnabled")){
+			return true;
+		}else{
+			return false;
+		}
 	}
 }

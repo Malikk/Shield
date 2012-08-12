@@ -36,11 +36,11 @@ import com.malikk.shield.regions.RegionManager;
 /**
  * <b>Shield</b> - A collection of common Bukkit protection plugin API
  * <p>
- * For help implementing Shield, please visit the <a href="https://github.com/Malikk/Shield">Shield Github</a>
+ * For help implementing Shield, please visit the <a href="https://github.com/Malikk/Shield/wiki">Shield Wiki</a>
  * <p>
- * <img src="/Users/Jordan/git/Shield/Shield/lib/Logo.png">
+ * <img src = "https://dl.dropbox.com/u/59837317/Shield/SmallLogo.png">
  * @author Malikk
- * @version v0.1, 6-13-2012
+ * @version v1.0, 8-13-2012
  */
 public class Shield extends JavaPlugin{
 
@@ -56,7 +56,7 @@ public class Shield extends JavaPlugin{
 	public Protect_WorldGuard worldGuard = null;
 	
 	//Shield Classes
-	public IncompatibilityHandler incompat = new IncompatibilityHandler(this);
+	public PartialSupportNotifier notifier = new PartialSupportNotifier(this);
 	public FlagPersister flagPersister = new FlagPersister(this);
 	public ShieldConfig config = new ShieldConfig(this);
 	public ProtectionManager pm = new ProtectionManager(this);
