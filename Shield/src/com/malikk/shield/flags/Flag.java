@@ -23,7 +23,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 
 import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import com.malikk.shield.Shield;
@@ -175,5 +174,12 @@ public class Flag implements Serializable{
 		for (String p: players){
 			this.players.remove(p);
 		}
+	}
+	
+	/**
+	 * Removes this flag completely
+	 */
+	public void remove(){
+		shield.fm.flags.remove(this);
 	}
 }

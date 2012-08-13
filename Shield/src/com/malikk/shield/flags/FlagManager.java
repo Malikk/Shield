@@ -21,6 +21,7 @@ package com.malikk.shield.flags;
 
 import java.util.HashSet;
 
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import com.malikk.shield.Shield;
@@ -48,12 +49,18 @@ public class FlagManager {
 		return (validFlags.contains(flag) ? true : false);
 	}
 	
-	public void createFlag(String flag, ShieldRegion region, HashSet<Player> players, boolean value){
-		Flag f1 = new Flag(flag, region, convertPlayersToNames(players), value);
+	public void createFlag(String flag, ShieldRegion region, HashSet<String> players, boolean value) throws InvalidFlagException{
+		
+		if (!isValidFlag(flag)){
+			throw new InvalidFlagException();
+		}
+		
+		Flag f1 = new Flag(flag, region, players, value);
 		
 		for (Flag f2: flags){
 			if (f1.getName().equalsIgnoreCase(f2.getName()) && plugin.rm.regionsAreEqual(f1.getRegion(), f2.getRegion())){
 				plugin.log("Should consolidate");
+				flags.remove(f2);
 				consolidateFlags(f2, f1);
 				return;
 			}
@@ -62,8 +69,8 @@ public class FlagManager {
 		flags.add(f1);
 	}
 	
-	public void createFlag(String flag, ShieldRegion region, Player player, boolean value){
-		HashSet<Player> players = new HashSet<Player>();
+	public void createFlag(String flag, ShieldRegion region, String player, boolean value) throws InvalidFlagException{
+		HashSet<String> players = new HashSet<String>();
 		players.add(player);
 		createFlag(flag, region, players, value);
 	}
@@ -121,6 +128,9 @@ public class FlagManager {
 		}else{
 			f2.removePlayers(f1.getPlayerNames());
 		}
+		
+		flags.add(f2);
+		
 	}
 	
 }

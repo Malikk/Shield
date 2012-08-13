@@ -19,7 +19,6 @@
 
 package com.malikk.shield;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import org.bukkit.Location;
@@ -142,12 +141,12 @@ public class ShieldAPIManager implements ShieldAPI{
 	}
 
 	@Override
-	public void setFlag(String flag, ShieldRegion region, HashSet<Player> players, boolean value) {
+	public void setFlag(String flag, ShieldRegion region, HashSet<String> players, boolean value) throws InvalidFlagException {
 		plugin.fm.createFlag(flag, region, players, value);
 	}
 	
 	@Override
-	public void setFlag(String flag, ShieldRegion region, Player player, boolean value) {
+	public void setFlag(String flag, ShieldRegion region, String player, boolean value) throws InvalidFlagException {
 		plugin.fm.createFlag(flag, region, player, value);
 	}
 
@@ -164,6 +163,11 @@ public class ShieldAPIManager implements ShieldAPI{
 	@Override
 	public Flag getFlag(String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException {
 		return plugin.fm.getFlag(flag, region);
+	}
+	
+	@Override
+	public void removeFlag(String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException {
+		plugin.fm.getFlag(flag, region).remove();
 	}
 
 }

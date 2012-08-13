@@ -207,20 +207,22 @@ public interface ShieldAPI {
 	 * 
 	 * @param flag - flag name, String
 	 * @param region - {@link ShieldRegion}
-	 * @param players  - HashSet<{@linkplain Player}> that the value is applied to (can be empty)
+	 * @param players  - HashSet<{@literal}String> that the value is applied to (can be empty)
 	 * @param value - Boolean value that is applied
+	 * @throws InvalidFlagException 
 	 */
-	public void setFlag(String flag, ShieldRegion region, HashSet<Player> players, boolean value);
+	public void setFlag(String flag, ShieldRegion region, HashSet<String> players, boolean value) throws InvalidFlagException;
 	
 	/**
 	 * Sets a Custom flag for a single Player
 	 * 
 	 * @param flag - flag name, String
 	 * @param region - {@link ShieldRegion}
-	 * @param player  - {@linkplain Player} that the value is applied to 
+	 * @param player  - String name, that the value is applied to
 	 * @param value - Boolean value that is applied
+	 * @throws InvalidFlagException 
 	 */
-	public void setFlag(String flag, ShieldRegion region, Player player, boolean value);
+	public void setFlag(String flag, ShieldRegion region, String player, boolean value) throws InvalidFlagException;
 	
 	/**
 	 * Checks the value of a flag for a specific Player.
@@ -254,4 +256,6 @@ public interface ShieldAPI {
 	 * @throws InvalidFlagException 
 	 */
 	public Flag getFlag(String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException;
+	
+	public void removeFlag(String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException;
 }
