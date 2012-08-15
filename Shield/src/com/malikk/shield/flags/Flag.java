@@ -41,6 +41,7 @@ import com.malikk.shield.regions.ShieldRegion;
  * @see {@link #addPlayers(players)}
  * @see {@link #removePlayer(player)}
  * @see {@link #removePlayers(players)}
+ * @see {@link #remove()}
  */
 public class Flag implements Serializable{
 

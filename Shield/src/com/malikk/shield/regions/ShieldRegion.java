@@ -26,7 +26,7 @@ import com.malikk.shield.Shield;
 import com.malikk.shield.plugins.Protect;
 
 /**
- * A ShieldRegion is simply an object which contains the association between the name of a region and the plugin is comes from. The purpose is to avoid conflicts with region names across protection plugins.
+ * A ShieldRegion is an object which represents a region in any given plugin. It stores the regions name, the plugin it belongs to, the world, and the Protect object.
  * @author Malikk
  *
  * @see {@link #getName()}
@@ -79,6 +79,11 @@ public class ShieldRegion {
 		return world;
 	}
 	
+	/**
+	 * Checks
+	 * @param loc
+	 * @return
+	 */
 	public boolean contains(Location loc){
 		return plugin.rm.containsLoc(this, loc);
 	}

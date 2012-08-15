@@ -40,7 +40,7 @@ import com.malikk.shield.regions.RegionManager;
  * <p>
  * <img src = "https://dl.dropbox.com/u/59837317/Shield/SmallLogo.png">
  * @author Malikk
- * @version v1.0, 8-13-2012
+ * @version Beta 1.0, 8-14-2012
  */
 public class Shield extends JavaPlugin{
 

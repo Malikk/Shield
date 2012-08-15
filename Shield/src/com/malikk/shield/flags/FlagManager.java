@@ -21,7 +21,6 @@ package com.malikk.shield.flags;
 
 import java.util.HashSet;
 
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import com.malikk.shield.Shield;
@@ -59,8 +58,6 @@ public class FlagManager {
 		
 		for (Flag f2: flags){
 			if (f1.getName().equalsIgnoreCase(f2.getName()) && plugin.rm.regionsAreEqual(f1.getRegion(), f2.getRegion())){
-				plugin.log("Should consolidate");
-				flags.remove(f2);
 				consolidateFlags(f2, f1);
 				return;
 			}
@@ -128,8 +125,6 @@ public class FlagManager {
 		}else{
 			f2.removePlayers(f1.getPlayerNames());
 		}
-		
-		flags.add(f2);
 		
 	}
 	
