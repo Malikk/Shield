@@ -1,0 +1,11 @@
+Beta 1.0.0.1
+    * Fixed Bug: NPE on build checks for Regios
+
+Beta 1.0
+    * Initial Beta Release
+    
+Version Changes
+1.0.0.0 - Major changes, complete new features, many new classes, etc.
+0.1.0.0 - API changes
+0.0.1.0 - Changes somewhere in Shield
+0.0.0.1 - Changes in a Protect_Class 

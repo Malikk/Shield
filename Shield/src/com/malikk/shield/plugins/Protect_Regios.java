@@ -157,32 +157,32 @@ public class Protect_Regios implements Listener, Protect {
 
 	@Override
 	public boolean canBuild(Player player) {
-		return api.getRegion(player).canBypassProtection(player);
+		return (api.getRegion(player) != null ? api.getRegion(player).canBypassProtection(player) : true);
 	}
 
 	@Override
 	public boolean canBuild(Player player, Location loc) {
-		return api.getRegion(loc).canBypassProtection(player);
+		return (api.getRegion(loc) != null ? api.getRegion(loc).canBypassProtection(player) : true);
 	}
 
 	@Override
 	public boolean canUse(Player player) {
-		return api.getRegion(player).canBypassProtection(player);
+		return canBuild(player);
 	}
 
 	@Override
 	public boolean canUse(Player player, Location loc) {
-		return api.getRegion(loc).canBypassProtection(player);
+		return canBuild(player, loc);
 	}
 
 	@Override
 	public boolean canOpen(Player player) {
-		return api.getRegion(player).canBypassProtection(player);
+		return canBuild(player);
 	}
 
 	@Override
 	public boolean canOpen(Player player, Location loc) {
-		return api.getRegion(loc).canBypassProtection(player);
+		return canBuild(player, loc);
 	}
 
 	//Region info Getters

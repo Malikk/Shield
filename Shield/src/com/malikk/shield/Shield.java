@@ -38,9 +38,9 @@ import com.malikk.shield.regions.RegionManager;
  * <p>
  * For help implementing Shield, please visit the <a href="https://github.com/Malikk/Shield/wiki">Shield Wiki</a>
  * <p>
- * <img src = "https://dl.dropbox.com/u/59837317/Shield/SmallLogo.png">
+ * <img src = "https://dl.dropbox.com/u/59837317/Shield/LogoSmall.png">
  * @author Malikk
- * @version Beta 1.0, 8-14-2012
+ * @version Beta 1.0.0.1, 8-17-2012
  */
 public class Shield extends JavaPlugin{
 
