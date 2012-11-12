@@ -3,7 +3,6 @@ package com.malikk.shield.metrics;
 import java.io.IOException;
 
 import com.malikk.shield.Shield;
-import com.malikk.shield.metrics.Metrics.Graph;
 import com.malikk.shield.plugins.Protect;
 
 public class MetricsHandler {
@@ -16,11 +15,10 @@ public class MetricsHandler {
 		
 		try {
 			metrics = new Metrics(plugin);
+			startMetrics();
 		} catch (IOException e) {
 			plugin.logWarning("Failed to start plugin Metrics.");
 		}
-		
-		startMetrics();
 	}
 	
 	private void startMetrics(){

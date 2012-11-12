@@ -173,8 +173,13 @@ public class Protect_WorldGuard implements Listener, Protect {
 	}
 	
 	@Override
+	public boolean isInRegion(Location loc) {
+		return (getAppRegionSet(loc).size() > 0 ? true : false);
+	}
+	
+	@Override
 	public boolean isInRegion(Entity entity) {
-		return (getAppRegionSet(entity).size() > 0 ? true : false);
+		return isInRegion(entity.getLocation());
 	}
 	
 	public String getRegionOccupiedBy(Entity entity) {
@@ -190,11 +195,6 @@ public class Protect_WorldGuard implements Listener, Protect {
 		}
 		
 		return (priority == null ? null : priority.getId());
-	}
-	
-	@Override
-	public boolean isInRegion(Location loc) {
-		return (getAppRegionSet(loc).size() > 0 ? true : false);
 	}
 	
 	@Override
