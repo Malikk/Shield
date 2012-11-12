@@ -54,6 +54,7 @@ public class Shield extends JavaPlugin{
 	public Protect_Regios regios = null;
 	public Protect_Residence residence = null;
 	public Protect_WorldGuard worldGuard = null;
+	public Protect_Towny towny = null;
 	
 	//Shield Classes
 	public PartialSupportNotifier notifier = new PartialSupportNotifier(this);
@@ -141,6 +142,12 @@ public class Shield extends JavaPlugin{
 		if (foundClass("com.sk89q.worldguard.bukkit.WorldGuardPlugin")){
 			worldGuard = new Protect_WorldGuard(this);
 			log(String.format("Detected WorldGuard: %s", worldGuard.isEnabled() ? "Hooked v" + worldGuard.getVersion() : "Waiting"));
+		}
+		
+		//Attempt to load Towny
+		if (foundClass("com.palmergames.bukkit.towny.Towny")){
+			towny = new Protect_Towny(this);
+			log(String.format("Detected Towny: %s", towny.isEnabled() ? "Hooked v" + towny.getVersion() : "Waiting"));
 		}
 		
 		if (foundPlugin == false){
