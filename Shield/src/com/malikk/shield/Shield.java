@@ -19,17 +19,24 @@
 
 package com.malikk.shield;
 
-import java.util.logging.Logger;
+import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.malikk.shield.flags.*;
+import com.malikk.shield.flags.Flag;
+import com.malikk.shield.flags.FlagManager;
+import com.malikk.shield.flags.FlagPersister;
 import com.malikk.shield.metrics.MetricsHandler;
-import com.malikk.shield.plugins.*;
+import com.malikk.shield.plugins.PartialSupportNotifier;
+import com.malikk.shield.plugins.Protect_PreciousStones;
+import com.malikk.shield.plugins.Protect_Regios;
+import com.malikk.shield.plugins.Protect_Residence;
+import com.malikk.shield.plugins.Protect_Towny;
+import com.malikk.shield.plugins.Protect_WorldGuard;
+import com.malikk.shield.plugins.ProtectionManager;
 import com.malikk.shield.regions.RegionManager;
 
 
@@ -43,9 +50,6 @@ import com.malikk.shield.regions.RegionManager;
  * @version Beta 1.0.0.1, 8-17-2012
  */
 public class Shield extends JavaPlugin{
-
-	protected Logger log = Logger.getLogger("Minecraft");
-	PluginDescriptionFile pdfile = null;
 	
 	private boolean foundPlugin = false;
 	
@@ -64,25 +68,26 @@ public class Shield extends JavaPlugin{
 	public FlagManager fm = new FlagManager(this);
 	public RegionManager rm = new RegionManager(this);
 	
-	public void onEnable(){
-		pdfile = this.getDescription();
+	@Override
+    public void onEnable(){
 		
 		loadPlugins();
 		registerAPI();
 		
-		config.loadConfig();
+		this.config.loadConfig();
 		
 		Flag.shield = this;
 		
-		flagPersister.load();
+		this.flagPersister.load();
 		
 		new MetricsHandler(this);
 		
 		log("Enabled");
 	}
 	
-	public void onDisable(){
-		flagPersister.save();
+	@Override
+    public void onDisable(){
+		this.flagPersister.save();
 		
 		getServer().getScheduler().cancelTasks(this);
 		
@@ -90,15 +95,15 @@ public class Shield extends JavaPlugin{
 	}
 	
 	public void log(String msg){
-		log.info("[" + pdfile.getName() + "] " + msg);
+	        getLogger().log(Level.INFO, msg);
 	}
 	
 	public void logWarning(String msg){
-		log.warning("[" + pdfile.getName() + "] " + msg);
+	        getLogger().log(Level.WARNING, msg);
 	}
 	
 	public void logSevere(String msg){
-		log.severe("[" + pdfile.getName() + "] " + msg);
+	        getLogger().log(Level.SEVERE, msg);
 	}
 	
 	private void registerAPI(){
@@ -122,35 +127,35 @@ public class Shield extends JavaPlugin{
 		
 		//Attempt to load PreciousStones
 		if (foundClass("net.sacredlabyrinth.Phaed.PreciousStones.PreciousStones")){
-			preciousStones = new Protect_PreciousStones(this);
-			log(String.format("Detected PreciousStones: %s", preciousStones.isEnabled() ? "Hooked v" + preciousStones.getVersion() : "Waiting"));
+			this.preciousStones = new Protect_PreciousStones(this);
+			log(String.format("Detected PreciousStones: %s", this.preciousStones.isEnabled() ? "Hooked v" + this.preciousStones.getVersion() : "Waiting"));
 		}
 		
 		//Attempt to load Regios
 		if (foundClass("couk.Adamki11s.Regios.Main.Regios")){
-			regios = new Protect_Regios(this);
-			log(String.format("Detected Regios: %s", regios.isEnabled() ? "Hooked v" + regios.getVersion() : "Waiting"));
+			this.regios = new Protect_Regios(this);
+			log(String.format("Detected Regios: %s", this.regios.isEnabled() ? "Hooked v" + this.regios.getVersion() : "Waiting"));
 		}
 		
 		//Attempt to load Residence
 		if (foundClass("com.bekvon.bukkit.residence.Residence")){
-			residence = new Protect_Residence(this);
-			log(String.format("Detected Residence: %s", residence.isEnabled() ? "Hooked v" + residence.getVersion() : "Waiting"));
+			this.residence = new Protect_Residence(this);
+			log(String.format("Detected Residence: %s", this.residence.isEnabled() ? "Hooked v" + this.residence.getVersion() : "Waiting"));
 		}
 		
 		//Attempt to load WorldGuard
 		if (foundClass("com.sk89q.worldguard.bukkit.WorldGuardPlugin")){
-			worldGuard = new Protect_WorldGuard(this);
-			log(String.format("Detected WorldGuard: %s", worldGuard.isEnabled() ? "Hooked v" + worldGuard.getVersion() : "Waiting"));
+			this.worldGuard = new Protect_WorldGuard(this);
+			log(String.format("Detected WorldGuard: %s", this.worldGuard.isEnabled() ? "Hooked v" + this.worldGuard.getVersion() : "Waiting"));
 		}
 		
 		//Attempt to load Towny
 		if (foundClass("com.palmergames.bukkit.towny.Towny")){
-			towny = new Protect_Towny(this);
-			log(String.format("Detected Towny: %s", towny.isEnabled() ? "Hooked v" + towny.getVersion() : "Waiting"));
+			this.towny = new Protect_Towny(this);
+			log(String.format("Detected Towny: %s", this.towny.isEnabled() ? "Hooked v" + this.towny.getVersion() : "Waiting"));
 		}
 		
-		if (foundPlugin == false){
+		if (this.foundPlugin == false){
 			log("No supported protection plugins found.");
 		}
 	}
@@ -158,7 +163,7 @@ public class Shield extends JavaPlugin{
 	private boolean foundClass(String className){
 		try{
 			Class.forName(className);
-			foundPlugin = true;
+			this.foundPlugin = true;
 			return true;
 		}catch (Exception e){
 			return false;
