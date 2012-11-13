@@ -19,13 +19,11 @@
 
 package com.malikk.shield;
 
+import java.util.HashSet;
+
 import org.bukkit.configuration.file.FileConfiguration;
 
 import com.malikk.shield.regions.ShieldRegion;
-
-
-import java.util.ArrayList;
-import java.util.HashSet;
 
 public class ShieldConfig {
 
@@ -33,27 +31,27 @@ public class ShieldConfig {
 	private FileConfiguration config;
 	
 	public ShieldConfig(Shield instance){
-		plugin = instance;
+		this.plugin = instance;
 	}
 	
 	public void loadConfig(){
-		config = plugin.getConfig();
+		this.config = this.plugin.getConfig();
 		
-		config.options().header("\n Shield v" + plugin.pdfile.getVersion() + "\n By Malikk \n \n " +
+		this.config.options().header("\n Shield v" + this.plugin.getDescription().getVersion() + "\n By Malikk \n \n " +
 				"AlertsEnabled: \n" +
 				"     This section defines whether or not you are notified in the server console when a plugin using Shield calls a method that a protection plugin on your server does not support.\n \n" +
 				"Priority: \n" +
 				"     This section sets which plugins have greater priority in the event of overlapping regions.\n \n");
 		
-		config.addDefault("AlertsEnabled", true);
+		this.config.addDefault("AlertsEnabled", true);
 		
-		config.addDefault("Priority.1", "WorldGuard");
-		config.addDefault("Priority.2", "Residence");
-		config.addDefault("Priority.3", "Regios");
-		config.addDefault("Priority.4", "PreciousStones");
+		this.config.addDefault("Priority.1", "WorldGuard");
+		this.config.addDefault("Priority.2", "Residence");
+		this.config.addDefault("Priority.3", "Regios");
+		this.config.addDefault("Priority.4", "PreciousStones");
 		
-		config.options().copyDefaults(true);
-		plugin.saveConfig();
+		this.config.options().copyDefaults(true);
+		this.plugin.saveConfig();
 	}
 	
 	public ShieldRegion getHighestPriority(HashSet<ShieldRegion> regions){
@@ -66,7 +64,7 @@ public class ShieldConfig {
 			}
 		}
 		
-		while (config.get("Priority." + counter) != null){
+		while (this.config.get("Priority." + counter) != null){
 			
 			//plugin.log("Priority " + counter + "-----------");
 			
@@ -76,7 +74,7 @@ public class ShieldConfig {
 				
 				String name = region.getPluginName();
 				
-				if (name.equalsIgnoreCase(config.getString("Priority." + counter))){
+				if (name.equalsIgnoreCase(this.config.getString("Priority." + counter))){
 					
 					//plugin.log("Is priority");
 					
@@ -97,7 +95,7 @@ public class ShieldConfig {
 							return region;
 						}
 						
-						return plugin.worldGuard.getHighestPriority(worldGuardRegions);
+						return this.plugin.worldGuard.getHighestPriority(worldGuardRegions);
 					}else{
 						return region;
 					}
@@ -111,7 +109,7 @@ public class ShieldConfig {
 	}
 	
 	public boolean AlertsAreEnabled(){
-		if (config.getBoolean("AlertsEnabled")){
+		if (this.config.getBoolean("AlertsEnabled")){
 			return true;
 		}else{
 			return false;
