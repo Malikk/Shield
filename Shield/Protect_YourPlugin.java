@@ -35,7 +35,7 @@ import org.bukkit.plugin.PluginManager;
 import com.malikk.shield.*;
 import com.malikk.shield.regions.ShieldRegion;
 
-public class Protect_Plugin implements Listener, Protect {
+public class Protect_YourPlugin implements Listener, Protect {
 	
 	Shield shield;
 	
@@ -43,7 +43,7 @@ public class Protect_Plugin implements Listener, Protect {
 	private final String pack = "location.of.main.class";
 	private static YourPlugin protect = null;
 	
-	public Protect_Plugin(Shield instance){
+	public Protect_YourPlugin(Shield instance){
 		this.shield = instance;
 		
 		PluginManager pm = shield.getServer().getPluginManager();
@@ -55,6 +55,7 @@ public class Protect_Plugin implements Listener, Protect {
             
 			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
 				protect = (YourPlugin) p;
+				shield.pm.addClassToInstantiatedSet(this);
 			}
 		}
 	}
@@ -66,6 +67,7 @@ public class Protect_Plugin implements Listener, Protect {
 
 			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
 				protect = (YourPlugin) p;
+				shield.pm.addClassToInstantiatedSet(this);
 				shield.log(String.format("Hooked %s v" + getVersion(), name));
 			}
 		}
@@ -97,8 +99,7 @@ public class Protect_Plugin implements Listener, Protect {
 	}
 	
 	/*
-	 * If you can figure out how to make ShieldRegions, great, otherwise skip these.
-	 * You'll need to make the object for this class in Shield's main class to pass in.
+	 * If you can figure out how to make ShieldRegions, great, otherwise skip the first 3 methods
 	 * 
 	 * shield.rm.createShieldRegion(String regionName, Protect objectForThisClass, World world));
 	 *
