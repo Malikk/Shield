@@ -19,10 +19,10 @@
 
 package com.malikk.shield;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -44,8 +44,7 @@ import com.malikk.shield.regions.RegionManager;
  */
 public class Shield extends JavaPlugin{
 
-	protected Logger log = Logger.getLogger("Minecraft");
-	PluginDescriptionFile pdfile = null;
+	protected Logger logger = getLogger();
 	
 	private boolean foundPlugin = false;
 	
@@ -64,8 +63,8 @@ public class Shield extends JavaPlugin{
 	public FlagManager fm = new FlagManager(this);
 	public RegionManager rm = new RegionManager(this);
 	
+	@Override
 	public void onEnable(){
-		pdfile = this.getDescription();
 		
 		loadPlugins();
 		registerAPI();
@@ -81,6 +80,7 @@ public class Shield extends JavaPlugin{
 		log("Enabled");
 	}
 	
+	@Override
 	public void onDisable(){
 		flagPersister.save();
 		
@@ -90,15 +90,15 @@ public class Shield extends JavaPlugin{
 	}
 	
 	public void log(String msg){
-		log.info("[" + pdfile.getName() + "] " + msg);
+		logger.log(Level.INFO, msg);
 	}
 	
 	public void logWarning(String msg){
-		log.warning("[" + pdfile.getName() + "] " + msg);
+		logger.log(Level.WARNING, msg);
 	}
 	
 	public void logSevere(String msg){
-		log.severe("[" + pdfile.getName() + "] " + msg);
+		logger.log(Level.SEVERE, msg);
 	}
 	
 	private void registerAPI(){

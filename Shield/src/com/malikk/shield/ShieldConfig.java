@@ -23,8 +23,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import com.malikk.shield.regions.ShieldRegion;
 
-
-import java.util.ArrayList;
 import java.util.HashSet;
 
 public class ShieldConfig {
@@ -39,7 +37,7 @@ public class ShieldConfig {
 	public void loadConfig(){
 		config = plugin.getConfig();
 		
-		config.options().header("\n Shield v" + plugin.pdfile.getVersion() + "\n By Malikk \n \n " +
+		config.options().header("\n Shield v" + plugin.getDescription().getVersion() + "\n By Malikk \n \n " +
 				"AlertsEnabled: \n" +
 				"     This section defines whether or not you are notified in the server console when a plugin using Shield calls a method that a protection plugin on your server does not support.\n \n" +
 				"Priority: \n" +
