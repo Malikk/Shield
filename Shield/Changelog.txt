@@ -2,10 +2,10 @@ Beta 1.1
 	* Fixed Bug: NPE on isInRegion for WorldGuard
 
 Beta 1.0.0.1
-    * Fixed Bug: NPE on build checks for Regios
+	* Fixed Bug: NPE on build checks for Regios
 
 Beta 1.0
-    * Initial Beta Release
+	* Initial Beta Release
     
 Version Changes
 1.0.0.0 - Major changes, complete new features, many new classes, etc.

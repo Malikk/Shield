@@ -12,7 +12,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *  
+ * 
  * You should have received a copy of the GNU General Public License
  * along with Shield.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -45,16 +45,16 @@ import com.malikk.shield.regions.RegionManager;
 public class Shield extends JavaPlugin{
 
 	protected Logger logger = getLogger();
-	
+
 	private boolean foundPlugin = false;
-	
+
 	//Plugin Classes
 	public Protect_PreciousStones preciousStones = null;
 	public Protect_Regios regios = null;
 	public Protect_Residence residence = null;
 	public Protect_WorldGuard worldGuard = null;
 	public Protect_Towny towny = null;
-	
+
 	//Shield Classes
 	public PartialSupportNotifier notifier = new PartialSupportNotifier(this);
 	public FlagPersister flagPersister = new FlagPersister(this);
@@ -62,99 +62,99 @@ public class Shield extends JavaPlugin{
 	public ProtectionManager pm = new ProtectionManager(this);
 	public FlagManager fm = new FlagManager(this);
 	public RegionManager rm = new RegionManager(this);
-	
+
 	@Override
 	public void onEnable(){
-		
+
 		loadPlugins();
 		registerAPI();
-		
+
 		config.loadConfig();
-		
+
 		Flag.shield = this;
-		
+
 		flagPersister.load();
-		
+
 		new MetricsHandler(this);
-		
+
 		log("Enabled");
 	}
-	
+
 	@Override
 	public void onDisable(){
 		flagPersister.save();
-		
+
 		getServer().getScheduler().cancelTasks(this);
-		
+
 		log("Disabled");
 	}
-	
+
 	public void log(String msg){
 		logger.log(Level.INFO, msg);
 	}
-	
+
 	public void logWarning(String msg){
 		logger.log(Level.WARNING, msg);
 	}
-	
+
 	public void logSevere(String msg){
 		logger.log(Level.SEVERE, msg);
 	}
-	
+
 	private void registerAPI(){
 		ShieldAPI api = new ShieldAPIManager(this);
 		Bukkit.getServicesManager().register(ShieldAPI.class, api, this, ServicePriority.Normal);
 	}
-	
+
 	/**
 	 * Gets the Shield API Interface
 	 * @return ShieldAPI
 	 */
 	public ShieldAPI getAPI(){
 		RegisteredServiceProvider<ShieldAPI> provider = getServer().getServicesManager().getRegistration(com.malikk.shield.ShieldAPI.class);
-        ShieldAPI api = provider.getProvider();
-        return api;
+		ShieldAPI api = provider.getProvider();
+		return api;
 	}
-	
+
 	private void loadPlugins(){
-		
+
 		log("Scanning for supported protection plugins...");
-		
+
 		//Attempt to load PreciousStones
 		if (foundClass("net.sacredlabyrinth.Phaed.PreciousStones.PreciousStones")){
 			preciousStones = new Protect_PreciousStones(this);
 			log(String.format("Detected PreciousStones: %s", preciousStones.isEnabled() ? "Hooked v" + preciousStones.getVersion() : "Waiting"));
 		}
-		
+
 		//Attempt to load Regios
 		if (foundClass("couk.Adamki11s.Regios.Main.Regios")){
 			regios = new Protect_Regios(this);
 			log(String.format("Detected Regios: %s", regios.isEnabled() ? "Hooked v" + regios.getVersion() : "Waiting"));
 		}
-		
+
 		//Attempt to load Residence
 		if (foundClass("com.bekvon.bukkit.residence.Residence")){
 			residence = new Protect_Residence(this);
 			log(String.format("Detected Residence: %s", residence.isEnabled() ? "Hooked v" + residence.getVersion() : "Waiting"));
 		}
-		
+
 		//Attempt to load WorldGuard
 		if (foundClass("com.sk89q.worldguard.bukkit.WorldGuardPlugin")){
 			worldGuard = new Protect_WorldGuard(this);
 			log(String.format("Detected WorldGuard: %s", worldGuard.isEnabled() ? "Hooked v" + worldGuard.getVersion() : "Waiting"));
 		}
-		
+
 		//Attempt to load Towny
 		if (foundClass("com.palmergames.bukkit.towny.Towny")){
 			towny = new Protect_Towny(this);
 			log(String.format("Detected Towny: %s", towny.isEnabled() ? "Hooked v" + towny.getVersion() : "Waiting"));
 		}
-		
+
 		if (foundPlugin == false){
 			log("No supported protection plugins found.");
 		}
 	}
-	
+
 	private boolean foundClass(String className){
 		try{
 			Class.forName(className);
@@ -164,5 +164,5 @@ public class Shield extends JavaPlugin{
 			return false;
 		}
 	}
-	
+
 }

@@ -12,7 +12,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *  
+ * 
  * You should have received a copy of the GNU General Public License
  * along with Shield.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -20,6 +20,8 @@
 package com.malikk.shield.plugins;
 
 import java.util.HashSet;
+
+import net.sacredlabyrinth.Phaed.PreciousStones.PreciousStones;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -32,36 +34,38 @@ import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
-import com.malikk.shield.*;
+import com.malikk.shield.Shield;
 import com.malikk.shield.regions.ShieldRegion;
 
-import net.sacredlabyrinth.Phaed.PreciousStones.PreciousStones;
-
+/**
+ * PreciousStones
+ * @version v9.5.0 for CB 1.4.2
+ */
 public class Protect_PreciousStones implements Listener, Protect {
-	
+
 	Shield shield;
-	
+
 	private final String name = "PreciousStones";
 	private final String pack = "net.sacredlabyrinth.Phaed.PreciousStones.PreciousStones";
 	private static PreciousStones protect = null;
-	
+
 	public Protect_PreciousStones(Shield instance){
 		this.shield = instance;
-		
+
 		PluginManager pm = shield.getServer().getPluginManager();
 		pm.registerEvents(this, shield);
-		
+
 		//Load plugin if it was loaded before Shield
 		if (protect == null) {
 			Plugin p = shield.getServer().getPluginManager().getPlugin(name);
-            
+
 			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
 				protect = (PreciousStones) p;
 				//shield.pm.addClassToInstantiatedPluginClassesArrayList(name);
 			}
 		}
 	}
-	
+
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPluginEnable(PluginEnableEvent event) {
 		if (protect == null) {
@@ -84,22 +88,22 @@ public class Protect_PreciousStones implements Listener, Protect {
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean isEnabled(){
 		return (protect == null ? false : true);
 	}
-	
+
 	@Override
 	public String getPluginName(){
 		return name;
 	}
-	
+
 	@Override
 	public String getVersion(){
 		return protect.getDescription().getVersion();
 	}
-	
+
 	@Override
 	public HashSet<ShieldRegion> getRegions() {
 		// TODO Auto-generated method stub
@@ -135,7 +139,7 @@ public class Protect_PreciousStones implements Listener, Protect {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
+
 	@Override
 	public boolean canBuild(Player player, Location loc) {
 		// TODO Auto-generated method stub
@@ -165,7 +169,7 @@ public class Protect_PreciousStones implements Listener, Protect {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
+
 	//Region info Getters
 	@Override
 	public Location getMaxLoc(ShieldRegion region) {

@@ -12,7 +12,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *  
+ * 
  * You should have received a copy of the GNU General Public License
  * along with Shield.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -38,30 +38,34 @@ import com.bekvon.bukkit.residence.Residence;
 import com.bekvon.bukkit.residence.protection.ClaimedResidence;
 import com.bekvon.bukkit.residence.protection.FlagPermissions;
 import com.bekvon.bukkit.residence.protection.ResidenceManager;
-import com.malikk.shield.*;
+import com.malikk.shield.Shield;
 import com.malikk.shield.regions.ShieldRegion;
 
+/**
+ * Residence
+ * @version v2.6.6 for CB 1.4.2-R0.2
+ */
 public class Protect_Residence implements Listener, Protect {
-	
+
 	Shield shield;
-	
+
 	private final String name = "Residence";
 	private final String pack = "com.bekvon.bukkit.residence.Residence";
 	private static Residence protect = null;
-	
+
 	//Managers
 	private static ResidenceManager rmanager = null;
-	
+
 	public Protect_Residence(Shield instance){
 		this.shield = instance;
-		
+
 		PluginManager pm = shield.getServer().getPluginManager();
 		pm.registerEvents(this, shield);
-		
+
 		//Load plugin if it was loaded before Shield
 		if (protect == null) {
 			Plugin p = shield.getServer().getPluginManager().getPlugin(name);
-            
+
 			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
 				protect = (Residence) p;
 				rmanager = Residence.getResidenceManager();
@@ -69,7 +73,7 @@ public class Protect_Residence implements Listener, Protect {
 			}
 		}
 	}
-	
+
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPluginEnable(PluginEnableEvent event) {
 		if (protect == null) {
@@ -93,38 +97,38 @@ public class Protect_Residence implements Listener, Protect {
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean isEnabled(){
 		return (protect == null ? false : true);
 	}
-	
+
 	@Override
 	public String getPluginName(){
 		return name;
 	}
-	
+
 	@Override
 	public String getVersion(){
 		return protect.getDescription().getVersion();
 	}
-	
+
 	@Override
 	public HashSet<ShieldRegion> getRegions(){
 		HashSet<ShieldRegion> regions = new HashSet<ShieldRegion>();
-		
+
 		try{
 			for (String r: rmanager.getResidenceList()){
 				regions.add(shield.rm.createShieldRegion(r, shield.residence, Bukkit.getWorld(rmanager.getByName(r).getWorld())));
 			}
-			
+
 			return regions;
-			
+
 		}catch(Exception e){
 			return regions;
 		}
 	}
-	
+
 	@Override
 	public HashSet<ShieldRegion> getRegions(Entity entity){
 		try{
@@ -134,7 +138,7 @@ public class Protect_Residence implements Listener, Protect {
 			return new HashSet<ShieldRegion>();
 		}
 	}
-	
+
 	@Override
 	public HashSet<ShieldRegion> getRegions(Location loc){
 		try{
@@ -144,17 +148,17 @@ public class Protect_Residence implements Listener, Protect {
 			return new HashSet<ShieldRegion>();
 		}
 	}
-	
+
 	public HashSet<ShieldRegion> getShieldRegions(String[] names, World world){
 		HashSet<ShieldRegion> regions = new HashSet<ShieldRegion>();
-		
+
 		try{
 			for (String r: names){
 				regions.add(shield.rm.createShieldRegion(r, shield.residence, world));
 			}
-			
+
 			return regions;
-			
+
 		}catch(Exception e){
 			return regions;
 		}
@@ -169,54 +173,54 @@ public class Protect_Residence implements Listener, Protect {
 	public boolean isInRegion(Location loc) {
 		return (rmanager.getByLoc(loc) != null ? true : false);
 	}
-	
+
 	@Override
 	public boolean canBuild(Player player) {
 		FlagPermissions flags = Residence.getPermsByLoc(player.getLocation());
-		
+
 		return flags.playerHas(player.getName(), player.getWorld().getName(), "build", true);
 	}
 
 	@Override
 	public boolean canBuild(Player player, Location loc) {
 		FlagPermissions flags = Residence.getPermsByLoc(loc);
-		
+
 		return flags.playerHas(player.getName(), player.getWorld().getName(), "build", true);
 	}
 
 	@Override
 	public boolean canUse(Player player) {
 		FlagPermissions flags = Residence.getPermsByLoc(player.getLocation());
-		
+
 		return flags.playerHas(player.getName(), player.getWorld().getName(), "use", true);
 	}
 
 	@Override
 	public boolean canUse(Player player, Location loc) {
 		FlagPermissions flags = Residence.getPermsByLoc(loc);
-		
+
 		return flags.playerHas(player.getName(), player.getWorld().getName(), "use", true);
 	}
 
 	@Override
 	public boolean canOpen(Player player) {
 		FlagPermissions flags = Residence.getPermsByLoc(player.getLocation());
-		
+
 		return flags.playerHas(player.getName(), player.getWorld().getName(), "container", true);
 	}
 
 	@Override
 	public boolean canOpen(Player player, Location loc) {
 		FlagPermissions flags = Residence.getPermsByLoc(loc);
-		
+
 		return flags.playerHas(player.getName(), player.getWorld().getName(), "container", true);
 	}
-	
+
 	//Region info Getters
 	private ClaimedResidence getRegion(ShieldRegion region){
 		return rmanager.getByName(region.getName());
 	}
-	
+
 	@Override
 	public Location getMaxLoc(ShieldRegion region) {
 		//TODO Not sure if i want to keep working on this feature, since not all plugins use cuboid regions.

@@ -12,7 +12,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *  
+ * 
  * You should have received a copy of the GNU General Public License
  * along with Shield.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -20,6 +20,9 @@
 package com.malikk.shield.plugins;
 
 import java.util.HashSet;
+
+import net.jzx7.regios.RegiosPlugin;
+import net.jzx7.regiosapi.regions.Region;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -32,48 +35,45 @@ import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
-import com.malikk.shield.*;
+import com.malikk.shield.Shield;
 import com.malikk.shield.regions.ShieldRegion;
 
-import couk.Adamki11s.Regios.API.RegiosAPI;
-import couk.Adamki11s.Regios.Main.Regios;
-import couk.Adamki11s.Regios.Regions.Region;
-
+/**
+ * Regios
+ * @version v5.9.3 for CB 1.4.2-R0.2
+ */
 public class Protect_Regios implements Listener, Protect {
-	
+
 	Shield shield;
-	
+
 	private final String name = "Regios";
 	private final String pack = "couk.Adamki11s.Regios.Main.Regios";
-	private static Regios protect = null;
-	private static RegiosAPI api = null;
-	
+	private static RegiosPlugin protect = null;
+
 	public Protect_Regios(Shield instance){
 		this.shield = instance;
-		
+
 		PluginManager pm = shield.getServer().getPluginManager();
 		pm.registerEvents(this, shield);
-		
+
 		//Load plugin if it was loaded before Shield
 		if (protect == null) {
 			Plugin p = shield.getServer().getPluginManager().getPlugin(name);
-            
+
 			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
-				protect = (Regios) p;
-				api = new RegiosAPI();
+				protect = (RegiosPlugin) p;
 				shield.pm.addClassToInstantiatedSet(shield.regios);
 			}
 		}
 	}
-	
+
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPluginEnable(PluginEnableEvent event) {
 		if (protect == null) {
 			Plugin p = shield.getServer().getPluginManager().getPlugin(name);
 
 			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
-				protect = (Regios) p;
-				api = new RegiosAPI();
+				protect = (RegiosPlugin) p;
 				shield.pm.addClassToInstantiatedSet(shield.regios);
 				shield.log(String.format("Hooked %s v" + getVersion(), name));
 			}
@@ -85,84 +85,83 @@ public class Protect_Regios implements Listener, Protect {
 		if (protect != null) {
 			if (event.getPlugin().getDescription().getName().equals(name)) {
 				protect = null;
-				api = null;
 				shield.log(String.format("%s unhooked.", name));
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean isEnabled(){
 		return (protect == null ? false : true);
 	}
-	
+
 	@Override
 	public String getPluginName(){
 		return name;
 	}
-	
+
 	@Override
 	public String getVersion(){
 		return protect.getDescription().getVersion();
 	}
-	
+
 	@Override
 	public HashSet<ShieldRegion> getRegions(){
 		HashSet<ShieldRegion> regions = new HashSet<ShieldRegion>();
-		
-		if (api.getRegions() != null){
-			for (Region r: api.getRegions()){
+
+		if (protect.getRegions() != null){
+			for (Region r: protect.getRegions()){
 				regions.add(shield.rm.createShieldRegion(r.getName(), shield.regios, r.getWorld()));
 			}
 		}
-		
+
 		return regions;
 	}
-	
+
 	@Override
 	public HashSet<ShieldRegion> getRegions(Entity entity){
 		HashSet<ShieldRegion> regions = new HashSet<ShieldRegion>();
-		
-		if (api.getRegions(entity.getLocation()) != null){
-			for (Region r: api.getRegions(entity.getLocation())){
+
+		if (protect.getRegions(entity.getLocation()) != null){
+			for (Region r: protect.getRegions(entity.getLocation())){
 				regions.add(shield.rm.createShieldRegion(r.getName(), shield.regios, r.getWorld()));
 			}
 		}
-		
+
 		return regions;
 	}
-	
+
 	@Override
 	public HashSet<ShieldRegion> getRegions(Location loc){
 		HashSet<ShieldRegion> regions = new HashSet<ShieldRegion>();
-		
-		if (api.getRegions(loc) != null){
-			for (Region r: api.getRegions(loc)){
+
+		if (protect.getRegions(loc) != null){
+			for (Region r: protect.getRegions(loc)){
 				regions.add(shield.rm.createShieldRegion(r.getName(), shield.regios, r.getWorld()));
 			}
 		}
-		
+
 		return regions;
 	}
 
 	@Override
 	public boolean isInRegion(Entity entity) {
-		return api.isInRegion(entity.getLocation());
+		return protect.isInRegion(entity.getLocation());
 	}
 
 	@Override
 	public boolean isInRegion(Location loc) {
-		return api.isInRegion(loc);
+		return protect.isInRegion(loc);
 	}
 
 	@Override
 	public boolean canBuild(Player player) {
-		return (api.getRegion(player) != null ? api.getRegion(player).canBypassProtection(player) : true);
+		return (protect.getRegion(player) != null ? protect.getRegion(player).canBypassProtection(player) : true);
 	}
 
 	@Override
 	public boolean canBuild(Player player, Location loc) {
-		return (api.getRegion(loc) != null ? api.getRegion(loc).canBypassProtection(player) : true);
+		return (protect.getRegion(loc) != null ? protect.getRegion(loc).canBypassProtection(player) : true);
 	}
 
 	@Override
@@ -186,11 +185,11 @@ public class Protect_Regios implements Listener, Protect {
 	}
 
 	//Region info Getters
-	
+
 	private Region getRegion(ShieldRegion region){
-		return api.getRegion(region.getName());
+		return protect.getRegion(region.getName());
 	}
-	
+
 	@Override
 	public Location getMaxLoc(ShieldRegion region) {
 		// TODO Auto-generated method stub
@@ -205,6 +204,6 @@ public class Protect_Regios implements Listener, Protect {
 
 	@Override
 	public boolean contains(ShieldRegion region, Location loc) {
-		return (api.getRegion(loc) != null ? true : false);
+		return (protect.getRegion(loc) != null ? true : false);
 	}
 }
