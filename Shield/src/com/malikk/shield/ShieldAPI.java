@@ -27,6 +27,7 @@ import org.bukkit.entity.Player;
 
 import com.malikk.shield.exceptions.*;
 import com.malikk.shield.flags.Flag;
+import com.malikk.shield.groups.ShieldGroup;
 import com.malikk.shield.regions.ShieldRegion;
 
 /**
@@ -196,11 +197,21 @@ public interface ShieldAPI {
 	public boolean isValidFlag(String flag);
 
 	/**
+	 * Sets a Custom flag for a ShieldGroup
+	 * @param flag String flag name
+	 * @param region ShieldRegion the flag will be set to
+	 * @param group ShieldGroup of players that the value will be applied to
+	 * @param value Boolean value that is applied
+	 * @throws InvalidFlagException
+	 */
+	public void setFlag(String flag, ShieldRegion region, ShieldGroup group, boolean value) throws InvalidFlagException;
+
+	/**
 	 * Sets a Custom flag for multiple Players
 	 * 
 	 * @param flag flag name, String
 	 * @param region {@link ShieldRegion}
-	 * @param players  HashSet<{@literal}String> that the value is applied to (can be empty)
+	 * @param players  HashSet of Strings that the value is applied to (can be empty)
 	 * @param value Boolean value that is applied
 	 * @throws InvalidFlagException
 	 */
@@ -250,5 +261,12 @@ public interface ShieldAPI {
 	 */
 	public Flag getFlag(String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException;
 
+	/**
+	 * Deletes the flag object for the name and region entirely
+	 * @param flag String name of the flag
+	 * @param region ShieldRegion object
+	 * @throws FlagNotFoundException
+	 * @throws InvalidFlagException
+	 */
 	public void removeFlag(String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException;
 }

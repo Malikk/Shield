@@ -12,7 +12,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *  
+ * 
  * You should have received a copy of the GNU General Public License
  * along with Shield.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -27,20 +27,21 @@ import org.bukkit.entity.Player;
 
 import com.malikk.shield.exceptions.*;
 import com.malikk.shield.flags.Flag;
+import com.malikk.shield.groups.ShieldGroup;
 import com.malikk.shield.regions.ShieldRegion;
 
 public class ShieldAPIManager implements ShieldAPI{
-	
+
 	Shield plugin;
-	
+
 	public ShieldAPIManager(Shield instance){
 		plugin = instance;
 	}
-	
+
 	/*
 	 * Plugin Methods
 	 */
-	
+
 	@Override
 	public ShieldRegion getShieldRegion(String name, String pluginName) throws RegionNotFoundException {
 		return plugin.rm.getShieldRegion(name, pluginName);
@@ -55,22 +56,22 @@ public class ShieldAPIManager implements ShieldAPI{
 	public ShieldRegion getPriorityRegion(HashSet<ShieldRegion> regions){
 		return plugin.config.getHighestPriority(regions);
 	}
-	
+
 	@Override
 	public ShieldRegion getPriorityRegion(Entity entity) throws RegionNotFoundException{
 		return plugin.config.getHighestPriority(getRegions(entity));
 	}
-	
+
 	@Override
 	public ShieldRegion getPriorityRegion(Location loc) throws RegionNotFoundException{
 		return plugin.config.getHighestPriority(getRegions(loc));
 	}
-	
+
 	@Override
 	public HashSet<ShieldRegion> getRegions() throws RegionNotFoundException{
 		return plugin.pm.getRegions();
 	}
-	
+
 	@Override
 	public HashSet<ShieldRegion> getRegions(String name) throws RegionNotFoundException {
 		return plugin.rm.getShieldRegions(name);
@@ -95,7 +96,7 @@ public class ShieldAPIManager implements ShieldAPI{
 	public boolean isInRegion(Location loc) {
 		return plugin.pm.isInRegion(loc);
 	}
-	
+
 	@Override
 	public boolean canBuild(Player player) {
 		return plugin.pm.canBuild(player);
@@ -129,22 +130,27 @@ public class ShieldAPIManager implements ShieldAPI{
 	/*
 	 * Flag Methods
 	 */
-	
+
 	@Override
 	public void addValidFlag(String flag){
 		plugin.fm.addValidFlag(flag);
 	}
-	
-	@Override 
+
+	@Override
 	public boolean isValidFlag(String flag){
 		return plugin.fm.isValidFlag(flag);
+	}
+
+	@Override
+	public void setFlag(String flag, ShieldRegion region, ShieldGroup group, boolean value) throws InvalidFlagException{
+		plugin.fm.createFlag(flag, region, group, value);
 	}
 
 	@Override
 	public void setFlag(String flag, ShieldRegion region, HashSet<String> players, boolean value) throws InvalidFlagException {
 		plugin.fm.createFlag(flag, region, players, value);
 	}
-	
+
 	@Override
 	public void setFlag(String flag, ShieldRegion region, String player, boolean value) throws InvalidFlagException {
 		plugin.fm.createFlag(flag, region, player, value);
@@ -154,7 +160,7 @@ public class ShieldAPIManager implements ShieldAPI{
 	public boolean getFlagValue(Player player, String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException {
 		return plugin.fm.getFlagAndValue(player, flag, region);
 	}
-	
+
 	@Override
 	public boolean getFlagValue(Player player, Flag flag){
 		return plugin.fm.getValue(player, flag);
@@ -164,7 +170,7 @@ public class ShieldAPIManager implements ShieldAPI{
 	public Flag getFlag(String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException {
 		return plugin.fm.getFlag(flag, region);
 	}
-	
+
 	@Override
 	public void removeFlag(String flag, ShieldRegion region) throws FlagNotFoundException, InvalidFlagException {
 		plugin.fm.getFlag(flag, region).remove();
