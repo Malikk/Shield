@@ -1,1 +1,7 @@
 com.malikk.shield
+com.malikk.shield.exceptions
+com.malikk.shield.flags
+com.malikk.shield.groups
+com.malikk.shield.metrics
+com.malikk.shield.plugins
+com.malikk.shield.regions
