@@ -132,13 +132,6 @@ public interface ShieldAPI {
 	public boolean isInRegion(Location location);
 
 	/**
-	 * Checks whether or not the player owns the region they are in
-	 * @param player Player to be checked
-	 * @return Boolean
-	 */
-	//public boolean isOwner(Player player);
-
-	/**
 	 * Checks if the player can build where they are standing
 	 * @param player Player to be checked
 	 * @return Boolean

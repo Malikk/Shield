@@ -39,11 +39,13 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
 import com.malikk.shield.Shield;
+import com.malikk.shield.groups.ShieldGroup;
 import com.malikk.shield.regions.ShieldRegion;
 import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldedit.Vector;
 import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.domains.DefaultDomain;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import com.sk89q.worldguard.protection.managers.RegionManager;
@@ -280,5 +282,13 @@ public class Protect_WorldGuard implements Listener, Protect {
 	public boolean contains(ShieldRegion region, Location loc){
 		Vector vec = new Vector(loc.getX(), loc.getY(), loc.getZ());
 		return getRegion(region).contains(vec);
+	}
+
+	@Override
+	public ShieldGroup getOwners(ShieldRegion region) {
+		DefaultDomain dd = getRegion(region).getOwners();
+		ShieldGroup group = new ShieldGroup();
+		group.addPlayerStrings(dd.getPlayers());
+		return group;
 	}
 }

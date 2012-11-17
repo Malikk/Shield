@@ -39,6 +39,7 @@ import com.bekvon.bukkit.residence.protection.ClaimedResidence;
 import com.bekvon.bukkit.residence.protection.FlagPermissions;
 import com.bekvon.bukkit.residence.protection.ResidenceManager;
 import com.malikk.shield.Shield;
+import com.malikk.shield.groups.ShieldGroup;
 import com.malikk.shield.regions.ShieldRegion;
 
 /**
@@ -236,5 +237,10 @@ public class Protect_Residence implements Listener, Protect {
 	@Override
 	public boolean contains(ShieldRegion region, Location loc) {
 		return getRegion(region).containsLoc(loc);
+	}
+
+	@Override
+	public ShieldGroup getOwners(ShieldRegion region) {
+		return new ShieldGroup(getRegion(region).getOwner());
 	}
 }

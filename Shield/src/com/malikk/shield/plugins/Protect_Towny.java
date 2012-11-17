@@ -33,6 +33,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
 import com.malikk.shield.Shield;
+import com.malikk.shield.groups.ShieldGroup;
 import com.malikk.shield.regions.ShieldRegion;
 import com.palmergames.bukkit.towny.Towny;
 
@@ -186,6 +187,12 @@ public class Protect_Towny implements Listener, Protect {
 	public boolean contains(ShieldRegion region, Location loc) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public ShieldGroup getOwners(ShieldRegion region) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
