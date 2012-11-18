@@ -68,7 +68,7 @@ public class FlagManager {
 
 	public void createFlag(String flag, ShieldRegion region, HashSet<String> players, boolean value) throws InvalidFlagException{
 		ShieldGroup group = new ShieldGroup();
-		group.addPlayerStrings(players);
+		group.addPlayerNames(players);
 		createFlag(flag, region, group, value);
 	}
 
@@ -130,9 +130,9 @@ public class FlagManager {
 		}
 
 		if (f1.getValue() == f2.getValue()){
-			g2.addPlayerStrings(g1.getPlayerNames());
+			g2.addPlayerNames(g1.getPlayerNames());
 		}else{
-			g2.removePlayerStrings(g1.getPlayerNames());
+			g2.removePlayerNames(g1.getPlayerNames());
 		}
 	}
 

@@ -82,32 +82,47 @@ public class ShieldRegion {
 	}
 
 	/**
-	 * Checks
-	 * @param loc
-	 * @return
+	 * Checks if the ShieldRegion contains the Location
+	 * @param loc Location to check
+	 * @return true if the region contained the Location
 	 */
 	public boolean contains(Location loc){
 		return plugin.rm.containsLoc(this, loc);
 	}
 
+	/**
+	 * Checks if the Player is the Owner of the region.
+	 * @param player Player to check
+	 * @return true if the Player is the owner
+	 */
 	public boolean isOwner(Player player){
 		ShieldGroup owners = protect.getOwners(this);
-		return (owners.contains(player.getName()) ? true : false);
+		return (owners.contains(player) ? true : false);
 	}
 
+	/**
+	 * Checks if the Player is a member of the region.
+	 * @param player Player to check
+	 * @return true if the Player is a member
+	 */
+	public boolean isMember(Player player){
+		ShieldGroup members = protect.getMembers(this);
+		return (members.contains(player) ? true : false);
+	}
+
+	/**
+	 * Gets the Owners of the region.
+	 * @return ShieldGroup containing all of the owners
+	 */
 	public ShieldGroup getOwners(){
 		return protect.getOwners(this);
 	}
 
-	/*
-	 * TODO Not sure if I will continue working on these methods, as not all regions will be cuboid
-	 * 
-	public Location getMaxLoc(){
-		return plugin.rm.getMaxLoc(this);
-	}
-
-	public Location getMinLoc(){
-		return plugin.rm.getMinLoc(this);
-	}
+	/**
+	 * Gets the Members of the region.
+	 * @return ShieldGroup containing all of the members
 	 */
+	public ShieldGroup getMembers(){
+		return protect.getMembers(this);
+	}
 }

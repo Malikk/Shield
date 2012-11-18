@@ -223,18 +223,6 @@ public class Protect_Residence implements Listener, Protect {
 	}
 
 	@Override
-	public Location getMaxLoc(ShieldRegion region) {
-		//TODO Not sure if i want to keep working on this feature, since not all plugins use cuboid regions.
-		return null;
-	}
-
-	@Override
-	public Location getMinLoc(ShieldRegion region) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public boolean contains(ShieldRegion region, Location loc) {
 		return getRegion(region).containsLoc(loc);
 	}
@@ -242,5 +230,11 @@ public class Protect_Residence implements Listener, Protect {
 	@Override
 	public ShieldGroup getOwners(ShieldRegion region) {
 		return new ShieldGroup(getRegion(region).getOwner());
+	}
+
+	@Override
+	public ShieldGroup getMembers(ShieldRegion region) {
+		//TODO Does Residence have a member function?
+		return new ShieldGroup();
 	}
 }

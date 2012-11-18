@@ -172,18 +172,6 @@ public class Protect_Towny implements Listener, Protect {
 
 	//Region info Getters
 	@Override
-	public Location getMaxLoc(ShieldRegion region) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Location getMinLoc(ShieldRegion region) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public boolean contains(ShieldRegion region, Location loc) {
 		// TODO Auto-generated method stub
 		return false;
@@ -191,6 +179,12 @@ public class Protect_Towny implements Listener, Protect {
 
 	@Override
 	public ShieldGroup getOwners(ShieldRegion region) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ShieldGroup getMembers(ShieldRegion region) {
 		// TODO Auto-generated method stub
 		return null;
 	}

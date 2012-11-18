@@ -186,21 +186,8 @@ public class Protect_Regios implements Listener, Protect {
 	}
 
 	//Region info Getters
-
 	private Region getRegion(ShieldRegion region){
 		return protect.getRegion(region.getName());
-	}
-
-	@Override
-	public Location getMaxLoc(ShieldRegion region) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Location getMinLoc(ShieldRegion region) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -211,5 +198,12 @@ public class Protect_Regios implements Listener, Protect {
 	@Override
 	public ShieldGroup getOwners(ShieldRegion region) {
 		return new ShieldGroup(getRegion(region).getOwner());
+	}
+
+	@Override
+	public ShieldGroup getMembers(ShieldRegion region) {
+		ShieldGroup group = new ShieldGroup();
+		group.addPlayerNames(getRegion(region).getSubOwners());
+		return group;
 	}
 }
