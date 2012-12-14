@@ -61,7 +61,7 @@ public class Protect_Towny implements Listener, Protect {
 
 			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
 				protect = (Towny) p;
-				shield.pm.addClassToInstantiatedSet(this);
+				//shield.pm.addClassToInstantiatedSet(this);
 			}
 		}
 	}
@@ -73,7 +73,7 @@ public class Protect_Towny implements Listener, Protect {
 
 			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
 				protect = (Towny) p;
-				shield.pm.addClassToInstantiatedSet(this);
+				//shield.pm.addClassToInstantiatedSet(this);
 				shield.log(String.format("Hooked %s v" + getVersion(), name));
 			}
 		}

@@ -44,7 +44,7 @@ import com.malikk.shield.regions.RegionManager;
  */
 public class Shield extends JavaPlugin{
 
-	protected Logger logger = getLogger();
+	protected Logger logger = null;
 
 	private boolean foundPlugin = false;
 
@@ -65,6 +65,8 @@ public class Shield extends JavaPlugin{
 
 	@Override
 	public void onEnable(){
+
+		logger = getLogger();
 
 		loadPlugins();
 		registerAPI();
@@ -127,7 +129,7 @@ public class Shield extends JavaPlugin{
 		}
 
 		//Attempt to load Regios
-		if (foundClass("couk.Adamki11s.Regios.Main.Regios")){
+		if (foundClass("net.jzx7.regios.RegiosPlugin")){
 			regios = new Protect_Regios(this);
 			log(String.format("Detected Regios: %s", regios.isEnabled() ? "Hooked v" + regios.getVersion() : "Waiting"));
 		}

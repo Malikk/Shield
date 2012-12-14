@@ -12,7 +12,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *  
+ * 
  * You should have received a copy of the GNU General Public License
  * along with Shield.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -30,51 +30,51 @@ import com.malikk.shield.exceptions.RegionNotFoundException;
 import com.malikk.shield.regions.ShieldRegion;
 
 public class ProtectionManager {
-	
+
 	Shield shield;
 	public static HashSet<Protect> plugins = new HashSet<Protect>();
-	
+
 	public ProtectionManager(Shield instance){
 		shield = instance;
 	}
-	
+
 	public HashSet<ShieldRegion> getRegions() throws RegionNotFoundException{
 		HashSet<ShieldRegion> regions = new HashSet<ShieldRegion>();
-		
+
 		for (Protect protect: plugins){
 			regions.addAll(protect.getRegions());
 		}
-		
+
 		return validateSet(regions);
 	}
-	
+
 	public HashSet<ShieldRegion> getRegions(Entity entity) throws RegionNotFoundException{
 		HashSet<ShieldRegion> regions = new HashSet<ShieldRegion>();
-		
+
 		for (Protect protect: plugins){
 			regions.addAll(protect.getRegions(entity));
 		}
-		
+
 		return validateSet(regions);
 	}
-	
+
 	public HashSet<ShieldRegion> getRegions(Location loc) throws RegionNotFoundException{
 		HashSet<ShieldRegion> regions = new HashSet<ShieldRegion>();
-		
+
 		for (Protect protect: plugins){
 			regions.addAll(protect.getRegions(loc));
 		}
-		
+
 		return validateSet(regions);
 	}
-	
+
 	public boolean isInRegion(Entity entity) {
 		for (Protect protect: plugins){
 			if (protect.isInRegion(entity)){
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -84,17 +84,17 @@ public class ProtectionManager {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	public boolean canBuild(Player player) {
 		for (Protect protect: plugins){
 			if (!protect.canBuild(player)){
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -104,7 +104,7 @@ public class ProtectionManager {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -114,7 +114,7 @@ public class ProtectionManager {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -124,7 +124,7 @@ public class ProtectionManager {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -134,7 +134,7 @@ public class ProtectionManager {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -144,17 +144,19 @@ public class ProtectionManager {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
-	
+
 	/*
 	 * Util
 	 */
 	public void addClassToInstantiatedSet(Protect protect){
-		plugins.add(protect);
+		if (protect != null){
+			plugins.add(protect);
+		}
 	}
-	
+
 	public HashSet<ShieldRegion> validateSet(HashSet<ShieldRegion> set) throws RegionNotFoundException{
 		if (set.size() != 0){
 			return set;
@@ -162,7 +164,7 @@ public class ProtectionManager {
 			throw new RegionNotFoundException();
 		}
 	}
-	
+
 	public Protect getProtectObjectFromName(String plugin){
 		for (Protect protect: plugins){
 			if (protect.getPluginName().equalsIgnoreCase(plugin)){

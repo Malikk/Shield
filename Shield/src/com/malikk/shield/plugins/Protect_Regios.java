@@ -48,7 +48,7 @@ public class Protect_Regios implements Listener, Protect {
 	Shield shield;
 
 	private final String name = "Regios";
-	private final String pack = "couk.Adamki11s.Regios.Main.Regios";
+	private final String pack = "net.jzx7.regios.RegiosPlugin";
 	private static RegiosPlugin protect = null;
 
 	public Protect_Regios(Shield instance){

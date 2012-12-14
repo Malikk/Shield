@@ -45,6 +45,11 @@ public class ShieldRegion {
 	public ShieldRegion (Shield instance, String name, Protect protect, World world){
 		plugin = instance;
 
+		plugin.log("Creating ShieldRegion");
+		plugin.log(name);
+		plugin.log(protect.getPluginName());
+		plugin.log(world.getName());
+
 		this.name = name;
 		this.protect = protect;
 		this.world = world;
