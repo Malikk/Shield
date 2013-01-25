@@ -54,6 +54,7 @@ public class Shield extends JavaPlugin{
 	public Protect_Residence residence = null;
 	public Protect_WorldGuard worldGuard = null;
 	public Protect_Towny towny = null;
+	public Protect_AntiShare antishare = null;
 
 	//Shield Classes
 	public PartialSupportNotifier notifier = new PartialSupportNotifier(this);
@@ -150,6 +151,12 @@ public class Shield extends JavaPlugin{
 		if (foundClass("com.palmergames.bukkit.towny.Towny")){
 			towny = new Protect_Towny(this);
 			log(String.format("Detected Towny: %s", towny.isEnabled() ? "Hooked v" + towny.getVersion() : "Waiting"));
+		}
+		
+		// Attempt to load AntiShare
+		if (foundClass("com.turt2live.antishare.AntiShare")){
+			antishare=new Protect_AntiShare(this);
+			log(String.format("Detected AntiShare: %s", antishare.isEnabled() ? "Hooked v" + antishare.getVersion() : "Waiting"));
 		}
 
 		if (foundPlugin == false){
