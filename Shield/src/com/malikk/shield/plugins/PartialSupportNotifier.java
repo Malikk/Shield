@@ -12,7 +12,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *  
+ * 
  * You should have received a copy of the GNU General Public License
  * along with Shield.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -25,22 +25,22 @@ import com.malikk.shield.Shield;
 
 public class PartialSupportNotifier {
 
-	Shield plugin;
-	
+	Shield shield;
+
 	ArrayList<String> known = new ArrayList<String>();
-	
+
 	public PartialSupportNotifier(Shield instance){
-		plugin = instance;
+		shield = instance;
 	}
-	
+
 	public void incompatible(String name, String method, String lookingFor, String instead){
 		String warning = name + "." + method;
-		
-		if (!known.contains(warning) && plugin.config.AlertsAreEnabled()){
-			plugin.logWarning(String.format("%s API does not support '%s' for %s. Instead, %s", name, method, lookingFor, instead));
+
+		if (!known.contains(warning) && shield.config.AlertsAreEnabled()){
+			shield.logWarning(String.format("%s API does not support '%s' for %s. Instead, %s", name, method, lookingFor, instead));
 			known.add(warning);
 		}
-		
+
 	}
-	
+
 }

@@ -57,6 +57,8 @@ public class Protect_Factions extends ProtectTemplate {
 	public void init(){
 		protect = (Factions) plugin;
 		shield.pm.addClassToInstantiatedSet(shield.factions);
+		// TODO remove once support is complete
+		shield.logWarning("Factions support is currently incomplete");
 	}
 
 	@Override
