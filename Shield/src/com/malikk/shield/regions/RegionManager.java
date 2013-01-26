@@ -30,15 +30,15 @@ import com.malikk.shield.plugins.Protect;
 
 public class RegionManager {
 
-	Shield plugin;
+	Shield shield;
 	
 	public RegionManager(Shield instance){
-		plugin = instance;
+		shield = instance;
 	}
 	
 	//Always valid or Exception is thown
 	public ShieldRegion getShieldRegion(String name, String protect) throws RegionNotFoundException{
-		for (ShieldRegion region: plugin.pm.getRegions()){
+		for (ShieldRegion region: shield.pm.getRegions()){
 			if (region.getName().equalsIgnoreCase(name) && region.getPluginName().equalsIgnoreCase(protect)){
 				return region;
 			}
@@ -51,7 +51,7 @@ public class RegionManager {
 	public HashSet<ShieldRegion> getShieldRegions(String name) throws RegionNotFoundException{
 		HashSet<ShieldRegion> regions = new HashSet<ShieldRegion>();
 		
-		for (ShieldRegion region: plugin.pm.getRegions()){
+		for (ShieldRegion region: shield.pm.getRegions()){
 			if (region.getName().equalsIgnoreCase(name)){
 				regions.add(region);
 			}
@@ -67,7 +67,7 @@ public class RegionManager {
 	
 	//Not always Valid
 	public ShieldRegion createShieldRegion(String name, Protect protect, World world){
-		return new ShieldRegion(plugin, name, protect, world);
+		return new ShieldRegion(shield, name, protect, world);
 	}
 	
 	public boolean regionsAreEqual(ShieldRegion region1, ShieldRegion region2){

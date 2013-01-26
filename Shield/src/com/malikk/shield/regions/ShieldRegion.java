@@ -37,18 +37,13 @@ import com.malikk.shield.plugins.Protect;
  */
 public class ShieldRegion {
 
-	private Shield plugin;
+	private Shield shield;
 	private String name;
 	private World world;
 	private Protect protect;
 
 	public ShieldRegion (Shield instance, String name, Protect protect, World world){
-		plugin = instance;
-
-		plugin.log("Creating ShieldRegion");
-		plugin.log(name);
-		plugin.log(protect.getPluginName());
-		plugin.log(world.getName());
+		shield = instance;
 
 		this.name = name;
 		this.protect = protect;
@@ -92,7 +87,7 @@ public class ShieldRegion {
 	 * @return true if the region contained the Location
 	 */
 	public boolean contains(Location loc){
-		return plugin.rm.containsLoc(this, loc);
+		return shield.rm.containsLoc(this, loc);
 	}
 
 	/**

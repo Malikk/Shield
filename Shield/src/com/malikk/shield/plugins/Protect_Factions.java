@@ -24,6 +24,7 @@ import java.util.HashSet;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import com.malikk.shield.Shield;
@@ -42,106 +43,148 @@ import com.massivecraft.factions.struct.FPerm;
  * TODO: support outposts
  * 
  * @author IDragonfire
- * @version 1.0
+ * @version 1.8.0
  */
 public class Protect_Factions extends ProtectTemplate {
 
-    protected Factions protect;
+	protected Factions protect;
 
-    public Protect_Factions(Shield instance) {
-        super(instance, "Faction", "com.massivecraft.factions");
-    }
+	public Protect_Factions(Shield instance) {
+		super(instance, "Faction", "com.massivecraft.factions.Factions");
+	}
 
-    @Override
-    public boolean canBuild(Player player, Location loc) {
-        return FPerm.BUILD.has(FPlayers.i.get(player.getName()), new FLocation(
-                loc));
-    }
+	@Override
+	public void init(){
+		protect = (Factions) plugin;
+		shield.pm.addClassToInstantiatedSet(shield.factions);
+	}
 
-    @Override
-    public boolean canOpen(Player player, Location loc) {
-        FPlayer fplayer = FPlayers.i.get(player.getName());
-        FLocation flocation = new FLocation(loc);
-        Material type = loc.getBlock().getType();
-        if (type == Material.WOOD_DOOR || type == Material.IRON_DOOR) {
-            return FPerm.DOOR.has(fplayer, flocation);
-        }
-        if (type == Material.STONE_BUTTON) {
-            FPerm.BUTTON.has(fplayer, flocation);
-        }
-        if (type == Material.LEVER) {
-            return FPerm.LEVER.has(fplayer, flocation);
-        }
-        return FPerm.DOOR.has(fplayer, flocation)
-                || FPerm.BUTTON.has(fplayer, flocation)
-                || FPerm.LEVER.has(fplayer, flocation);
-    }
+	@Override
+	public boolean canBuild(Player player, Location loc) {
+		return FPerm.BUILD.has(FPlayers.i.get(player.getName()), new FLocation(
+				loc));
+	}
 
-    @Override
-    public boolean canUse(Player player, Location loc) {
-        return FPerm.CONTAINER.has(FPlayers.i.get(player.getName()),
-                new FLocation(loc));
-    }
+	@Override
+	public boolean canOpen(Player player, Location loc) {
+		FPlayer fplayer = FPlayers.i.get(player.getName());
+		FLocation flocation = new FLocation(loc);
+		Material type = loc.getBlock().getType();
+		if (type == Material.WOOD_DOOR || type == Material.IRON_DOOR) {
+			return FPerm.DOOR.has(fplayer, flocation);
+		}
+		if (type == Material.STONE_BUTTON) {
+			FPerm.BUTTON.has(fplayer, flocation);
+		}
+		if (type == Material.LEVER) {
+			return FPerm.LEVER.has(fplayer, flocation);
+		}
+		return FPerm.DOOR.has(fplayer, flocation)
+				|| FPerm.BUTTON.has(fplayer, flocation)
+				|| FPerm.LEVER.has(fplayer, flocation);
+	}
 
-    @Override
-    public boolean contains(ShieldRegion region, Location loc) {
-        Faction in = Board.getFactionAt(new FLocation(loc));
-        if (in == null) {
-            return false;
-        }
-        Faction out = Factions.i.get(region.getName());
-        if (out == null) {
-            return false;
-        }
-        return in.getId().equals(out.getId());
-    }
+	@Override
+	public boolean canUse(Player player, Location loc) {
+		return FPerm.CONTAINER.has(FPlayers.i.get(player.getName()),
+				new FLocation(loc));
+	}
 
-    @Override
-    public ShieldGroup getMembers(ShieldRegion region) {
-        ShieldGroup group = region.getMembers();
-        Faction faction = Factions.i.get(region.getName());
-        if (faction != null) {
-            for (FPlayer member : faction.getFPlayers()) {
-                group.addPlayer(member.getName());
-            }
-        }
-        return group;
-    }
+	@Override
+	public boolean contains(ShieldRegion region, Location loc) {
+		Faction in = Board.getFactionAt(new FLocation(loc));
+		if (in == null) {
+			return false;
+		}
+		Faction out = Factions.i.get(region.getName());
+		if (out == null) {
+			return false;
+		}
+		return in.getId().equals(out.getId());
+	}
 
-    @Override
-    public ShieldGroup getOwners(ShieldRegion region) {
-        ShieldGroup group = region.getOwners();
-        Faction faction = Factions.i.get(region.getName());
-        if (faction != null) {
-            group.addPlayer(faction.getFPlayerLeader().getName());
-        }
-        return group;
-    }
+	@Override
+	public ShieldGroup getMembers(ShieldRegion region) {
+		ShieldGroup group = region.getMembers();
+		Faction faction = Factions.i.get(region.getName());
+		if (faction != null) {
+			for (FPlayer member : faction.getFPlayers()) {
+				group.addPlayer(member.getName());
+			}
+		}
+		return group;
+	}
 
-    @Override
-    public HashSet<ShieldRegion> getRegions() {
-        HashSet<ShieldRegion> regios = new HashSet<ShieldRegion>();
-        ArrayList<Faction> factionList = new ArrayList<Faction>(Factions.i
-                .get());
-        for (Faction faction : factionList) {
-            addFactionToRegion(faction, regios);
-        }
-        return regios;
-    }
+	@Override
+	public ShieldGroup getOwners(ShieldRegion region) {
+		ShieldGroup group = region.getOwners();
+		Faction faction = Factions.i.get(region.getName());
+		if (faction != null) {
+			group.addPlayer(faction.getFPlayerLeader().getName());
+		}
+		return group;
+	}
 
-    @Override
-    public HashSet<ShieldRegion> getRegions(Location loc) {
-        HashSet<ShieldRegion> regios = new HashSet<ShieldRegion>();
-        Faction faction = Board.getFactionAt(new FLocation(loc));
-        if (faction != null) {
-            addFactionToRegion(faction, regios);
-        }
-        return regios;
-    }
+	@Override
+	public HashSet<ShieldRegion> getRegions() {
+		HashSet<ShieldRegion> regios = new HashSet<ShieldRegion>();
+		ArrayList<Faction> factionList = new ArrayList<Faction>(Factions.i
+				.get());
+		for (Faction faction : factionList) {
+			addFactionToRegion(faction, regios);
+		}
+		return regios;
+	}
 
-    private void addFactionToRegion(Faction faction,
-            HashSet<ShieldRegion> region) {
-        region.add(new ShieldRegion(shield, faction.getId(), this, faction
-                .getHome().getWorld()));
-    }
+	@Override
+	public HashSet<ShieldRegion> getRegions(Location loc) {
+		HashSet<ShieldRegion> regios = new HashSet<ShieldRegion>();
+		Faction faction = Board.getFactionAt(new FLocation(loc));
+		if (faction != null) {
+			addFactionToRegion(faction, regios);
+		}
+		return regios;
+	}
+
+	private void addFactionToRegion(Faction faction,
+			HashSet<ShieldRegion> region) {
+		region.add(new ShieldRegion(shield, faction.getId(), this, faction
+				.getHome().getWorld()));
+	}
+
+	@Override
+	public HashSet<ShieldRegion> getRegions(Entity entity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isInRegion(Entity entity) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isInRegion(Location loc) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean canBuild(Player player) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean canUse(Player player) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean canOpen(Player player) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

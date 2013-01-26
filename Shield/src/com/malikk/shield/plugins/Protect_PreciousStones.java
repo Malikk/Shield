@@ -26,14 +26,6 @@ import net.sacredlabyrinth.Phaed.PreciousStones.PreciousStones;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.server.PluginDisableEvent;
-import org.bukkit.event.server.PluginEnableEvent;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginManager;
-
 import com.malikk.shield.Shield;
 import com.malikk.shield.groups.ShieldGroup;
 import com.malikk.shield.regions.ShieldRegion;
@@ -42,67 +34,20 @@ import com.malikk.shield.regions.ShieldRegion;
  * PreciousStones
  * @version v9.5.0 for CB 1.4.2
  */
-public class Protect_PreciousStones implements Listener, Protect {
+public class Protect_PreciousStones extends ProtectTemplate{
 
-	Shield shield;
-
-	private final String name = "PreciousStones";
-	private final String pack = "net.sacredlabyrinth.Phaed.PreciousStones.PreciousStones";
-	private static PreciousStones protect = null;
+	private PreciousStones protect = null;
 
 	public Protect_PreciousStones(Shield instance){
-		this.shield = instance;
-
-		PluginManager pm = shield.getServer().getPluginManager();
-		pm.registerEvents(this, shield);
-
-		//Load plugin if it was loaded before Shield
-		if (protect == null) {
-			Plugin p = shield.getServer().getPluginManager().getPlugin(name);
-
-			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
-				protect = (PreciousStones) p;
-				//shield.pm.addClassToInstantiatedPluginClassesArrayList(name);
-			}
-		}
-	}
-
-	@EventHandler(priority = EventPriority.MONITOR)
-	public void onPluginEnable(PluginEnableEvent event) {
-		if (protect == null) {
-			Plugin p = shield.getServer().getPluginManager().getPlugin(name);
-
-			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
-				protect = (PreciousStones) p;
-				//shield.pm.addClassToInstantiatedPluginClassesArrayList(name);
-				shield.log(String.format("Hooked %s v" + getVersion(), name));
-			}
-		}
-	}
-
-	@EventHandler(priority = EventPriority.MONITOR)
-	public void onPluginDisable(PluginDisableEvent event) {
-		if (protect != null) {
-			if (event.getPlugin().getDescription().getName().equals(name)) {
-				protect = null;
-				shield.log(String.format("%s unhooked.", name));
-			}
-		}
+		super(instance, "PreciousStones", "net.sacredlabyrinth.Phaed.PreciousStones.PreciousStones");
 	}
 
 	@Override
-	public boolean isEnabled(){
-		return (protect == null ? false : true);
-	}
-
-	@Override
-	public String getPluginName(){
-		return name;
-	}
-
-	@Override
-	public String getVersion(){
-		return protect.getDescription().getVersion();
+	public void init(){
+		//Leave this out until the class is finished
+		//shield.pm.addClassToInstantiatedSet(shield.preciousStones);
+		protect = (PreciousStones) plugin;
+		shield.logWarning("There is currently no support for PreciousStones. It only has a placeholder class and is hooked.");
 	}
 
 	@Override

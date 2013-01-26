@@ -40,7 +40,7 @@ import com.malikk.shield.regions.RegionManager;
  * <p>
  * <img src = "https://dl.dropbox.com/u/59837317/Shield/LogoSmall.png">
  * @author Malikk
- * @version Beta 1.0.0.1, 8-17-2012
+ * @version Beta 1.2, 8-17-2012
  */
 public class Shield extends JavaPlugin{
 
@@ -55,6 +55,7 @@ public class Shield extends JavaPlugin{
 	public Protect_WorldGuard worldGuard = null;
 	public Protect_Towny towny = null;
 	public Protect_AntiShare antishare = null;
+	public Protect_Factions factions = null;
 
 	//Shield Classes
 	public PartialSupportNotifier notifier = new PartialSupportNotifier(this);
@@ -152,11 +153,17 @@ public class Shield extends JavaPlugin{
 			towny = new Protect_Towny(this);
 			log(String.format("Detected Towny: %s", towny.isEnabled() ? "Hooked v" + towny.getVersion() : "Waiting"));
 		}
-		
-		// Attempt to load AntiShare
+
+		//Attempt to load AntiShare
 		if (foundClass("com.turt2live.antishare.AntiShare")){
 			antishare=new Protect_AntiShare(this);
 			log(String.format("Detected AntiShare: %s", antishare.isEnabled() ? "Hooked v" + antishare.getVersion() : "Waiting"));
+		}
+
+		//Attempt to load Factions
+		if (foundClass("com.massivecraft.factions.Factions")){
+			factions = new Protect_Factions(this);
+			log(String.format("Detected Factions: %s", factions.isEnabled() ? "Hooked v" + factions.getVersion() : "Waiting"));
 		}
 
 		if (foundPlugin == false){

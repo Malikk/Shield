@@ -34,6 +34,8 @@ public interface Protect {
 
 	public boolean isEnabled();
 
+	public void init();
+
 	public String getPluginName();
 
 	public String getVersion();

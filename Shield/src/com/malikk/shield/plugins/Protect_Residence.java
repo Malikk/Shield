@@ -26,14 +26,6 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.server.PluginDisableEvent;
-import org.bukkit.event.server.PluginEnableEvent;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginManager;
-
 import com.bekvon.bukkit.residence.Residence;
 import com.bekvon.bukkit.residence.protection.ClaimedResidence;
 import com.bekvon.bukkit.residence.protection.FlagPermissions;
@@ -46,72 +38,22 @@ import com.malikk.shield.regions.ShieldRegion;
  * Residence
  * @version v2.6.6 for CB 1.4.2-R0.2
  */
-public class Protect_Residence implements Listener, Protect {
+public class Protect_Residence extends ProtectTemplate {
 
-	Shield shield;
-
-	private final String name = "Residence";
-	private final String pack = "com.bekvon.bukkit.residence.Residence";
-	private static Residence protect = null;
+	private Residence protect = null;
 
 	//Managers
 	private static ResidenceManager rmanager = null;
 
 	public Protect_Residence(Shield instance){
-		this.shield = instance;
-
-		PluginManager pm = shield.getServer().getPluginManager();
-		pm.registerEvents(this, shield);
-
-		//Load plugin if it was loaded before Shield
-		if (protect == null) {
-			Plugin p = shield.getServer().getPluginManager().getPlugin(name);
-
-			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
-				protect = (Residence) p;
-				rmanager = Residence.getResidenceManager();
-				shield.pm.addClassToInstantiatedSet(shield.residence);
-			}
-		}
-	}
-
-	@EventHandler(priority = EventPriority.MONITOR)
-	public void onPluginEnable(PluginEnableEvent event) {
-		if (protect == null) {
-			Plugin p = shield.getServer().getPluginManager().getPlugin(name);
-
-			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
-				protect = (Residence) p;
-				rmanager = Residence.getResidenceManager();
-				shield.pm.addClassToInstantiatedSet(shield.residence);
-				shield.log(String.format("Hooked %s v" + getVersion(), name));
-			}
-		}
-	}
-
-	@EventHandler(priority = EventPriority.MONITOR)
-	public void onPluginDisable(PluginDisableEvent event) {
-		if (protect != null) {
-			if (event.getPlugin().getDescription().getName().equals(name)) {
-				protect = null;
-				shield.log(String.format("%s unhooked.", name));
-			}
-		}
+		super(instance, "Residence", "com.bekvon.bukkit.residence.Residence");
 	}
 
 	@Override
-	public boolean isEnabled(){
-		return (protect == null ? false : true);
-	}
-
-	@Override
-	public String getPluginName(){
-		return name;
-	}
-
-	@Override
-	public String getVersion(){
-		return protect.getDescription().getVersion();
+	public void init(){
+		protect = (Residence) plugin;
+		rmanager = Residence.getResidenceManager();
+		shield.pm.addClassToInstantiatedSet(shield.residence);
 	}
 
 	@Override

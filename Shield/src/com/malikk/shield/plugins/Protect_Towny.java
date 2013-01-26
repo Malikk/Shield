@@ -24,14 +24,6 @@ import java.util.HashSet;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.server.PluginDisableEvent;
-import org.bukkit.event.server.PluginEnableEvent;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginManager;
-
 import com.malikk.shield.Shield;
 import com.malikk.shield.groups.ShieldGroup;
 import com.malikk.shield.regions.ShieldRegion;
@@ -41,67 +33,20 @@ import com.palmergames.bukkit.towny.Towny;
  * Towny
  * @version v0.82.0.0 for CB 1.3.2-R3.0
  */
-public class Protect_Towny implements Listener, Protect {
+public class Protect_Towny extends ProtectTemplate {
 
-	Shield shield;
-
-	private final String name = "Towny";
-	private final String pack = "com.palmergames.bukkit.towny.Towny";
-	private static Towny protect = null;
+	private Towny protect = null;
 
 	public Protect_Towny(Shield instance){
-		this.shield = instance;
-
-		PluginManager pm = shield.getServer().getPluginManager();
-		pm.registerEvents(this, shield);
-
-		//Load plugin if it was loaded before Shield
-		if (protect == null) {
-			Plugin p = shield.getServer().getPluginManager().getPlugin(name);
-
-			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
-				protect = (Towny) p;
-				//shield.pm.addClassToInstantiatedSet(this);
-			}
-		}
-	}
-
-	@EventHandler(priority = EventPriority.MONITOR)
-	public void onPluginEnable(PluginEnableEvent event) {
-		if (protect == null) {
-			Plugin p = shield.getServer().getPluginManager().getPlugin(name);
-
-			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
-				protect = (Towny) p;
-				//shield.pm.addClassToInstantiatedSet(this);
-				shield.log(String.format("Hooked %s v" + getVersion(), name));
-			}
-		}
-	}
-
-	@EventHandler(priority = EventPriority.MONITOR)
-	public void onPluginDisable(PluginDisableEvent event) {
-		if (protect != null) {
-			if (event.getPlugin().getDescription().getName().equals(name)) {
-				protect = null;
-				shield.log(String.format("%s unhooked.", name));
-			}
-		}
+		super(instance, "Towny", "com.palmergames.bukkit.towny.Towny");
 	}
 
 	@Override
-	public boolean isEnabled(){
-		return (protect == null ? false : true);
-	}
-
-	@Override
-	public String getPluginName(){
-		return name;
-	}
-
-	@Override
-	public String getVersion(){
-		return protect.getDescription().getVersion();
+	public void init(){
+		//Leave this out until the class is finished
+		//shield.pm.addClassToInstantiatedSet(shield.towny);
+		protect = (Towny) plugin;
+		shield.logWarning("There is currently no support for Towny. It only has a placeholder class and is hooked.");
 	}
 
 	@Override

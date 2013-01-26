@@ -27,14 +27,6 @@ import net.jzx7.regiosapi.regions.Region;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.server.PluginDisableEvent;
-import org.bukkit.event.server.PluginEnableEvent;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginManager;
-
 import com.malikk.shield.Shield;
 import com.malikk.shield.groups.ShieldGroup;
 import com.malikk.shield.regions.ShieldRegion;
@@ -43,67 +35,18 @@ import com.malikk.shield.regions.ShieldRegion;
  * Regios
  * @version v5.9.3 for CB 1.4.2-R0.2
  */
-public class Protect_Regios implements Listener, Protect {
+public class Protect_Regios extends ProtectTemplate {
 
-	Shield shield;
-
-	private final String name = "Regios";
-	private final String pack = "net.jzx7.regios.RegiosPlugin";
-	private static RegiosPlugin protect = null;
+	private RegiosPlugin protect;
 
 	public Protect_Regios(Shield instance){
-		this.shield = instance;
-
-		PluginManager pm = shield.getServer().getPluginManager();
-		pm.registerEvents(this, shield);
-
-		//Load plugin if it was loaded before Shield
-		if (protect == null) {
-			Plugin p = shield.getServer().getPluginManager().getPlugin(name);
-
-			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
-				protect = (RegiosPlugin) p;
-				shield.pm.addClassToInstantiatedSet(shield.regios);
-			}
-		}
-	}
-
-	@EventHandler(priority = EventPriority.MONITOR)
-	public void onPluginEnable(PluginEnableEvent event) {
-		if (protect == null) {
-			Plugin p = shield.getServer().getPluginManager().getPlugin(name);
-
-			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
-				protect = (RegiosPlugin) p;
-				shield.pm.addClassToInstantiatedSet(shield.regios);
-				shield.log(String.format("Hooked %s v" + getVersion(), name));
-			}
-		}
-	}
-
-	@EventHandler(priority = EventPriority.MONITOR)
-	public void onPluginDisable(PluginDisableEvent event) {
-		if (protect != null) {
-			if (event.getPlugin().getDescription().getName().equals(name)) {
-				protect = null;
-				shield.log(String.format("%s unhooked.", name));
-			}
-		}
+		super(instance, "Regios", "net.jzx7.regios.RegiosPlugin");
 	}
 
 	@Override
-	public boolean isEnabled(){
-		return (protect == null ? false : true);
-	}
-
-	@Override
-	public String getPluginName(){
-		return name;
-	}
-
-	@Override
-	public String getVersion(){
-		return protect.getDescription().getVersion();
+	public void init(){
+		protect = (RegiosPlugin)plugin;
+		shield.pm.addClassToInstantiatedSet(shield.regios);
 	}
 
 	@Override
