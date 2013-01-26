@@ -33,7 +33,7 @@ import com.malikk.shield.regions.ShieldRegion;
 
 /**
  * Regios
- * @version v5.9.3 for CB 1.4.2-R0.2
+ * @version v5.9.6 for CB 1.4.6
  */
 public class Protect_Regios extends ProtectTemplate {
 
