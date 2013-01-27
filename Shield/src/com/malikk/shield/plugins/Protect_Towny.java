@@ -24,6 +24,8 @@ import java.util.HashSet;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+
 import com.malikk.shield.Shield;
 import com.malikk.shield.groups.ShieldGroup;
 import com.malikk.shield.regions.ShieldRegion;
@@ -38,7 +40,7 @@ public class Protect_Towny extends ProtectTemplate {
 	private Towny protect = null;
 
 	public Protect_Towny(Shield instance){
-		super(instance, "Towny", "com.palmergames.bukkit.towny.Towny");
+		super(instance, ProtectInfo.TOWNY);
 	}
 
 	@Override
@@ -46,6 +48,11 @@ public class Protect_Towny extends ProtectTemplate {
 		//Leave this out until the class is finished
 		//shield.pm.addClassToInstantiatedSet(shield.towny);
 		protect = (Towny) plugin;
+	}
+
+	@Override
+	protected void hook(Plugin p){
+		//Overriding template hook method and leaving blank. This is so the class isn't used while it's not finished.
 		shield.logWarning("There is currently no support for Towny. It only has a placeholder class and is hooked.");
 	}
 

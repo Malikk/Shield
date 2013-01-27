@@ -46,14 +46,13 @@ public class Protect_Residence extends ProtectTemplate {
 	private static ResidenceManager rmanager = null;
 
 	public Protect_Residence(Shield instance){
-		super(instance, "Residence", "com.bekvon.bukkit.residence.Residence");
+		super(instance, ProtectInfo.RESIDENCE);
 	}
 
 	@Override
 	public void init(){
 		protect = (Residence) plugin;
 		rmanager = Residence.getResidenceManager();
-		shield.pm.addClassToInstantiatedSet(shield.residence);
 	}
 
 	@Override
@@ -62,7 +61,7 @@ public class Protect_Residence extends ProtectTemplate {
 
 		try{
 			for (String r: rmanager.getResidenceList()){
-				regions.add(shield.rm.createShieldRegion(r, shield.residence, Bukkit.getWorld(rmanager.getByName(r).getWorld())));
+				regions.add(shield.rm.createShieldRegion(r, info.getProtectObject(), Bukkit.getWorld(rmanager.getByName(r).getWorld())));
 			}
 
 			return regions;
@@ -97,7 +96,7 @@ public class Protect_Residence extends ProtectTemplate {
 
 		try{
 			for (String r: names){
-				regions.add(shield.rm.createShieldRegion(r, shield.residence, world));
+				regions.add(shield.rm.createShieldRegion(r, info.getProtectObject(), world));
 			}
 
 			return regions;

@@ -21,6 +21,8 @@ package com.malikk.shield;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
+import com.malikk.shield.plugins.ProtectInfo;
+import com.malikk.shield.plugins.Protect_WorldGuard;
 import com.malikk.shield.regions.ShieldRegion;
 
 import java.util.HashSet;
@@ -45,13 +47,10 @@ public class ShieldConfig {
 
 		config.addDefault("AlertsEnabled", true);
 
-		config.addDefault("Priority.1", "WorldGuard");
-		config.addDefault("Priority.2", "Residence");
-		config.addDefault("Priority.3", "Regios");
-		config.addDefault("Priority.4", "PreciousStones");
-		config.addDefault("Priority.5", "Factions");
-		config.addDefault("Priority.6", "Towny");
-		config.addDefault("Priority.7", "AntiShare");
+		int counter = 1;
+		for (ProtectInfo info: ProtectInfo.values()){
+			config.addDefault("Priority." + counter++, info.getName());
+		}
 
 		config.options().copyDefaults(true);
 		plugin.saveConfig();
@@ -98,7 +97,8 @@ public class ShieldConfig {
 							return region;
 						}
 
-						return plugin.worldGuard.getHighestPriority(worldGuardRegions);
+						Protect_WorldGuard p = (Protect_WorldGuard) ProtectInfo.WORLDGUARD.getProtectObject();
+						return p.getHighestPriority(worldGuardRegions);
 					}else{
 						return region;
 					}

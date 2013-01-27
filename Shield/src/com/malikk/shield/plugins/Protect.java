@@ -36,6 +36,12 @@ public interface Protect {
 
 	public void init();
 
+	public void sendDetectMessage();
+
+	public void sendHookMessage();
+
+	public void sendUnhookMessage();
+
 	public String getPluginName();
 
 	public String getVersion();

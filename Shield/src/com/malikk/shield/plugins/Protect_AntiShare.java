@@ -52,7 +52,7 @@ public class Protect_AntiShare extends ProtectTemplate{
 	 */
 
 	public Protect_AntiShare(Shield instance){
-		super(instance, "AntiShare", "com.turt2live.antishare.AntiShare");
+		super(instance, ProtectInfo.ANTISHARE);
 	}
 
 	@Override
@@ -61,14 +61,14 @@ public class Protect_AntiShare extends ProtectTemplate{
 			regionManager = (RegionManager) protect.getSystemsManager().getManager(Manager.REGION);
 		}
 		protect = (AntiShare) plugin;
-		shield.pm.addClassToInstantiatedSet(shield.antishare);
+		shield.pm.addClassToInstantiatedSet(info.getProtectObject());
 	}
 
 	@Override
 	public HashSet<ShieldRegion> getRegions(){
 		HashSet<ShieldRegion> regions = new HashSet<ShieldRegion>();
 		for(Region region : regionManager.getAllRegions()){
-			ShieldRegion sregion = shield.rm.createShieldRegion(region.getName(), shield.antishare, Bukkit.getWorld(region.getWorldName()));
+			ShieldRegion sregion = shield.rm.createShieldRegion(region.getName(), info.getProtectObject(), Bukkit.getWorld(region.getWorldName()));
 			regions.add(sregion);
 		}
 		return regions;
@@ -86,7 +86,7 @@ public class Protect_AntiShare extends ProtectTemplate{
 		if(region==null){
 			return regions;
 		}
-		ShieldRegion sregion = shield.rm.createShieldRegion(region.getName(), shield.antishare, Bukkit.getWorld(region.getWorldName()));
+		ShieldRegion sregion = shield.rm.createShieldRegion(region.getName(), info.getProtectObject(), Bukkit.getWorld(region.getWorldName()));
 		regions.add(sregion);
 		return regions;
 	}

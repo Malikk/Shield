@@ -20,23 +20,21 @@ public abstract class ProtectTemplate implements Listener, Protect {
 
 	protected Shield shield;
 
-	protected final String name;
-	protected final String pack;
+	protected ProtectInfo info;
 	protected Plugin plugin = null;
 
-	public ProtectTemplate(Shield instance, String name, String pack) {
+	public ProtectTemplate(Shield instance, ProtectInfo info) {
 		this.shield = instance;
-		this.name = name;
-		this.pack = pack;
+		this.info = info;
 
 		PluginManager pm = shield.getServer().getPluginManager();
 		pm.registerEvents(this, shield);
 
 		// Load plugin if it was loaded before Shield
 		if (plugin == null) {
-			Plugin p = shield.getServer().getPluginManager().getPlugin(name);
+			Plugin p = shield.getServer().getPluginManager().getPlugin(info.getName());
 
-			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
+			if (p != null && p.isEnabled() && p.getClass().getName().equals(info.getPack())) {
 				hook(p);
 			}
 		}
@@ -45,11 +43,11 @@ public abstract class ProtectTemplate implements Listener, Protect {
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPluginEnable(PluginEnableEvent event) {
 		if (plugin == null) {
-			Plugin p = shield.getServer().getPluginManager().getPlugin(name);
+			Plugin p = shield.getServer().getPluginManager().getPlugin(info.getName());
 
-			if (p != null && p.isEnabled() && p.getClass().getName().equals(pack)) {
+			if (p != null && p.isEnabled() && p.getClass().getName().equals(info.getPack())) {
 				hook(p);
-				shield.log(String.format("Hooked %s v" + getVersion(), name));
+				sendHookMessage();
 			}
 		}
 	}
@@ -57,7 +55,7 @@ public abstract class ProtectTemplate implements Listener, Protect {
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPluginDisable(PluginDisableEvent event) {
 		if (plugin!= null) {
-			if (event.getPlugin().getDescription().getName().equals(name)) {
+			if (event.getPlugin().getDescription().getName().equals(info.getName())) {
 				unhook();
 			}
 		}
@@ -65,12 +63,12 @@ public abstract class ProtectTemplate implements Listener, Protect {
 
 	protected void hook(Plugin p) {
 		plugin = p;
+		shield.pm.addClassToInstantiatedSet(info.getProtectObject());
 		init();
 	}
 
-	private void unhook(){
+	protected void unhook(){
 		plugin = null;
-		shield.log(String.format("%s unhooked.", name));
 	}
 
 	@Override
@@ -80,12 +78,27 @@ public abstract class ProtectTemplate implements Listener, Protect {
 
 	@Override
 	public String getPluginName() {
-		return name;
+		return info.getName();
 	}
 
 	@Override
 	public String getVersion() {
 		return plugin.getDescription().getVersion();
+	}
+
+	@Override
+	public void sendDetectMessage(){
+		shield.log(String.format("Detected %s: %s", getPluginName(), isEnabled() ? "Hooked v" + getVersion() : "Waiting"));
+	}
+
+	@Override
+	public void sendHookMessage(){
+		shield.log(String.format("Hooked %s v" + getVersion(), info.getName()));
+	}
+
+	@Override
+	public void sendUnhookMessage(){
+		shield.log(String.format("%s unhooked.", getPluginName()));
 	}
 
 }

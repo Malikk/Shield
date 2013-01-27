@@ -40,13 +40,12 @@ public class Protect_Regios extends ProtectTemplate {
 	private RegiosPlugin protect;
 
 	public Protect_Regios(Shield instance){
-		super(instance, "Regios", "net.jzx7.regios.RegiosPlugin");
+		super(instance, ProtectInfo.REGIOS);
 	}
 
 	@Override
 	public void init(){
 		protect = (RegiosPlugin)plugin;
-		shield.pm.addClassToInstantiatedSet(shield.regios);
 	}
 
 	@Override
@@ -55,7 +54,7 @@ public class Protect_Regios extends ProtectTemplate {
 
 		if (protect.getRegions() != null){
 			for (Region r: protect.getRegions()){
-				regions.add(shield.rm.createShieldRegion(r.getName(), shield.regios, r.getWorld()));
+				regions.add(shield.rm.createShieldRegion(r.getName(), info.getProtectObject(), r.getWorld()));
 			}
 		}
 
@@ -68,7 +67,7 @@ public class Protect_Regios extends ProtectTemplate {
 
 		if (protect.getRegions(entity.getLocation()) != null){
 			for (Region r: protect.getRegions(entity.getLocation())){
-				regions.add(shield.rm.createShieldRegion(r.getName(), shield.regios, r.getWorld()));
+				regions.add(shield.rm.createShieldRegion(r.getName(), info.getProtectObject(), r.getWorld()));
 			}
 		}
 
@@ -81,7 +80,7 @@ public class Protect_Regios extends ProtectTemplate {
 
 		if (protect.getRegions(loc) != null){
 			for (Region r: protect.getRegions(loc)){
-				regions.add(shield.rm.createShieldRegion(r.getName(), shield.regios, r.getWorld()));
+				regions.add(shield.rm.createShieldRegion(r.getName(), info.getProtectObject(), r.getWorld()));
 			}
 		}
 

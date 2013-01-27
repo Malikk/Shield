@@ -51,13 +51,12 @@ public class Protect_WorldGuard extends ProtectTemplate {
 	private WorldGuardPlugin protect;;
 
 	public Protect_WorldGuard(Shield instance){
-		super(instance, "WorldGuard", "com.sk89q.worldguard.bukkit.WorldGuardPlugin");
+		super(instance, ProtectInfo.WORLDGUARD);
 	}
 
 	@Override
 	public void init(){
 		protect = (WorldGuardPlugin) plugin;
-		shield.pm.addClassToInstantiatedSet(shield.worldGuard);
 	}
 
 	public ShieldRegion getHighestPriority(HashSet<ShieldRegion> regions){
@@ -93,7 +92,7 @@ public class Protect_WorldGuard extends ProtectTemplate {
 
 		for (World world: worlds){
 			for (String s: protect.getRegionManager(world).getRegions().keySet()){
-				regions.add(shield.rm.createShieldRegion(s, shield.worldGuard, world));
+				regions.add(shield.rm.createShieldRegion(s, info.getProtectObject(), world));
 			}
 		}
 
@@ -114,7 +113,7 @@ public class Protect_WorldGuard extends ProtectTemplate {
 		HashSet<ShieldRegion> regions = new HashSet<ShieldRegion>();
 
 		for (ProtectedRegion region: app){
-			regions.add(shield.rm.createShieldRegion(region.getId(), shield.worldGuard, world));
+			regions.add(shield.rm.createShieldRegion(region.getId(), info.getProtectObject(), world));
 		}
 
 		return regions;

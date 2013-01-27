@@ -50,13 +50,12 @@ public class Protect_Factions extends ProtectTemplate {
 	protected Factions protect;
 
 	public Protect_Factions(Shield instance) {
-		super(instance, "Faction", "com.massivecraft.factions.Factions");
+		super(instance, ProtectInfo.FACTIONS);
 	}
 
 	@Override
 	public void init(){
 		protect = (Factions) plugin;
-		shield.pm.addClassToInstantiatedSet(shield.factions);
 		// TODO remove once support is complete
 		shield.logWarning("Factions support is currently incomplete");
 	}

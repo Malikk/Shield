@@ -26,6 +26,8 @@ import net.sacredlabyrinth.Phaed.PreciousStones.PreciousStones;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+
 import com.malikk.shield.Shield;
 import com.malikk.shield.groups.ShieldGroup;
 import com.malikk.shield.regions.ShieldRegion;
@@ -39,14 +41,17 @@ public class Protect_PreciousStones extends ProtectTemplate{
 	private PreciousStones protect = null;
 
 	public Protect_PreciousStones(Shield instance){
-		super(instance, "PreciousStones", "net.sacredlabyrinth.Phaed.PreciousStones.PreciousStones");
+		super(instance, ProtectInfo.PRECIOUSSTONES);
 	}
 
 	@Override
 	public void init(){
-		//Leave this out until the class is finished
-		//shield.pm.addClassToInstantiatedSet(shield.preciousStones);
 		protect = (PreciousStones) plugin;
+	}
+
+	@Override
+	protected void hook(Plugin p){
+		//Overriding template hook method and leaving blank. This is so the class isn't used while it's not finished.
 		shield.logWarning("There is currently no support for PreciousStones. It only has a placeholder class and is hooked.");
 	}
 

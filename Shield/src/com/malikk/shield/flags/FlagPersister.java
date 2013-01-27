@@ -12,7 +12,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *  
+ * 
  * You should have received a copy of the GNU General Public License
  * along with Shield.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -32,20 +32,20 @@ import com.malikk.shield.Shield;
 public class FlagPersister {
 
 	Shield plugin;
-	
+
 	public FlagPersister(Shield instance){
 		plugin = instance;
 	}
-	
+
 	public void save(){
-		
+
 		int amt = plugin.fm.flags.size();
-		
+
 		if (amt == 0){
 			plugin.log("No flags to save");
 			return;
 		}
-		
+
 		//create a new File
 		File saveFile = new File(plugin.getDataFolder() + File.separator + "Flags.dat");
 
@@ -57,51 +57,51 @@ public class FlagPersister {
 				e1.printStackTrace();
 			}
 		}
-		
+
 		try{
 			FileOutputStream fos = new FileOutputStream(plugin.getDataFolder() + File.separator + "Flags.dat");
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			
+
 			//Write file here
 			oos.writeInt(amt);
-			
+
 			for (Flag f: plugin.fm.flags){
 				oos.writeObject(f);
 			}
-				
+
 			oos.close();
-			
-			plugin.log(amt + " Flags Saved");
-			
+
+			plugin.log(amt + " Flag(s) Saved");
+
 		}catch(Exception e){
 			e.printStackTrace();
 			plugin.log("Failed to save Flags");
 		}
-		
-				
+
+
 	}
-	
+
 	public void load(){
-		
+
 		File saveFile = new File(plugin.getDataFolder() + File.separator + "Flags.dat");
-		
+
 		if(saveFile.exists()){
 			FileInputStream fis = null;
 			ObjectInputStream ois = null;
-			
+
 			try{
 				fis = new FileInputStream(saveFile);
 				ois = new ObjectInputStream(fis);
-				
+
 				Integer recordCount = ois.readInt();
-				
+
 				for(int i = 0; i < recordCount; i ++){
 					Flag f = (Flag) ois.readObject();
 					plugin.fm.flags.add(f);
 				}
-				
-				plugin.log(recordCount + " Flags loaded");
-					
+
+				plugin.log(recordCount + " Flag(s) loaded");
+
 			}catch(FileNotFoundException e){
 				plugin.log("Could not locate data file... ");
 				e.printStackTrace();
