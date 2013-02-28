@@ -3,6 +3,8 @@ Shield
 
 *A collection of common Bukkit protection plugin API*
 
+Shield is a plugin for Bukkit, bridging the gap between the many region protection plugins and the common plugin. Through Shield, plugin developers can easily access a variety of methods, without hooking a specific protection plugin, and have them applied universally. Hours of work adding support for a small handful of protection plugins is a thing of the past. A lot of work has been put into making Shield as easy to use as possible, so all of the api can be found in a single interface, clearly labeled and clearly documented automatically as soon as you've configured your build path.
+
 For help hooking in or using Shield, please visit https://github.com/Malikk/Shield/wiki
 
 ##License
