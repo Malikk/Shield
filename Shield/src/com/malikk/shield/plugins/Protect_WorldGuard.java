@@ -30,6 +30,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+
 import com.malikk.shield.Shield;
 import com.malikk.shield.groups.ShieldGroup;
 import com.malikk.shield.regions.ShieldRegion;
@@ -190,7 +191,6 @@ public class Protect_WorldGuard extends ProtectTemplate {
 		LocalPlayer lPlayer = protect.wrapPlayer(player);
 
 		if (regionSet.size() == 0){return true;}
-
 		return (regionSet.allows(DefaultFlag.CHEST_ACCESS, lPlayer) ? true : false);
 	}
 

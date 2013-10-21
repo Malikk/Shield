@@ -26,6 +26,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+
 import com.bekvon.bukkit.residence.Residence;
 import com.bekvon.bukkit.residence.protection.ClaimedResidence;
 import com.bekvon.bukkit.residence.protection.FlagPermissions;
@@ -36,7 +37,7 @@ import com.malikk.shield.regions.ShieldRegion;
 
 /**
  * Residence
- * @version v2.6.6 for CB 1.4.2-R0.2
+ * @version v2.6.6 for CB 1.6.2-R0.1
  */
 public class Protect_Residence extends ProtectTemplate {
 
