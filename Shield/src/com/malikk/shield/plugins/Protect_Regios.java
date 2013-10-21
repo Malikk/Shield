@@ -22,18 +22,21 @@ package com.malikk.shield.plugins;
 import java.util.HashSet;
 
 import net.jzx7.regios.RegiosPlugin;
+import net.jzx7.regios.util.RegiosConversions;
 import net.jzx7.regiosapi.regions.Region;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+
 import com.malikk.shield.Shield;
 import com.malikk.shield.groups.ShieldGroup;
 import com.malikk.shield.regions.ShieldRegion;
 
 /**
  * Regios
- * @version v5.9.6 for CB 1.4.6
+ * @version v5.9.9 for CB 1.6.2
  */
 public class Protect_Regios extends ProtectTemplate {
 
@@ -54,7 +57,7 @@ public class Protect_Regios extends ProtectTemplate {
 
 		if (protect.getRegions() != null){
 			for (Region r: protect.getRegions()){
-				regions.add(shield.rm.createShieldRegion(r.getName(), info.getProtectObject(), r.getWorld()));
+				regions.add(shield.rm.createShieldRegion(r.getName(), info.getProtectObject(), Bukkit.getWorld(r.getWorld().getName())));
 			}
 		}
 
@@ -67,7 +70,7 @@ public class Protect_Regios extends ProtectTemplate {
 
 		if (protect.getRegions(entity.getLocation()) != null){
 			for (Region r: protect.getRegions(entity.getLocation())){
-				regions.add(shield.rm.createShieldRegion(r.getName(), info.getProtectObject(), r.getWorld()));
+				regions.add(shield.rm.createShieldRegion(r.getName(), info.getProtectObject(), Bukkit.getWorld(r.getWorld().getName())));
 			}
 		}
 
@@ -80,7 +83,7 @@ public class Protect_Regios extends ProtectTemplate {
 
 		if (protect.getRegions(loc) != null){
 			for (Region r: protect.getRegions(loc)){
-				regions.add(shield.rm.createShieldRegion(r.getName(), info.getProtectObject(), r.getWorld()));
+				regions.add(shield.rm.createShieldRegion(r.getName(), info.getProtectObject(),  Bukkit.getWorld(r.getWorld().getName())));
 			}
 		}
 
@@ -99,12 +102,12 @@ public class Protect_Regios extends ProtectTemplate {
 
 	@Override
 	public boolean canBuild(Player player) {
-		return (protect.getRegion(player) != null ? protect.getRegion(player).canBypassProtection(player) : true);
+		return (protect.getRegion(player) != null ? protect.getRegion(player).canBypassProtection(RegiosConversions.getRegiosPlayer(player)) : true);
 	}
 
 	@Override
 	public boolean canBuild(Player player, Location loc) {
-		return (protect.getRegion(loc) != null ? protect.getRegion(loc).canBypassProtection(player) : true);
+		return (protect.getRegion(loc) != null ? protect.getRegion(loc).canBypassProtection(RegiosConversions.getRegiosPlayer(player)) : true);
 	}
 
 	@Override

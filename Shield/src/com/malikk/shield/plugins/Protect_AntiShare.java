@@ -15,30 +15,34 @@
 
 package com.malikk.shield.plugins;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+
 import com.malikk.shield.Shield;
 import com.malikk.shield.groups.ShieldGroup;
 import com.malikk.shield.regions.ShieldRegion;
 import com.turt2live.antishare.AntiShare;
-import com.turt2live.antishare.Systems.Manager;
+import com.turt2live.antishare.PermissionNodes;
+import com.turt2live.antishare.PermissionNodes.PermissionPackage;
 import com.turt2live.antishare.manager.RegionManager;
-import com.turt2live.antishare.permissions.PermissionNodes;
 import com.turt2live.antishare.regions.Region;
+import com.turt2live.antishare.util.ASMaterialList;
+import com.turt2live.antishare.util.ASUtils;
 
 /**
  * AntiShare
  * 
- * @version v9.5.0 for CB 1.4.2
+ * @version v5.5.0 for CB 1.6.2
  */
 public class Protect_AntiShare extends ProtectTemplate{
 
 	private AntiShare protect = null;
-	private static RegionManager regionManager = null;
+	private RegionManager regionManager = null;
 
 	/*
 	 * Generic Note:
@@ -57,10 +61,8 @@ public class Protect_AntiShare extends ProtectTemplate{
 
 	@Override
 	public void init(){
-		if(protect.getSystemsManager().isEnabled(Manager.REGION)){
-			regionManager = (RegionManager) protect.getSystemsManager().getManager(Manager.REGION);
-		}
 		protect = (AntiShare) plugin;
+		regionManager = (RegionManager) protect.getRegionManager();
 		shield.pm.addClassToInstantiatedSet(info.getProtectObject());
 	}
 
@@ -108,13 +110,15 @@ public class Protect_AntiShare extends ProtectTemplate{
 
 	@Override
 	public boolean canBuild(Player player, Location loc){
-		Region region = regionManager.getRegion(player.getLocation());
-		Region playerRegion = regionManager.getRegion(player.getLocation());
-		if(protect.getPermissions().has(player, PermissionNodes.REGION_PLACE)
-				|| protect.getPermissions().has(player, PermissionNodes.REGION_BREAK)){
+		if (!(isBlocked(player, loc, PermissionNodes.PACK_BLOCK_PLACE)) || !(isBlocked(player, loc, PermissionNodes.PACK_BLOCK_BREAK)))
 			return true;
-		}
-		return region == playerRegion;
+		else
+			return false;
+	}
+	
+	private boolean isBlocked(Player player, Location loc, PermissionPackage pack)
+	{
+		return ASUtils.isBlocked(player, loc.getBlock(), new ASMaterialList(new ArrayList<String>()), pack).illegal;
 	}
 
 	@Override
@@ -124,12 +128,10 @@ public class Protect_AntiShare extends ProtectTemplate{
 
 	@Override
 	public boolean canUse(Player player, Location loc){
-		Region region = regionManager.getRegion(loc);
-		Region playerRegion = regionManager.getRegion(player.getLocation());
-		if(protect.getPermissions().has(player, PermissionNodes.REGION_USE)){
+		if (!(isBlocked(player, loc, PermissionNodes.PACK_USE)))
 			return true;
-		}
-		return region == playerRegion;
+		else
+			return false;
 	}
 
 	@Override

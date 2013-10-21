@@ -19,8 +19,8 @@
 
 package com.malikk.shield.plugins;
 
-import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -30,20 +30,21 @@ import org.bukkit.entity.Player;
 import com.malikk.shield.Shield;
 import com.malikk.shield.groups.ShieldGroup;
 import com.malikk.shield.regions.ShieldRegion;
-import com.massivecraft.factions.Board;
-import com.massivecraft.factions.FLocation;
-import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.Faction;
+import com.massivecraft.factions.FPerm;
 import com.massivecraft.factions.Factions;
-import com.massivecraft.factions.struct.FPerm;
+import com.massivecraft.factions.entity.BoardColls;
+import com.massivecraft.factions.entity.Faction;
+import com.massivecraft.factions.entity.FactionColl;
+import com.massivecraft.factions.entity.FactionColls;
+import com.massivecraft.factions.entity.UPlayer;
+import com.massivecraft.mcore.ps.PS;
 
 /**
  * Factions <br>
  * TODO: support outposts
  * 
  * @author IDragonfire
- * @version 1.8.0
+ * @version 2.1.0
  */
 public class Protect_Factions extends ProtectTemplate {
 
@@ -62,42 +63,50 @@ public class Protect_Factions extends ProtectTemplate {
 
 	@Override
 	public boolean canBuild(Player player, Location loc) {
-		return FPerm.BUILD.has(FPlayers.i.get(player.getName()), new FLocation(
-				loc));
+		return FPerm.BUILD.has(UPlayer.get(player.getName()), PS.valueOf(loc), false);
 	}
 
 	@Override
 	public boolean canOpen(Player player, Location loc) {
-		FPlayer fplayer = FPlayers.i.get(player.getName());
-		FLocation flocation = new FLocation(loc);
+		UPlayer uplayer = UPlayer.get(player.getName());
+		
+		PS ps = PS.valueOf(loc);
+		
 		Material type = loc.getBlock().getType();
 		if (type == Material.WOOD_DOOR || type == Material.IRON_DOOR) {
-			return FPerm.DOOR.has(fplayer, flocation);
+			return FPerm.DOOR.has(uplayer, ps, false);
 		}
 		if (type == Material.STONE_BUTTON) {
-			FPerm.BUTTON.has(fplayer, flocation);
+			return FPerm.BUTTON.has(uplayer, ps, false);
 		}
 		if (type == Material.LEVER) {
-			return FPerm.LEVER.has(fplayer, flocation);
+			return FPerm.LEVER.has(uplayer, ps, false);
 		}
-		return FPerm.DOOR.has(fplayer, flocation)
-				|| FPerm.BUTTON.has(fplayer, flocation)
-				|| FPerm.LEVER.has(fplayer, flocation);
+		return FPerm.DOOR.has(uplayer, ps, false)
+				|| FPerm.BUTTON.has(uplayer, ps, false)
+				|| FPerm.LEVER.has(uplayer, ps, false);
 	}
 
 	@Override
 	public boolean canUse(Player player, Location loc) {
-		return FPerm.CONTAINER.has(FPlayers.i.get(player.getName()),
-				new FLocation(loc));
+		return FPerm.CONTAINER.has(UPlayer.get(player.getName()), PS.valueOf(loc), false);
 	}
 
 	@Override
 	public boolean contains(ShieldRegion region, Location loc) {
-		Faction in = Board.getFactionAt(new FLocation(loc));
-		if (in == null) {
+		PS ps = PS.valueOf(loc);
+		Faction in = BoardColls.get().getFactionAt(ps);
+		if (in == null)
 			return false;
-		}
-		Faction out = Factions.i.get(region.getName());
+
+		Faction out = null;
+		for (Faction f : FactionColls.get().getForWorld(ps.getWorld()).getAll())
+			if (f.getId().equals(region.getName()))
+			{
+				out = f;
+				break;
+			}
+		
 		if (out == null) {
 			return false;
 		}
@@ -107,9 +116,9 @@ public class Protect_Factions extends ProtectTemplate {
 	@Override
 	public ShieldGroup getMembers(ShieldRegion region) {
 		ShieldGroup group = region.getMembers();
-		Faction faction = Factions.i.get(region.getName());
+		Faction faction = Faction.get(region.getName());
 		if (faction != null) {
-			for (FPlayer member : faction.getFPlayers()) {
+			for (UPlayer member : faction.getUPlayers()) {
 				group.addPlayer(member.getName());
 			}
 		}
@@ -119,9 +128,9 @@ public class Protect_Factions extends ProtectTemplate {
 	@Override
 	public ShieldGroup getOwners(ShieldRegion region) {
 		ShieldGroup group = region.getOwners();
-		Faction faction = Factions.i.get(region.getName());
+		Faction faction = Faction.get(region.getName());
 		if (faction != null) {
-			group.addPlayer(faction.getFPlayerLeader().getName());
+			group.addPlayer(faction.getLeader().getName());
 		}
 		return group;
 	}
@@ -129,18 +138,19 @@ public class Protect_Factions extends ProtectTemplate {
 	@Override
 	public HashSet<ShieldRegion> getRegions() {
 		HashSet<ShieldRegion> regios = new HashSet<ShieldRegion>();
-		ArrayList<Faction> factionList = new ArrayList<Faction>(Factions.i
-				.get());
-		for (Faction faction : factionList) {
-			addFactionToRegion(faction, regios);
-		}
+		List<FactionColl> data = FactionColls.get().getColls();
+		
+		for (FactionColl col : data)
+			for (Faction faction : col.getAll())
+				addFactionToRegion(faction, regios);
+			
 		return regios;
 	}
 
 	@Override
 	public HashSet<ShieldRegion> getRegions(Location loc) {
 		HashSet<ShieldRegion> regios = new HashSet<ShieldRegion>();
-		Faction faction = Board.getFactionAt(new FLocation(loc));
+		Faction faction = BoardColls.get().getFactionAt(PS.valueOf(loc));
 		if (faction != null) {
 			addFactionToRegion(faction, regios);
 		}
@@ -149,14 +159,14 @@ public class Protect_Factions extends ProtectTemplate {
 
 	private void addFactionToRegion(Faction faction,
 			HashSet<ShieldRegion> region) {
-		region.add(new ShieldRegion(shield, faction.getId(), this, faction
-				.getHome().getWorld()));
+		region.add(new ShieldRegion(shield, faction.getId(), this, 
+				faction.getHome().asBukkitWorld()));
+		
 	}
 
 	@Override
 	public HashSet<ShieldRegion> getRegions(Entity entity) {
-		// TODO Auto-generated method stub
-		return null;
+		return getRegions(entity.getLocation());
 	}
 
 	@Override
